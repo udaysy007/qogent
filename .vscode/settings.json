@@ -1,0 +1,31 @@
+{
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript",
+    "css": "css"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "files.associations": {
+    "*.css": "css",
+    "src/app/globals.css": "tailwindcss"
+  },
+  "editor.colorDecorators": true,
+  "editor.semanticHighlighting.enabled": true,
+  "workbench.colorCustomizations": {
+    "editor.semanticHighlightingBackground": "#00000000"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
+}

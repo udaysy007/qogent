@@ -1,5 +1,7 @@
+'use client'
+
+import React, { ElementType, ComponentPropsWithoutRef } from 'react'
 import { cn } from '@/lib/utils'
-import { ElementType, ComponentPropsWithoutRef } from 'react'
 
 interface HeroButtonProps<T extends ElementType> {
   as?: T
