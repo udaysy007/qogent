@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, GraduationCap, MapPin, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { HeroButton } from '@/components/ui/hero-button'
 
 export function Hero() {
   return (
@@ -12,7 +13,7 @@ export function Hero() {
         className="absolute inset-0 z-0"
         style={{
           background:
-            'linear-gradient(135deg, rgba(16,185,129,0.2) 0%, rgba(59,130,246,0.1) 50%, rgba(99,102,241,0.15) 100%)',
+            'linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(59,130,246,0.08) 50%, rgba(96,165,250,0.1) 100%)',
         }}
       ></div>
 
@@ -39,22 +40,20 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-4 text-4xl font-bold tracking-tight md:mb-6 md:text-5xl lg:text-6xl"
+            className="mb-6 text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl"
           >
-            Study Abroad with{' '}
-            <span className="text-[var(--accent)]">Confidence</span>
+            Studying Abroad Made{' '}
+            <span className="text-[var(--primary)]">Easy!</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[var(--foreground)]/80 mb-8 max-w-3xl text-lg md:mb-10 md:text-xl"
+            className="text-[var(--foreground)]/70 mb-8 max-w-2xl text-lg md:text-xl"
           >
-            Not sure where to begin your international education journey?
-            We&apos;ve been there, navigated the maze of applications, and
-            created the resources we wish we&apos;d had. Let&apos;s find your
-            perfect path together.
+            Get free education abroad based on merit, with guidance tailored to
+            your aspirations.
           </motion.p>
 
           <motion.div
@@ -63,19 +62,20 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-col gap-4 sm:flex-row"
           >
-            <Button
-              size="lg"
-              className="hover:bg-[var(--accent)]/90 bg-[var(--accent)] px-8 text-white"
+            <HeroButton
+              variant="filled"
+              className="flex h-12 w-full min-w-[200px] animate-pulse-subtle items-center justify-center sm:w-auto"
             >
-              Find Your Country
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+              <span className="mr-2 font-medium">Find Your Country</span>
+              <ArrowRight className="h-4 w-4" />
+            </HeroButton>
+
             <Button
-              size="lg"
               variant="outline"
-              className="border-[var(--accent)]/20 hover:bg-[var(--accent)]/10 text-[var(--accent)]"
+              className="flex h-12 w-full min-w-[200px] items-center justify-center rounded-full border-white/20 bg-white/10 backdrop-blur-sm sm:w-auto"
             >
-              Explore Universities
+              <span className="mr-2 font-medium">Explore Universities</span>
+              <ArrowRight className="h-4 w-4" />
             </Button>
           </motion.div>
         </div>
@@ -108,20 +108,22 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
             >
-              <div className="relative h-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6">
+              <div className="border-[var(--border)]/40 bg-[var(--background)]/30 hover:border-[var(--primary)]/30 group relative h-full overflow-hidden rounded-2xl border p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-[0_0_25px_rgba(var(--primary-rgb),0.08)]">
                 {/* Subtle gradient accent */}
                 <div
-                  className="absolute right-0 top-0 h-48 w-48"
+                  className="absolute right-0 top-0 h-48 w-48 opacity-50 transition-opacity duration-300 group-hover:opacity-100"
                   style={{
                     background:
-                      'radial-gradient(circle at top right, rgba(16,185,129,0.1) 0%, rgba(16,185,129,0.05) 50%, transparent 70%)',
+                      'radial-gradient(circle at top right, rgba(var(--primary-rgb),0.1) 0%, rgba(var(--primary-rgb),0.05) 50%, transparent 70%)',
                     borderBottomLeftRadius: '5rem',
                   }}
                 ></div>
 
                 {/* Card content */}
                 <div className="relative z-10">
-                  <div className="mb-4">{feature.icon}</div>
+                  <div className="bg-[var(--primary)]/10 group-hover:bg-[var(--primary)]/15 mb-4 w-fit rounded-xl p-3 transition-all duration-300">
+                    {feature.icon}
+                  </div>
                   <h3 className="mb-2 text-xl font-semibold">
                     {feature.title}
                   </h3>
