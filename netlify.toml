@@ -1,0 +1,22 @@
+[build]
+  command = "pnpm build:netlify"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20.9.0"
+  NEXT_USE_NETLIFY_EDGE = "true"
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+  NEXT_FORCE_APP_ROUTER = "true"
+  NEXT_SKIP_ROUTER_VALIDATION = "true"
+  NODE_ENV = "production"
+  NEXT_PREFER_APP_ROUTER = "true"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block" 
