@@ -186,7 +186,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-            </Card>
+              </Card>
           </div>
         </div>
       </section>
@@ -200,7 +200,7 @@ export default function HomePage() {
             </h2>
             <Button size="lg" className="mt-4">
               Get Started
-            </Button>
+              </Button>
           </div>
         </div>
       </section>

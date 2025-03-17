@@ -1,0 +1,441 @@
+[
+  {
+    "id": 1,
+    "name": "Technical University of Munich",
+    "slug": "technical-university-munich",
+    "countryId": 1,
+    "countryName": "Germany",
+    "location": "Munich, Bavaria",
+    "foundingYear": 1868,
+    "isPublic": true,
+    "ranking": {
+      "qs": 49,
+      "the": 38,
+      "arwu": 57
+    },
+    "logo": "/images/universities/tum-logo.svg",
+    "image": "/images/universities/tum-campus.jpg",
+    "website": "https://www.tum.de/en/",
+    "description": "TUM is one of Europe's top technical universities with a strong focus on engineering, natural sciences, medicine, and life sciences. Known for its excellent research opportunities and industry connections, TUM offers a vibrant international community and innovative approach to education.",
+    "studentPopulation": 48000,
+    "internationalStudentPercentage": 32,
+    "featuredPrograms": [
+      {
+        "id": 101,
+        "universityId": 1,
+        "name": "Computer Science",
+        "degree": "Master",
+        "field": "Computer Science & IT",
+        "language": "English",
+        "duration": "2 years (4 semesters)",
+        "description": "The Master's program in Computer Science focuses on advanced algorithms, artificial intelligence, software engineering, and computer systems.",
+        "tuitionFee": "No tuition fees (semester fee of €144.50 only)",
+        "applicationDeadlines": "Winter: January 31 | Summer: November 30",
+        "isPopular": true
+      },
+      {
+        "id": 102,
+        "universityId": 1,
+        "name": "Electrical Engineering",
+        "degree": "Master",
+        "field": "Engineering",
+        "language": "English",
+        "duration": "2 years (4 semesters)",
+        "description": "The Master's program in Electrical Engineering covers power systems, electronics, communications, and control systems.",
+        "tuitionFee": "No tuition fees (semester fee of €144.50 only)",
+        "applicationDeadlines": "Winter: January 31 | Summer: November 30",
+        "isPopular": true
+      },
+      {
+        "id": 103,
+        "universityId": 1,
+        "name": "Mechanical Engineering",
+        "degree": "Master",
+        "field": "Engineering",
+        "language": "English",
+        "duration": "2 years (4 semesters)",
+        "description": "The Master's program in Mechanical Engineering focuses on advanced mechanics, materials, thermodynamics, and manufacturing.",
+        "tuitionFee": "No tuition fees (semester fee of €144.50 only)",
+        "applicationDeadlines": "Winter: January 31 | Summer: November 30",
+        "isPopular": true
+      }
+    ],
+    "admissionRequirements": [
+      {
+        "id": 201,
+        "universityId": 1,
+        "type": "Academic",
+        "description": "Bachelor's degree in relevant field with minimum GPA equivalent to German 2.5 (scale of 1-5, where 1 is best)",
+        "qogentInsight": "For Indian students, we've seen success with 7.5+ CGPA from tier 1 institutions, and 8.0+ from other universities."
+      },
+      {
+        "id": 202,
+        "universityId": 1,
+        "type": "Language",
+        "description": "English proficiency (TOEFL 88+ or IELTS 6.5+) for English programs. German proficiency (TestDaF 4+ or DSH-2) for German programs.",
+        "qogentInsight": "While these are the official requirements, we recommend aiming for IELTS 7.0+ for better chances of acceptance."
+      },
+      {
+        "id": 203,
+        "universityId": 1,
+        "type": "Documents",
+        "description": "CV, letter of motivation, two letters of recommendation, transcript of records, degree certificate (if already available)",
+        "qogentInsight": "Strong letters of motivation that show specific research interests aligned with TUM faculty significantly increase chances of admission."
+      }
+    ],
+    "costs": {
+      "tuitionDomestic": "No tuition (semester fee only: €144.50)",
+      "tuitionInternational": "No tuition (semester fee only: €144.50)",
+      "livingExpenses": {
+        "accommodation": "€450-€800 per month",
+        "food": "€200-€300 per month",
+        "transportation": "€78 per month (included in semester fee)",
+        "other": "€100-€200 per month"
+      },
+      "healthInsurance": "€110 per month",
+      "applicationFee": "None",
+      "otherFees": "Semester fee: €144.50 (includes local public transport)"
+    },
+    "scholarships": [
+      {
+        "id": 301,
+        "universityId": 1,
+        "name": "DAAD Scholarship",
+        "provider": "Government",
+        "amount": "€850 per month + additional benefits",
+        "description": "The German Academic Exchange Service (DAAD) offers scholarships for international students to pursue study and research in Germany.",
+        "eligibility": "Outstanding academic record, strong research proposal or study plan",
+        "applicationProcess": "Apply through DAAD portal, separate from university application",
+        "deadline": "Varies by program, typically October-December for following academic year",
+        "successRate": "Highly competitive, approximately 15% acceptance rate"
+      },
+      {
+        "id": 302,
+        "universityId": 1,
+        "name": "Deutschlandstipendium",
+        "provider": "University",
+        "amount": "€300 per month",
+        "description": "Merit-based scholarship for talented and high-achieving students, funded equally by private sponsors and the German government.",
+        "eligibility": "Outstanding academic achievements, social engagement, special personal circumstances",
+        "applicationProcess": "Apply after enrollment through TUM scholarship portal",
+        "deadline": "Usually in June-July for winter semester",
+        "successRate": "Approximately 20% of applicants receive this scholarship"
+      }
+    ],
+    "studentLife": {
+      "housing": "TUM helps students find accommodation in student dorms, shared apartments, or private housing. Early application for student housing is strongly recommended due to high demand in Munich.",
+      "campusFacilities": [
+        "Modern libraries",
+        "Computer labs",
+        "Sports facilities",
+        "Student cafeterias",
+        "Research laboratories",
+        "Career center"
+      ],
+      "internationalSupport": "TUM Global & Alumni Office provides support services including orientation events, buddy programs, language courses, and cultural activities for international students.",
+      "clubs": "Over 100 student initiatives and clubs covering everything from robotics and entrepreneurship to music, sports, and cultural exchange."
+    },
+    "qogentMetrics": {
+      "admissionSuccessRate": "83%",
+      "studentsPlaced": 145,
+      "testimonials": [
+        {
+          "id": 401,
+          "universityId": 1,
+          "studentName": "Priya Sharma",
+          "studentImage": "/images/testimonials/priya-sharma.jpg",
+          "program": "MSc Computer Science",
+          "year": 2021,
+          "quote": "Qogent's guidance was crucial in navigating TUM's application process. Their detailed insights about the German education system and specific advice for my motivation letter made a huge difference. I'm now completing my Master's with a research position!",
+          "rating": 5
+        },
+        {
+          "id": 402,
+          "universityId": 1,
+          "studentName": "Arjun Patel",
+          "studentImage": "/images/testimonials/arjun-patel.jpg",
+          "program": "MSc Electrical Engineering",
+          "year": 2022,
+          "quote": "I was initially hesitant about applying to German universities due to the language barrier. Qogent helped me find the perfect English-taught program at TUM and guided me through each step. Their expertise with German university applications is unmatched.",
+          "rating": 5
+        }
+      ]
+    },
+    "faq": [
+      {
+        "question": "Can I study at TUM without knowing German?",
+        "answer": "Yes, TUM offers numerous Master's programs entirely in English, especially in engineering and sciences. However, learning some basic German will greatly enhance your day-to-day life in Munich."
+      },
+      {
+        "question": "What are my chances of admission with a 7.8 CGPA from an Indian university?",
+        "answer": "Admission chances depend on multiple factors. For Indian students, a 7.8 CGPA from a well-ranked university, combined with relevant projects and strong letters of recommendation, gives you good prospects at TUM. Qogent has helped many students with similar profiles gain admission."
+      },
+      {
+        "question": "How difficult is it to find accommodation in Munich?",
+        "answer": "Munich has a competitive housing market. We recommend applying for student housing through Studentenwerk München at least 6 months in advance. TUM also provides assistance to international students in finding accommodation. Qogent can guide you through the housing application process."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "University of Toronto",
+    "slug": "university-toronto",
+    "countryId": 2,
+    "countryName": "Canada",
+    "location": "Toronto, Ontario",
+    "foundingYear": 1827,
+    "isPublic": true,
+    "ranking": {
+      "qs": 25,
+      "the": 18,
+      "arwu": 22
+    },
+    "logo": "/images/universities/uoft-logo.svg",
+    "image": "/images/universities/uoft-campus.jpg",
+    "website": "https://www.utoronto.ca/",
+    "description": "The University of Toronto is Canada's leading institution of learning, discovery and knowledge creation. We are proud to be one of the world's top research-intensive universities, driven to invent and innovate. Our students have the opportunity to learn from and work with preeminent thought leaders through our multidisciplinary network of teaching and research faculty, alumni and partners.",
+    "studentPopulation": 97000,
+    "internationalStudentPercentage": 26,
+    "featuredPrograms": [
+      {
+        "id": 104,
+        "universityId": 2,
+        "name": "Computer Science",
+        "degree": "Master",
+        "field": "Computer Science & IT",
+        "language": "English",
+        "duration": "16 months",
+        "description": "The MScAC program combines advanced study in computer science with an 8-month applied research internship in an industry setting.",
+        "tuitionFee": "Domestic: CAD 8,500 per year | International: CAD 55,000 per year",
+        "applicationDeadlines": "January 15 for Fall intake",
+        "isPopular": true
+      },
+      {
+        "id": 105,
+        "universityId": 2,
+        "name": "Business Administration",
+        "degree": "Master",
+        "field": "Business & Management",
+        "language": "English",
+        "duration": "20 months",
+        "description": "The MBA program at Rotman School of Management offers a comprehensive business education with specializations in finance, marketing, and technology management.",
+        "tuitionFee": "Domestic: CAD 95,000 (full program) | International: CAD 125,000 (full program)",
+        "applicationDeadlines": "Round 1: October 15 | Round 2: January 6 | Round 3: March 1",
+        "isPopular": true
+      }
+    ],
+    "admissionRequirements": [
+      {
+        "id": 204,
+        "universityId": 2,
+        "type": "Academic",
+        "description": "Four-year bachelor's degree with minimum B+ average (GPA of 3.3 on a 4.0 scale) in final year",
+        "qogentInsight": "For Indian applicants, a minimum of 70-75% from a reputed university is typically expected. Students from top-tier Indian institutions may be given preference."
+      },
+      {
+        "id": 205,
+        "universityId": 2,
+        "type": "Language",
+        "description": "TOEFL iBT 93+ with minimum 22 in each component, or IELTS 7.0 with minimum 6.5 in each component",
+        "qogentInsight": "While these are minimum requirements, successful applicants typically score 100+ on TOEFL or 7.5+ on IELTS."
+      }
+    ],
+    "costs": {
+      "tuitionDomestic": "CAD 6,210 - 9,000 per year for most programs",
+      "tuitionInternational": "CAD 38,000 - 58,000 per year for most programs",
+      "livingExpenses": {
+        "accommodation": "CAD 800-1,500 per month",
+        "food": "CAD 400-600 per month",
+        "transportation": "CAD 128 per month (student pass)",
+        "other": "CAD 200-300 per month"
+      },
+      "healthInsurance": "CAD 636 per year (University Health Insurance Plan)",
+      "applicationFee": "CAD 125",
+      "otherFees": "Incidental fees: approximately CAD 1,500 per year"
+    },
+    "scholarships": [
+      {
+        "id": 303,
+        "universityId": 2,
+        "name": "University of Toronto International Scholar Award",
+        "provider": "University",
+        "amount": "CAD 10,000 - CAD 25,000",
+        "description": "Merit-based scholarship for exceptional international students.",
+        "eligibility": "Outstanding academic achievement and demonstrated leadership",
+        "applicationProcess": "Automatically considered with admission application",
+        "deadline": "Same as application deadline",
+        "successRate": "Highly competitive, approximately 5% of international students receive this"
+      }
+    ],
+    "studentLife": {
+      "housing": "UofT offers various housing options including dormitories, student residences, and off-campus housing services to help students find apartments.",
+      "campusFacilities": [
+        "44 libraries",
+        "Athletic center",
+        "Student union buildings",
+        "Research labs",
+        "Health services",
+        "Career center"
+      ],
+      "internationalSupport": "Centre for International Experience provides immigration advising, transition programs, English language support, and intercultural learning opportunities.",
+      "clubs": "Over 1000 student organizations covering academic interests, cultural groups, sports, arts, and community service."
+    },
+    "qogentMetrics": {
+      "admissionSuccessRate": "76%",
+      "studentsPlaced": 98,
+      "testimonials": [
+        {
+          "id": 403,
+          "universityId": 2,
+          "studentName": "Ravi Kumar",
+          "studentImage": "/images/testimonials/ravi-kumar.jpg",
+          "program": "MSc Computer Science",
+          "year": 2022,
+          "quote": "Qogent's counselors helped me understand the Canadian education system and guided me through the complex application process. Their advice on emphasizing my research experience in my statement of purpose was invaluable.",
+          "rating": 5
+        }
+      ]
+    },
+    "faq": [
+      {
+        "question": "How competitive is admission to University of Toronto?",
+        "answer": "UofT is among Canada's most competitive universities. For graduate programs, acceptance rates vary by department but typically range from 10-25%. Programs like Computer Science, Business, and Engineering are particularly competitive."
+      },
+      {
+        "question": "Are there work opportunities for international students?",
+        "answer": "Yes, international students can work up to 20 hours per week during academic sessions and full-time during scheduled breaks. After graduation, you may be eligible for a Post-Graduation Work Permit for up to 3 years."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Trinity College Dublin",
+    "slug": "trinity-college-dublin",
+    "countryId": 3,
+    "countryName": "Ireland",
+    "location": "Dublin",
+    "foundingYear": 1592,
+    "isPublic": true,
+    "ranking": {
+      "qs": 98,
+      "the": 146,
+      "arwu": 151
+    },
+    "logo": "/images/universities/tcd-logo.svg",
+    "image": "/images/universities/tcd-campus.jpg",
+    "website": "https://www.tcd.ie/",
+    "description": "Trinity College Dublin, the University of Dublin, founded in 1592, is Ireland's oldest university and one of the seven ancient universities of Britain and Ireland. Located in the heart of Dublin, Trinity offers a unique educational experience across a range of disciplines in the arts, humanities, engineering, science, social and health sciences.",
+    "studentPopulation": 18000,
+    "internationalStudentPercentage": 28,
+    "featuredPrograms": [
+      {
+        "id": 106,
+        "universityId": 3,
+        "name": "Computer Science",
+        "degree": "Master",
+        "field": "Computer Science & IT",
+        "language": "English",
+        "duration": "1 year",
+        "description": "The MSc in Computer Science offers specializations in data science, intelligent systems, future networked systems, and augmented/virtual reality.",
+        "tuitionFee": "EU: €8,450 | Non-EU: €19,500",
+        "applicationDeadlines": "Applications open in November and close when all places are filled",
+        "isPopular": true
+      },
+      {
+        "id": 107,
+        "universityId": 3,
+        "name": "International Management",
+        "degree": "Master",
+        "field": "Business & Management",
+        "language": "English",
+        "duration": "1 year",
+        "description": "The MSc in International Management focuses on global business strategy, leadership, and cross-cultural management skills.",
+        "tuitionFee": "EU: €14,000 | Non-EU: €21,000",
+        "applicationDeadlines": "Round 1: January 31 | Round 2: March 31 | Round 3: May 31",
+        "isPopular": true
+      }
+    ],
+    "admissionRequirements": [
+      {
+        "id": 206,
+        "universityId": 3,
+        "type": "Academic",
+        "description": "Minimum of 2.1 honors degree (Irish system) or international equivalent in relevant discipline",
+        "qogentInsight": "For Indian students, this typically translates to a minimum of 60-65% from a recognized university, though top programs may require 70%+."
+      },
+      {
+        "id": 207,
+        "universityId": 3,
+        "type": "Language",
+        "description": "IELTS: 6.5 overall with no band below 6.0, or TOEFL iBT: 88 overall with no band below 20",
+        "qogentInsight": "While these are minimum requirements, we recommend aiming for IELTS 7.0+ for competitive programs."
+      }
+    ],
+    "costs": {
+      "tuitionDomestic": "€7,000 - €15,000 per year (for EU students)",
+      "tuitionInternational": "€18,000 - €35,000 per year (for non-EU students)",
+      "livingExpenses": {
+        "accommodation": "€700-€1,300 per month",
+        "food": "€250-€350 per month",
+        "transportation": "€120 per month",
+        "other": "€200-€300 per month"
+      },
+      "healthInsurance": "€250 per year (minimum)",
+      "applicationFee": "€55",
+      "otherFees": "Student contribution: €3,000 per year"
+    },
+    "scholarships": [
+      {
+        "id": 304,
+        "universityId": 3,
+        "name": "Global Excellence Scholarship",
+        "provider": "University",
+        "amount": "€5,000 - €10,000",
+        "description": "Merit-based scholarships for international students across all disciplines.",
+        "eligibility": "Academic excellence, demonstrated leadership potential",
+        "applicationProcess": "Automatically considered upon application to program",
+        "deadline": "Same as course application deadline",
+        "successRate": "Approximately 15% of international applicants receive some form of scholarship"
+      }
+    ],
+    "studentLife": {
+      "housing": "Trinity offers on-campus accommodation, though places are limited and competitive. Many students live in private accommodation or shared housing in Dublin.",
+      "campusFacilities": [
+        "Historic library",
+        "Sports centre",
+        "Student union",
+        "Research facilities",
+        "Health service",
+        "Career advisory service"
+      ],
+      "internationalSupport": "Global Room provides a space for cultural events and support services specifically for international students, including orientation programs and immigration advice.",
+      "clubs": "Over 120 student societies and 50 sports clubs covering everything from debating to mountaineering."
+    },
+    "qogentMetrics": {
+      "admissionSuccessRate": "89%",
+      "studentsPlaced": 120,
+      "testimonials": [
+        {
+          "id": 404,
+          "universityId": 3,
+          "studentName": "Sneha Reddy",
+          "studentImage": "/images/testimonials/sneha-reddy.jpg",
+          "program": "MSc International Management",
+          "year": 2022,
+          "quote": "Qogent made my dream of studying in Ireland come true. Their detailed knowledge about Trinity's admission preferences helped me tailor my application perfectly. They also assisted with my visa process which was incredibly helpful.",
+          "rating": 5
+        }
+      ]
+    },
+    "faq": [
+      {
+        "question": "What are the advantages of studying in Ireland compared to other European countries?",
+        "answer": "Ireland offers several advantages: English-speaking environment, 2-year stay back option for international graduates, strong industry connections (especially in tech and pharma), EU membership providing access to European job market, and a welcoming culture with a strong Indian community."
+      },
+      {
+        "question": "Is it possible to work while studying at Trinity?",
+        "answer": "Yes, international students can work up to 20 hours per week during term time and up to 40 hours during holidays. After graduation, you can avail of the Third Level Graduate Scheme which allows you to stay and work in Ireland for up to 24 months."
+      }
+    ]
+  }
+] 

@@ -22,29 +22,121 @@ Base Components
     ├── Input
     ├── Select
     ├── Checkbox/Radio
-    └── Icons
+    ├── Badge
+    ├── Card
+    ├── Accordion
+    ├── Tabs
+    ├── Sheet
+    └── Avatar
 
 Composite Components
 ├── Layout
 │   ├── Header
 │   ├── Footer
-│   ├── Sidebar
-│   └── MainContent
+│   ├── PageHeader
+│   └── Breadcrumbs
 ├── Navigation
 │   ├── NavBar
 │   ├── MobileMenu
-│   └── Breadcrumbs
+│   └── Pagination
 ├── Cards
 │   ├── CountryCard
 │   ├── UniversityCard
-│   ├── ProgramCard
+│   ├── JobCard
+│   ├── ToolCard
+│   ├── ServiceCard
+│   ├── TeamMemberCard
 │   └── TestimonialCard
 └── Interactive Elements
-    ├── CountrySelector
-    ├── FilterPanel
-    ├── SearchBar
-    └── Comparison Tool
+    ├── Hero
+    ├── FeatureSection
+    ├── StatsSection
+    ├── TestimonialsSection
+    ├── CallToAction
+    ├── FAQ
+    ├── SearchAndFilter
+    └── ComparisonTable
 ```
+
+## Implementation Status
+
+### Base Components
+
+#### Typography Components
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Heading | ✅ Implemented | Supports h1-h6 with responsive sizing |
+| Paragraph | ✅ Implemented | Supports small, base, and large sizes |
+| List | ✅ Implemented | Supports ordered and unordered lists with optional icons |
+| Blockquote | ✅ Implemented | Supports different style variants and author attribution |
+
+#### Container Components
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Section | ✅ Implemented | Supports different background styles |
+| Container | ✅ Implemented | Supports small, default, and large sizes |
+| Grid | ✅ Implemented | Supports 1-4 columns with responsive behavior |
+
+#### UI Elements
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Button | ✅ Implemented | Using shadcn/ui with variants |
+| Input | ✅ Implemented | Using shadcn/ui |
+| Select | ✅ Implemented | Using shadcn/ui with Radix UI |
+| Checkbox/Radio | ✅ Implemented | Using shadcn/ui with Radix UI |
+| Badge | ✅ Implemented | Using shadcn/ui with variants |
+| Card | ✅ Implemented | Using shadcn/ui |
+| Accordion | ✅ Implemented | Using shadcn/ui with Radix UI |
+| Tabs | ✅ Implemented | Using shadcn/ui with Radix UI |
+| Sheet | ✅ Implemented | Using shadcn/ui with Radix UI Dialog |
+| Avatar | ✅ Implemented | Using shadcn/ui |
+
+### Composite Components
+
+#### Layout Components
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Header | ✅ Implemented | With mobile menu and theme toggle |
+| Footer | ✅ Implemented | With navigation links and copyright |
+| PageHeader | ✅ Implemented | With title, description, and optional actions |
+| Breadcrumbs | ✅ Implemented | With home icon and navigation links |
+
+#### Navigation Components
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| NavBar | ✅ Implemented | As part of Header component |
+| MobileMenu | ✅ Implemented | As part of Header component |
+| Pagination | ✅ Implemented | With page numbers and navigation |
+
+#### Card Components
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| CountryCard | ✅ Implemented | For displaying country information |
+| UniversityCard | ✅ Implemented | For displaying university information |
+| JobCard | ✅ Implemented | For displaying job listings |
+| ToolCard | ✅ Implemented | For displaying available tools |
+| ServiceCard | ✅ Implemented | For displaying services offered |
+| TeamMemberCard | ✅ Implemented | For displaying team information |
+| TestimonialCard | ✅ Implemented | For displaying testimonials |
+
+#### Interactive Elements
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Hero | ✅ Implemented | With title, description, and call-to-action buttons |
+| FeatureSection | ✅ Implemented | For displaying feature lists with icons |
+| StatsSection | ✅ Implemented | For displaying statistics with descriptions |
+| TestimonialsSection | ✅ Implemented | For displaying testimonial cards |
+| CallToAction | ✅ Implemented | With title, description, and action buttons |
+| FAQ | ✅ Implemented | Using Accordion component |
+| SearchAndFilter | ✅ Implemented | With search input and filter dropdowns |
+| ComparisonTable | ✅ Implemented | For comparing features across items |
 
 ## Base Components
 
@@ -53,7 +145,8 @@ Composite Components
 #### Heading
 
 ```tsx
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
 interface HeadingProps {
   level: 1 | 2 | 3 | 4 | 5 | 6
@@ -62,23 +155,32 @@ interface HeadingProps {
 }
 
 export function Heading({ level = 1, children, className }: HeadingProps) {
-  const Component = `h${level}` as keyof JSX.IntrinsicElements
-
-  const baseStyles = 'font-bold leading-tight tracking-tight text-foreground'
+  const baseStyles = "font-bold leading-tight tracking-tight text-foreground"
   const sizeStyles = {
-    1: 'text-4xl md:text-5xl',
-    2: 'text-3xl md:text-4xl',
-    3: 'text-2xl md:text-3xl',
-    4: 'text-xl md:text-2xl',
-    5: 'text-lg md:text-xl',
-    6: 'text-base md:text-lg',
+    1: "text-4xl md:text-5xl",
+    2: "text-3xl md:text-4xl",
+    3: "text-2xl md:text-3xl",
+    4: "text-xl md:text-2xl",
+    5: "text-lg md:text-xl",
+    6: "text-base md:text-lg",
   }
 
-  return (
-    <Component className={cn(baseStyles, sizeStyles[level], className)}>
-      {children}
-    </Component>
-  )
+  switch (level) {
+    case 1:
+      return <h1 className={cn(baseStyles, sizeStyles[level], className)}>{children}</h1>
+    case 2:
+      return <h2 className={cn(baseStyles, sizeStyles[level], className)}>{children}</h2>
+    case 3:
+      return <h3 className={cn(baseStyles, sizeStyles[level], className)}>{children}</h3>
+    case 4:
+      return <h4 className={cn(baseStyles, sizeStyles[level], className)}>{children}</h4>
+    case 5:
+      return <h5 className={cn(baseStyles, sizeStyles[level], className)}>{children}</h5>
+    case 6:
+      return <h6 className={cn(baseStyles, sizeStyles[level], className)}>{children}</h6>
+    default:
+      return <h1 className={cn(baseStyles, sizeStyles[1], className)}>{children}</h1>
+  }
 }
 ```
 
@@ -92,23 +194,24 @@ export function Heading({ level = 1, children, className }: HeadingProps) {
 #### Paragraph
 
 ```tsx
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
 interface ParagraphProps {
   children: React.ReactNode
-  size?: 'sm' | 'base' | 'lg'
+  size?: "sm" | "base" | "lg"
   className?: string
 }
 
 export function Paragraph({
   children,
-  size = 'base',
+  size = "base",
   className,
 }: ParagraphProps) {
   const sizeStyles = {
-    sm: 'text-sm leading-relaxed',
-    base: 'text-base leading-relaxed',
-    lg: 'text-lg leading-relaxed',
+    sm: "text-sm leading-relaxed",
+    base: "text-base leading-relaxed",
+    lg: "text-lg leading-relaxed",
   }
 
   return <p className={cn(sizeStyles[size], className)}>{children}</p>
@@ -127,31 +230,32 @@ export function Paragraph({
 #### Section
 
 ```tsx
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
 interface SectionProps {
   children: React.ReactNode
   className?: string
   id?: string
-  background?: 'default' | 'muted' | 'accent'
+  background?: "default" | "muted" | "primary"
 }
 
 export function Section({
   children,
   className,
   id,
-  background = 'default',
+  background = "default",
 }: SectionProps) {
   const backgroundStyles = {
-    default: 'bg-background',
-    muted: 'bg-muted',
-    accent: 'bg-accent/10',
+    default: "bg-background",
+    muted: "bg-muted",
+    primary: "bg-primary text-primary-foreground",
   }
 
   return (
     <section
       id={id}
-      className={cn('py-12 md:py-16', backgroundStyles[background], className)}
+      className={cn("py-12 md:py-16", backgroundStyles[background], className)}
     >
       {children}
     </section>
@@ -173,29 +277,30 @@ export function Section({
 #### Container
 
 ```tsx
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
 interface ContainerProps {
   children: React.ReactNode
   className?: string
-  size?: 'sm' | 'default' | 'lg'
+  size?: "sm" | "default" | "lg"
 }
 
 export function Container({
   children,
   className,
-  size = 'default',
+  size = "default",
 }: ContainerProps) {
   const sizeStyles = {
-    sm: 'max-w-3xl',
-    default: 'max-w-5xl',
-    lg: 'max-w-7xl',
+    sm: "max-w-3xl",
+    default: "max-w-5xl",
+    lg: "max-w-7xl",
   }
 
   return (
     <div
       className={cn(
-        'mx-auto w-full px-4 sm:px-6 lg:px-8',
+        "mx-auto w-full px-4 sm:px-6 lg:px-8",
         sizeStyles[size],
         className
       )}
@@ -206,354 +311,196 @@ export function Container({
 }
 ```
 
-**Usage:**
-
-```tsx
-<Container>
-  {/* Content with standard width */}
-</Container>
-
-<Container size="lg">
-  {/* Wider content */}
-</Container>
-```
-
 #### Grid
 
 ```tsx
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
 interface GridProps {
   children: React.ReactNode
   className?: string
   cols?: 1 | 2 | 3 | 4
-  gap?: 'sm' | 'md' | 'lg'
+  gap?: "sm" | "md" | "lg"
 }
 
-export function Grid({ children, className, cols = 3, gap = 'md' }: GridProps) {
+export function Grid({ children, className, cols = 3, gap = "md" }: GridProps) {
   const colsStyles = {
-    1: 'grid-cols-1',
-    2: 'grid-cols-1 md:grid-cols-2',
-    3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-    4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
+    1: "grid-cols-1",
+    2: "grid-cols-1 md:grid-cols-2",
+    3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+    4: "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
   }
 
   const gapStyles = {
-    sm: 'gap-4',
-    md: 'gap-6',
-    lg: 'gap-8',
+    sm: "gap-4",
+    md: "gap-6",
+    lg: "gap-8",
   }
 
   return (
-    <div className={cn('grid', colsStyles[cols], gapStyles[gap], className)}>
+    <div className={cn("grid", colsStyles[cols], gapStyles[gap], className)}>
       {children}
     </div>
   )
 }
 ```
 
-**Usage:**
+## Composite Components
+
+### Hero
 
 ```tsx
-<Grid cols={3} gap="lg">
-  <CountryCard country={germany} />
-  <CountryCard country={canada} />
-  <CountryCard country={usa} />
-</Grid>
-```
+import { ReactNode } from "react"
+import { Section } from "@/components/ui/section"
+import { Container } from "@/components/ui/container"
+import { Heading } from "@/components/ui/heading"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
-## Layout Components
-
-### Header
-
-```tsx
-'use client'
-
-import { useState } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { ThemeToggle } from '@/components/theme-toggle'
-import { NavigationMenu } from '@/components/ui/navigation-menu'
-import { cn } from '@/lib/utils'
-
-interface NavItem {
-  label: string
-  href: string
-  children?: NavItem[]
+interface HeroProps {
+  title: string
+  description?: string
+  primaryAction?: {
+    text: string
+    href: string
+  }
+  secondaryAction?: {
+    text: string
+    href: string
+  }
+  image?: ReactNode
+  background?: "default" | "muted" | "primary"
+  align?: "left" | "center"
 }
 
-const navItems: NavItem[] = [
-  { label: 'Home', href: '/' },
-  {
-    label: 'Destinations',
-    href: '/destinations',
-    children: [
-      { label: 'Germany', href: '/destinations/germany' },
-      { label: 'Canada', href: '/destinations/canada' },
-      { label: 'USA', href: '/destinations/usa' },
-    ],
-  },
-  { label: 'Services', href: '/services' },
-  { label: 'Tools', href: '/tools' },
-  { label: 'Jobs', href: '/jobs' },
-  { label: 'About', href: '/about' },
-]
-
-export function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const pathname = usePathname()
-
+export function Hero({
+  title,
+  description,
+  primaryAction,
+  secondaryAction,
+  image,
+  background = "default",
+  align = "center"
+}: HeroProps) {
   return (
-    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur">
-      <div className="container flex h-16 items-center">
-        <div className="mr-4 flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <span className="text-xl font-bold">Qogent</span>
-          </Link>
-
-          <nav className="hidden space-x-6 md:flex">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  'text-sm font-medium transition-colors hover:text-primary',
-                  pathname === item.href
-                    ? 'text-foreground'
-                    : 'text-muted-foreground'
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-
-        <div className="flex flex-1 items-center justify-end space-x-4">
-          <ThemeToggle />
-
-          <Button variant="outline" asChild>
-            <Link href="/contact">Contact Us</Link>
-          </Button>
-
-          <Button className="hidden md:inline-flex" asChild>
-            <Link href="/tools/country-selector">Find Your Country</Link>
-          </Button>
-
-          <button
-            className="md:hidden"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X /> : <Menu />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden">
-          <div className="space-y-1 px-2 pb-3 pt-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  'block rounded-md px-3 py-2 text-base font-medium',
-                  pathname === item.href
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-foreground hover:bg-muted hover:text-primary'
-                )}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-    </header>
-  )
-}
-```
-
-### Footer
-
-```tsx
-import Link from 'next/link'
-import { Container } from '@/components/container'
-
-export function Footer() {
-  return (
-    <footer className="bg-muted/50 border-t">
+    <Section background={background}>
       <Container>
-        <div className="grid grid-cols-1 gap-8 py-12 md:grid-cols-4">
-          <div>
-            <Link href="/" className="text-xl font-bold">
-              Qogent
-            </Link>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Democratizing access to international education through
-              merit-based admissions guidance.
-            </p>
+        <div className={`flex flex-col ${image ? "lg:flex-row" : ""} gap-10 items-center`}>
+          <div className={`flex-1 ${align === "center" && !image ? "text-center mx-auto max-w-3xl" : ""}`}>
+            <Heading level={1} className="mb-4 sm:mb-6">
+              {title}
+            </Heading>
+            
+            {description && (
+              <p className="text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl">
+                {description}
+              </p>
+            )}
+            
+            {(primaryAction || secondaryAction) && (
+              <div className={`flex flex-wrap gap-4 ${align === "center" && !image ? "justify-center" : ""}`}>
+                {primaryAction && (
+                  <Button asChild size="lg">
+                    <Link href={primaryAction.href}>
+                      {primaryAction.text}
+                    </Link>
+                  </Button>
+                )}
+                
+                {secondaryAction && (
+                  <Button variant="outline" asChild size="lg">
+                    <Link href={secondaryAction.href}>
+                      {secondaryAction.text}
+                    </Link>
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
-
-          <div>
-            <h3 className="text-lg font-medium">Destinations</h3>
-            <ul className="mt-3 space-y-2">
-              <li>
-                <Link
-                  href="/destinations/germany"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  Germany
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/destinations/canada"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  Canada
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/destinations/usa"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  USA
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-medium">Resources</h3>
-            <ul className="mt-3 space-y-2">
-              <li>
-                <Link
-                  href="/tools/country-selector"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  Country Selector
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/jobs"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  Job Portal
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-medium">Company</h3>
-            <ul className="mt-3 space-y-2">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/privacy"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/terms"
-                  className="text-sm text-muted-foreground hover:text-primary"
-                >
-                  Terms of Service
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center border-t py-6 md:flex-row md:justify-between">
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Qogent. All rights reserved.
-          </p>
-          <div className="mt-4 flex space-x-6 md:mt-0">
-            {/* Social media links */}
-          </div>
+          
+          {image && (
+            <div className="flex-1 w-full">
+              {image}
+            </div>
+          )}
         </div>
       </Container>
-    </footer>
+    </Section>
   )
 }
 ```
 
-## Card Components
+### Card Components
 
-### CountryCard
+#### CountryCard
 
 ```tsx
-import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import Link from "next/link"
+import Image from "next/image"
+import { ArrowRight } from "lucide-react"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 
 interface CountryCardProps {
   country: {
     id: number
     name: string
-    code: string
-    flagUrl: string
+    slug: string
+    region: string
     description: string
+    flagUrl?: string
+    tags: string[]
   }
-  variant?: 'default' | 'featured'
+  variant?: "default" | "featured"
 }
 
 export function CountryCard({
   country,
-  variant = 'default',
+  variant = "default",
 }: CountryCardProps) {
-  const { name, flagUrl, description } = country
+  const { name, slug, description, flagUrl, tags } = country
 
   return (
-    <Card className={variant === 'featured' ? 'border-primary/50' : ''}>
-      <CardHeader className="p-0">
-        <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
+    <Card className={`overflow-hidden hover-lift ${variant === "featured" ? "border-primary/50" : ""}`}>
+      {flagUrl ? (
+        <div className="relative h-48 w-full overflow-hidden">
           <Image
             src={flagUrl}
             alt={`${name} flag`}
             fill
-            className="object-cover transition-transform hover:scale-105"
+            className="object-cover"
           />
         </div>
-      </CardHeader>
+      ) : (
+        <div className="h-48 w-full bg-muted flex items-center justify-center">
+          <span className="text-4xl">{name.charAt(0)}</span>
+        </div>
+      )}
 
       <CardContent className="p-6">
-        <h3 className="text-xl font-bold">{name}</h3>
-        <p className="mt-2 line-clamp-3 text-muted-foreground">{description}</p>
+        <h3 className="text-xl font-medium mb-2">{name}</h3>
+        <p className="text-sm text-muted-foreground mb-4">{description}</p>
+        
+        {tags && tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {tags.map((tag, index) => (
+              <span 
+                key={index} 
+                className="px-2 py-1 bg-muted text-xs rounded-full"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </CardContent>
 
       <CardFooter className="p-6 pt-0">
-        <Button variant="outline" className="w-full" asChild>
-          <Link href={`/destinations/${name.toLowerCase()}`}>
-            Learn More <ArrowRight className="ml-2 h-4 w-4" />
+        <Button variant="outline" asChild className="w-full">
+          <Link href={`/destinations/${slug}`}>
+            Learn More
+            <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
       </CardFooter>
@@ -562,411 +509,99 @@ export function CountryCard({
 }
 ```
 
-**Usage:**
+#### JobCard
 
 ```tsx
-<CountryCard country={germany} variant="featured" />
-```
+import Link from "next/link"
+import { Calendar, MapPin, Clock, ArrowRight } from "lucide-react"
+import { Card } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 
-### UniversityCard
-
-```tsx
-import Link from 'next/link'
-import { ExternalLink } from 'lucide-react'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-
-interface UniversityCardProps {
-  university: {
-    id: number
-    name: string
-    countryId: number
-    website: string
-    isPublic: boolean
-    ranking?: number
-    description: string
-  }
-  country: {
-    name: string
-    code: string
-  }
-}
-
-export function UniversityCard({ university, country }: UniversityCardProps) {
-  const { name, website, isPublic, ranking, description } = university
-
-  return (
-    <Card className="flex h-full flex-col">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <h3 className="font-bold">{name}</h3>
-          {isPublic ? (
-            <Badge variant="outline">Public</Badge>
-          ) : (
-            <Badge variant="outline">Private</Badge>
-          )}
-        </div>
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-          <span>{country.name}</span>
-          {ranking && (
-            <>
-              <span>•</span>
-              <span>Ranking: #{ranking}</span>
-            </>
-          )}
-        </div>
-      </CardHeader>
-
-      <CardContent className="flex-grow">
-        <p className="text-muted-foreground">{description}</p>
-      </CardContent>
-
-      <CardFooter className="border-t pt-4">
-        <div className="flex w-full justify-between">
-          <Link
-            href={`/destinations/${country.name.toLowerCase()}/universities/${university.id}`}
-            className="text-sm font-medium text-primary hover:underline"
-          >
-            View Details
-          </Link>
-
-          <a
-            href={website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center text-sm font-medium text-primary hover:underline"
-          >
-            Website <ExternalLink className="ml-1 h-3 w-3" />
-          </a>
-        </div>
-      </CardFooter>
-    </Card>
-  )
-}
-```
-
-### CareerCard
-
-```tsx
-import Link from 'next/link'
-import { CalendarIcon, MapPinIcon, BriefcaseIcon } from 'lucide-react'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-
-interface CareerCardProps {
-  career: {
+interface JobCardProps {
+  job: {
     id: number
     title: string
-    department: string
+    company: string
     location: string
-    type: 'Full-time' | 'Part-time' | 'Contract' | 'Remote'
+    type: string
+    hours: string
+    posted: string
     description: string
-    postedDate: string
-    applicationUrl: string
+    skills: string[]
   }
 }
 
-export function CareerCard({ career }: CareerCardProps) {
-  const {
-    title,
-    department,
-    location,
-    type,
-    description,
-    postedDate,
-    applicationUrl,
-  } = career
-
-  // Format the date
-  const formattedDate = new Date(postedDate).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  })
+export function JobCard({ job }: JobCardProps) {
+  const { id, title, company, location, type, hours, posted, description, skills } = job
 
   return (
-    <Card className="flex h-full flex-col">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl font-bold">{title}</h3>
-          <Badge variant="outline">{type}</Badge>
+    <Card className="overflow-hidden hover-lift">
+      <div className="p-6 flex flex-col h-full">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-lg font-medium">{title}</h3>
+          <Badge>{type}</Badge>
         </div>
-        <div className="flex flex-col space-y-2 text-sm text-muted-foreground">
-          <div className="flex items-center">
-            <BriefcaseIcon className="mr-2 h-4 w-4" />
-            <span>{department}</span>
+        
+        <div className="flex flex-col gap-2 mb-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <Calendar className="h-4 w-4" />
+            <span>Posted {posted}</span>
           </div>
-          <div className="flex items-center">
-            <MapPinIcon className="mr-2 h-4 w-4" />
-            <span>{location}</span>
+          <div className="flex items-center gap-2">
+            <MapPin className="h-4 w-4" />
+            <span>{company} • {location}</span>
           </div>
-          <div className="flex items-center">
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            <span>Posted: {formattedDate}</span>
+          <div className="flex items-center gap-2">
+            <Clock className="h-4 w-4" />
+            <span>{hours}</span>
           </div>
         </div>
-      </CardHeader>
-
-      <CardContent className="flex-grow">
-        <p className="line-clamp-4 text-muted-foreground">{description}</p>
-      </CardContent>
-
-      <CardFooter className="border-t pt-6">
-        <div className="w-full">
-          <Button className="w-full" asChild>
-            <Link href={applicationUrl}>Apply Now</Link>
-          </Button>
-        </div>
-      </CardFooter>
-    </Card>
-  )
-}
-```
-
-**Usage:**
-
-```tsx
-<CareerCard career={fullStackDeveloperJob} />
-```
-
-## Interactive Components
-
-### CountrySelectorTool
-
-```tsx
-'use client'
-
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { Label } from '@/components/ui/label'
-import { CountryCard } from '@/components/country-card'
-
-// Example criteria and options
-const criteria = [
-  {
-    id: 'budget',
-    label: "What's your budget for tuition and living expenses?",
-    options: [
-      { value: 'low', label: 'Low (Under $10,000/year)' },
-      { value: 'medium', label: 'Medium ($10,000 - $30,000/year)' },
-      { value: 'high', label: 'High (Over $30,000/year)' },
-    ],
-  },
-  {
-    id: 'language',
-    label: 'Which language are you comfortable studying in?',
-    options: [
-      { value: 'english', label: 'English only' },
-      { value: 'german', label: 'German or willing to learn' },
-      { value: 'any', label: 'Any language (willing to learn)' },
-    ],
-  },
-  {
-    id: 'workOpportunities',
-    label: 'How important are work opportunities during/after study?',
-    options: [
-      {
-        value: 'essential',
-        label: 'Essential - I need to work while studying',
-      },
-      { value: 'important', label: 'Important for after graduation' },
-      { value: 'notImportant', label: 'Not a priority' },
-    ],
-  },
-]
-
-// Simplified recommendation logic (would be more complex in reality)
-const getRecommendations = (selections) => {
-  // This is a simplified example
-  const countries = [
-    {
-      id: 1,
-      name: 'Germany',
-      code: 'DE',
-      flagUrl: '/images/flags/germany.svg',
-      description:
-        'Recommended for its tuition-free public universities and growing English-taught programs.',
-      match: 95,
-    },
-    {
-      id: 2,
-      name: 'Canada',
-      code: 'CA',
-      flagUrl: '/images/flags/canada.svg',
-      description:
-        'Excellent work opportunities during and after study with a clear path to immigration.',
-      match: 85,
-    },
-    {
-      id: 3,
-      name: 'USA',
-      code: 'US',
-      flagUrl: '/images/flags/usa.svg',
-      description:
-        'World-class universities with numerous scholarship opportunities for international students.',
-      match: 75,
-    },
-  ]
-
-  // Sort by match percentage (in a real implementation, this would use the selections)
-  return countries.sort((a, b) => b.match - a.match)
-}
-
-export function CountrySelectorTool() {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [selections, setSelections] = useState({})
-  const [recommendations, setRecommendations] = useState(null)
-
-  const handleNext = () => {
-    if (currentStep < criteria.length - 1) {
-      setCurrentStep(currentStep + 1)
-    } else {
-      // Calculate recommendations
-      const results = getRecommendations(selections)
-      setRecommendations(results)
-    }
-  }
-
-  const handlePrevious = () => {
-    setCurrentStep(Math.max(0, currentStep - 1))
-  }
-
-  const handleReset = () => {
-    setSelections({})
-    setRecommendations(null)
-    setCurrentStep(0)
-  }
-
-  const handleSelect = (value) => {
-    setSelections({
-      ...selections,
-      [criteria[currentStep].id]: value,
-    })
-  }
-
-  return (
-    <Card className="mx-auto w-full max-w-3xl">
-      <CardHeader>
-        <CardTitle>Which Country is Right for You?</CardTitle>
-        <CardDescription>
-          Answer a few questions to find your ideal study destination
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent>
-        {!recommendations ? (
-          // Questions
-          <div className="space-y-6">
-            <h3 className="text-lg font-medium">
-              {criteria[currentStep].label}
-            </h3>
-
-            <RadioGroup
-              value={selections[criteria[currentStep].id]}
-              onValueChange={handleSelect}
-            >
-              <div className="space-y-3">
-                {criteria[currentStep].options.map((option) => (
-                  <div
-                    key={option.value}
-                    className="flex items-center space-x-2 rounded-md border p-3"
-                  >
-                    <RadioGroupItem value={option.value} id={option.value} />
-                    <Label htmlFor={option.value}>{option.label}</Label>
-                  </div>
-                ))}
-              </div>
-            </RadioGroup>
-
-            <div className="flex items-center justify-between">
-              <Button
-                variant="outline"
-                onClick={handlePrevious}
-                disabled={currentStep === 0}
-              >
-                Previous
-              </Button>
-
-              <span className="text-sm text-muted-foreground">
-                Step {currentStep + 1} of {criteria.length}
-              </span>
-
-              <Button
-                onClick={handleNext}
-                disabled={!selections[criteria[currentStep].id]}
-              >
-                {currentStep < criteria.length - 1 ? 'Next' : 'See Results'}
-              </Button>
-            </div>
-          </div>
-        ) : (
-          // Results
-          <div className="space-y-6">
-            <div className="text-center">
-              <h3 className="mb-1 text-lg font-medium">
-                Your Top Destinations
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Based on your preferences, these countries are the best fit:
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              {recommendations.map((country, index) => (
-                <div key={country.id} className="flex items-start gap-4">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-muted">
-                    {index + 1}
-                  </div>
-                  <div className="flex-1">
-                    <CountryCard country={country} />
-                    <div className="mt-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm">Match:</span>
-                        <span className="text-sm font-medium">
-                          {country.match}%
-                        </span>
-                      </div>
-                      <div className="mt-1 h-2 w-full rounded-full bg-muted">
-                        <div
-                          className="h-2 rounded-full bg-primary"
-                          style={{ width: `${country.match}%` }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+        
+        <p className="text-sm text-muted-foreground mb-4">
+          {description}
+        </p>
+        
+        {skills.length > 0 && (
+          <div className="mb-6">
+            <p className="text-sm font-medium mb-2">Skills:</p>
+            <div className="flex flex-wrap gap-2">
+              {skills.map((skill, index) => (
+                <Badge key={index} variant="outline">{skill}</Badge>
               ))}
             </div>
           </div>
         )}
-      </CardContent>
-
-      {recommendations && (
-        <CardFooter className="flex justify-between border-t pt-6">
-          <Button variant="outline" onClick={handleReset}>
-            Start Over
+        
+        <div className="mt-auto">
+          <Button variant="outline" asChild className="w-full">
+            <Link href={`/jobs/${id}`}>
+              View Job
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </Button>
-
-          <Button asChild>
-            <a href="/contact">Get Personalized Guidance</a>
-          </Button>
-        </CardFooter>
-      )}
+        </div>
+      </div>
     </Card>
   )
 }
 ```
+
+## Components To Be Implemented
+
+Based on our current implementation status, the following components still need to be created:
+
+1. **Typography Components**:
+   - List component
+   - Blockquote component
+
+2. **UI Elements**:
+   - Checkbox/Radio components
+
+3. **Interactive Tools**:
+   - CountrySelectorTool (for destination comparison)
+   - CostCalculator (for estimating study abroad expenses)
+   - ScholarshipFinder (for finding relevant scholarships)
 
 ## Component Best Practices
 
@@ -1035,3 +670,198 @@ When creating new components:
 - Should we implement component variants beyond those already specified?
 - Are there additional accessibility requirements beyond WCAG AA?
 - For interactive tools, what level of complexity is appropriate for the MVP?
+
+### List
+
+```tsx
+import * as React from "react"
+import { cn } from "@/lib/utils"
+
+interface ListProps {
+  children: React.ReactNode
+  className?: string
+  type?: "unordered" | "ordered"
+  variant?: "default" | "spaced"
+  icon?: React.ReactNode
+}
+
+interface ListItemProps {
+  children: React.ReactNode
+  className?: string
+  icon?: React.ReactNode
+}
+
+const List = React.forwardRef<
+  HTMLUListElement | HTMLOListElement,
+  ListProps
+>(({ children, className, type = "unordered", variant = "default", icon }, ref) => {
+  const baseStyles = "text-foreground"
+  const variantStyles = {
+    default: "space-y-1",
+    spaced: "space-y-3",
+  }
+
+  if (type === "ordered") {
+    return (
+      <ol
+        ref={ref as React.ForwardedRef<HTMLOListElement>}
+        className={cn(baseStyles, variantStyles[variant], className)}
+      >
+        {children}
+      </ol>
+    )
+  }
+
+  return (
+    <ul
+      ref={ref as React.ForwardedRef<HTMLUListElement>}
+      className={cn(baseStyles, variantStyles[variant], className)}
+    >
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child) && child.type === ListItem) {
+          return React.cloneElement(child, {
+            icon: child.props.icon || icon,
+          } as ListItemProps)
+        }
+        return child
+      })}
+    </ul>
+  )
+})
+
+List.displayName = "List"
+
+const ListItem = React.forwardRef<
+  HTMLLIElement,
+  ListItemProps
+>(({ children, className, icon }, ref) => {
+  return (
+    <li
+      ref={ref}
+      className={cn("flex items-start", className)}
+    >
+      {icon && (
+        <span className="mr-2 mt-0.5 text-primary">
+          {icon}
+        </span>
+      )}
+      <span>{children}</span>
+    </li>
+  )
+})
+
+ListItem.displayName = "ListItem"
+
+export { List, ListItem }
+```
+
+**Usage:**
+
+```tsx
+import { List, ListItem } from "@/components/ui/list"
+import { Check } from "lucide-react"
+
+// Unordered list with icons
+<List icon={<Check size={16} />}>
+  <ListItem>First item in the list</ListItem>
+  <ListItem>Second item in the list</ListItem>
+  <ListItem icon={<Star size={16} />}>Item with custom icon</ListItem>
+</List>
+
+// Ordered list
+<List type="ordered" variant="spaced">
+  <ListItem>First step in the process</ListItem>
+  <ListItem>Second step in the process</ListItem>
+  <ListItem>Final step in the process</ListItem>
+</List>
+```
+
+### Blockquote
+
+```tsx
+import * as React from "react"
+import { cn } from "@/lib/utils"
+
+interface BlockquoteProps {
+  children: React.ReactNode
+  className?: string
+  variant?: "default" | "primary" | "accent"
+  cite?: string
+  author?: string
+}
+
+const Blockquote = React.forwardRef<
+  HTMLQuoteElement,
+  BlockquoteProps
+>(({ children, className, variant = "default", cite, author }, ref) => {
+  const variantStyles = {
+    default: "border-l-4 border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800",
+    primary: "border-l-4 border-blue-primary bg-blue-light dark:bg-blue-dark/20",
+    accent: "border-l-4 border-accent-purple bg-gray-100 dark:bg-gray-800",
+  }
+
+  return (
+    <figure className={cn("my-6", className)}>
+      <blockquote
+        ref={ref}
+        cite={cite}
+        className={cn(
+          "p-4 italic text-gray-700 dark:text-gray-300",
+          variantStyles[variant]
+        )}
+      >
+        <div className="relative">
+          <svg
+            className="absolute -top-2 -left-2 h-8 w-8 text-gray-300 dark:text-gray-700 opacity-50"
+            fill="currentColor"
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+          >
+            <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
+          </svg>
+          <div className="relative z-10 pl-6">
+            {children}
+          </div>
+        </div>
+      </blockquote>
+      {author && (
+        <figcaption className="mt-2 text-right text-sm text-gray-500 dark:text-gray-400">
+          — {author}
+        </figcaption>
+      )}
+    </figure>
+  )
+})
+
+Blockquote.displayName = "Blockquote"
+
+export { Blockquote }
+```
+
+**Usage:**
+
+```tsx
+import { Blockquote } from "@/components/ui/blockquote"
+
+// Default blockquote
+<Blockquote>
+  Education is the passport to the future, for tomorrow belongs to those who prepare for it today.
+</Blockquote>
+
+// Blockquote with author
+<Blockquote 
+  variant="primary" 
+  author="Albert Einstein"
+>
+  Education is not the learning of facts, but the training of the mind to think.
+</Blockquote>
+
+// Blockquote with citation
+<Blockquote 
+  variant="accent" 
+  author="Nelson Mandela"
+  cite="https://example.com/quotes"
+>
+  Education is the most powerful weapon which you can use to change the world.
+</Blockquote>
+```
