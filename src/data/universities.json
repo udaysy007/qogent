@@ -308,6 +308,268 @@
     ]
   },
   {
+    "id": 4,
+    "name": "Heidelberg University",
+    "slug": "heidelberg-university",
+    "countryId": 1,
+    "countryName": "Germany",
+    "location": "Heidelberg, Baden-Württemberg",
+    "foundingYear": 1386,
+    "isPublic": true,
+    "ranking": {
+      "qs": 64,
+      "the": 42,
+      "arwu": 63
+    },
+    "logo": "/images/universities/heidelberg-logo.svg",
+    "image": "/images/universities/heidelberg-campus.jpg",
+    "website": "https://www.uni-heidelberg.de/en",
+    "description": "Founded in 1386, Heidelberg University is Germany's oldest university and one of Europe's most research-intensive institutions. It maintains a strong emphasis on research-oriented teaching and has a particularly strong reputation in medicine, physics, and humanities.",
+    "studentPopulation": 29000,
+    "internationalStudentPercentage": 20,
+    "featuredPrograms": [
+      {
+        "id": 108,
+        "universityId": 4,
+        "name": "Physics",
+        "degree": "Master",
+        "field": "Natural Sciences",
+        "language": "English",
+        "duration": "2 years (4 semesters)",
+        "description": "The Master's program in Physics focuses on fundamental physics principles with opportunities for specialization in fields like particle physics, cosmology, and quantum mechanics.",
+        "tuitionFee": "No tuition fees (semester fee of €171.80 only)",
+        "applicationDeadlines": "Winter: June 15 | Summer: January 15",
+        "isPopular": true
+      },
+      {
+        "id": 109,
+        "universityId": 4,
+        "name": "International Health",
+        "degree": "Master",
+        "field": "Medicine & Health",
+        "language": "English",
+        "duration": "1 year",
+        "description": "The Master's program in International Health addresses global health challenges, tropical medicine, and health systems management in low and middle-income countries.",
+        "tuitionFee": "€14,100 (entire program)",
+        "applicationDeadlines": "October 31 for program starting in February",
+        "isPopular": true
+      }
+    ],
+    "admissionRequirements": [
+      {
+        "id": 208,
+        "universityId": 4,
+        "type": "Academic",
+        "description": "Bachelor's degree in a relevant field with good to excellent grades",
+        "qogentInsight": "For Indian students, typically a minimum of 75% from recognized universities is expected for competitive programs."
+      },
+      {
+        "id": 209,
+        "universityId": 4,
+        "type": "Language",
+        "description": "English proficiency: TOEFL 90+ or IELTS 6.5+ for English programs. German proficiency: DSH-2 or TestDaF 4 for German programs.",
+        "qogentInsight": "While these are minimum requirements, competitive programs typically expect IELTS 7.0+ scores."
+      }
+    ],
+    "costs": {
+      "tuitionDomestic": "No tuition (semester fee only: €171.80)",
+      "tuitionInternational": "No tuition (semester fee only: €171.80) for most programs",
+      "livingExpenses": {
+        "accommodation": "€350-€600 per month",
+        "food": "€200-€250 per month",
+        "transportation": "Included in semester fee",
+        "other": "€100-€150 per month"
+      },
+      "healthInsurance": "€110 per month",
+      "applicationFee": "None",
+      "otherFees": "Semester fee: €171.80 (includes local public transport)"
+    },
+    "scholarships": [
+      {
+        "id": 305,
+        "universityId": 4,
+        "name": "DAAD Scholarship",
+        "provider": "Government",
+        "amount": "€850 per month + additional benefits",
+        "description": "The German Academic Exchange Service (DAAD) offers scholarships for international students to pursue study and research in Germany.",
+        "eligibility": "Outstanding academic record, strong research proposal or study plan",
+        "applicationProcess": "Apply through DAAD portal, separate from university application",
+        "deadline": "Varies by program, typically October-December for following academic year",
+        "successRate": "Highly competitive, approximately 15% acceptance rate"
+      }
+    ],
+    "studentLife": {
+      "housing": "Student Services Organization (Studierendenwerk) offers dormitories and assistance with private accommodation. The historic city center has many shared apartments (WGs) popular with students.",
+      "campusFacilities": [
+        "Historic university library",
+        "Modern research facilities",
+        "University sports center",
+        "Student cafeterias",
+        "Computer centers",
+        "University hospital"
+      ],
+      "internationalSupport": "The International Relations Office offers orientation programs, language tandems, and advisory services for international students.",
+      "clubs": "Numerous student groups ranging from subject-specific associations to cultural, political, and sports clubs."
+    },
+    "qogentMetrics": {
+      "admissionSuccessRate": "79%",
+      "studentsPlaced": 68,
+      "testimonials": [
+        {
+          "id": 405,
+          "universityId": 4,
+          "studentName": "Vikram Singh",
+          "studentImage": "/images/testimonials/vikram-singh.jpg",
+          "program": "MSc Physics",
+          "year": 2022,
+          "quote": "Qogent's counselors provided invaluable guidance for my application to Heidelberg. Their advice on emphasizing my research experience really helped my application stand out in a competitive field.",
+          "rating": 5
+        }
+      ]
+    },
+    "faq": [
+      {
+        "question": "How important is knowing German for studying at Heidelberg University?",
+        "answer": "While many Master's programs are offered in English, understanding German will significantly enhance your daily life and integration. For programs taught in German, DSH-2 or TestDaF level 4 in all sections is required."
+      },
+      {
+        "question": "Is Heidelberg an expensive city for students?",
+        "answer": "Heidelberg is moderately expensive by German standards, but still affordable compared to many international study destinations. Student dormitories offer reasonable accommodation options, and the semester fee includes public transportation within the city and region."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Humboldt University of Berlin",
+    "slug": "humboldt-university-berlin",
+    "countryId": 1,
+    "countryName": "Germany",
+    "location": "Berlin",
+    "foundingYear": 1810,
+    "isPublic": true,
+    "ranking": {
+      "qs": 131,
+      "the": 74,
+      "arwu": 101
+    },
+    "logo": "/images/universities/humboldt-logo.svg",
+    "image": "/images/universities/humboldt-campus.jpg",
+    "website": "https://www.hu-berlin.de/en",
+    "description": "Founded in 1810, Humboldt University is one of Berlin's oldest universities and was the model for many modern research universities. Located in the heart of Berlin, it offers a vibrant academic environment with strengths in humanities, social sciences, and natural sciences.",
+    "studentPopulation": 34000,
+    "internationalStudentPercentage": 16,
+    "featuredPrograms": [
+      {
+        "id": 110,
+        "universityId": 5,
+        "name": "Economics",
+        "degree": "Master",
+        "field": "Economics & Finance",
+        "language": "English",
+        "duration": "2 years (4 semesters)",
+        "description": "The Master's program in Economics provides advanced training in economic theory and methods with opportunities to specialize in various fields of economics.",
+        "tuitionFee": "No tuition fees (semester fee of €315.64 only)",
+        "applicationDeadlines": "Winter: May 31 | Summer: December 15",
+        "isPopular": true
+      },
+      {
+        "id": 111,
+        "universityId": 5,
+        "name": "Data Science",
+        "degree": "Master",
+        "field": "Computer Science & IT",
+        "language": "English",
+        "duration": "2 years (4 semesters)",
+        "description": "The Master's program in Data Science focuses on statistical methods, machine learning, and data analysis with applications across various domains.",
+        "tuitionFee": "No tuition fees (semester fee of €315.64 only)",
+        "applicationDeadlines": "Winter: April 30",
+        "isPopular": true
+      }
+    ],
+    "admissionRequirements": [
+      {
+        "id": 210,
+        "universityId": 5,
+        "type": "Academic",
+        "description": "Bachelor's degree in a relevant field with good academic standing",
+        "qogentInsight": "For Indian students, a minimum of 70-75% from a recognized university is typically expected."
+      },
+      {
+        "id": 211,
+        "universityId": 5,
+        "type": "Language",
+        "description": "English proficiency: TOEFL 87+ or IELTS 6.5+ for English programs. German proficiency: TestDaF 4 or DSH-2 for German programs.",
+        "qogentInsight": "While these are minimum requirements, having stronger language scores (IELTS 7.0+) can significantly strengthen your application."
+      }
+    ],
+    "costs": {
+      "tuitionDomestic": "No tuition (semester fee only: €315.64)",
+      "tuitionInternational": "No tuition (semester fee only: €315.64)",
+      "livingExpenses": {
+        "accommodation": "€350-€700 per month",
+        "food": "€200-€300 per month",
+        "transportation": "Included in semester fee",
+        "other": "€100-€200 per month"
+      },
+      "healthInsurance": "€110 per month",
+      "applicationFee": "None",
+      "otherFees": "Semester fee: €315.64 (includes public transport ticket)"
+    },
+    "scholarships": [
+      {
+        "id": 306,
+        "universityId": 5,
+        "name": "DAAD Scholarship",
+        "provider": "Government",
+        "amount": "€850 per month + additional benefits",
+        "description": "The German Academic Exchange Service (DAAD) offers scholarships for international students to pursue study and research in Germany.",
+        "eligibility": "Outstanding academic record, strong research proposal or study plan",
+        "applicationProcess": "Apply through DAAD portal, separate from university application",
+        "deadline": "Varies by program, typically October-December for following academic year",
+        "successRate": "Highly competitive, approximately 15% acceptance rate"
+      }
+    ],
+    "studentLife": {
+      "housing": "The Studierendenwerk Berlin manages student dormitories throughout the city. Many students also live in shared apartments (WGs) in Berlin's diverse neighborhoods.",
+      "campusFacilities": [
+        "Historic main building",
+        "Modern libraries",
+        "Computer centers",
+        "Student cafeterias",
+        "Sports facilities",
+        "Research centers"
+      ],
+      "internationalSupport": "The International Office provides comprehensive support for international students, including orientation programs, cultural events, and buddy programs.",
+      "clubs": "Diverse range of student initiatives and clubs covering academic interests, political activism, cultural activities, and sports."
+    },
+    "qogentMetrics": {
+      "admissionSuccessRate": "81%",
+      "studentsPlaced": 57,
+      "testimonials": [
+        {
+          "id": 406,
+          "universityId": 5,
+          "studentName": "Anjali Mehta",
+          "studentImage": "/images/testimonials/anjali-mehta.jpg",
+          "program": "MSc Economics",
+          "year": 2021,
+          "quote": "Moving to Berlin for my studies was a big step, but Qogent made the transition seamless. Their guidance on the German university system and Berlin's housing market was particularly valuable.",
+          "rating": 5
+        }
+      ]
+    },
+    "faq": [
+      {
+        "question": "What makes Berlin an attractive city for international students?",
+        "answer": "Berlin is known for its relatively low cost of living (compared to other European capitals), diverse and international atmosphere, rich cultural scene, and vibrant startup ecosystem offering excellent internship and job opportunities."
+      },
+      {
+        "question": "Does Humboldt University offer German language courses for international students?",
+        "answer": "Yes, the Language Centre offers German courses at various levels for international students. Some are intensive courses before the semester starts, while others run during the semester. Many are offered at reduced rates or even free of charge for enrolled students."
+      }
+    ]
+  },
+  {
     "id": 3,
     "name": "Trinity College Dublin",
     "slug": "trinity-college-dublin",
@@ -435,6 +697,268 @@
       {
         "question": "Is it possible to work while studying at Trinity?",
         "answer": "Yes, international students can work up to 20 hours per week during term time and up to 40 hours during holidays. After graduation, you can avail of the Third Level Graduate Scheme which allows you to stay and work in Ireland for up to 24 months."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "University of British Columbia",
+    "slug": "university-british-columbia",
+    "countryId": 2,
+    "countryName": "Canada",
+    "location": "Vancouver, British Columbia",
+    "foundingYear": 1908,
+    "isPublic": true,
+    "ranking": {
+      "qs": 41,
+      "the": 37,
+      "arwu": 44
+    },
+    "logo": "/images/universities/ubc-logo.svg",
+    "image": "/images/universities/ubc-campus.jpg",
+    "website": "https://www.ubc.ca/",
+    "description": "The University of British Columbia is a global centre for teaching, learning and research, consistently ranked among the top 20 public universities in the world. Located in Vancouver, one of the world's most livable cities, UBC combines exceptional research, innovative teaching, and a vibrant campus life.",
+    "studentPopulation": 66000,
+    "internationalStudentPercentage": 29,
+    "featuredPrograms": [
+      {
+        "id": 112,
+        "universityId": 6,
+        "name": "Computer Science",
+        "degree": "Master",
+        "field": "Computer Science & IT",
+        "language": "English",
+        "duration": "2 years",
+        "description": "The Master's program in Computer Science offers specializations in artificial intelligence, machine learning, human-computer interaction, and software engineering.",
+        "tuitionFee": "Domestic: CAD 5,600 per year | International: CAD 11,000 per year",
+        "applicationDeadlines": "December 15 for September intake",
+        "isPopular": true
+      },
+      {
+        "id": 113,
+        "universityId": 6,
+        "name": "Business Administration",
+        "degree": "Master",
+        "field": "Business & Management",
+        "language": "English",
+        "duration": "16 months",
+        "description": "The MBA program at UBC Sauder School of Business offers a comprehensive business education with opportunities for specialization and international experience.",
+        "tuitionFee": "Domestic: CAD 49,000 (full program) | International: CAD 80,000 (full program)",
+        "applicationDeadlines": "Round 1: November 1 | Round 2: January 15 | Round 3: March 15",
+        "isPopular": true
+      }
+    ],
+    "admissionRequirements": [
+      {
+        "id": 212,
+        "universityId": 6,
+        "type": "Academic",
+        "description": "Four-year bachelor's degree with B+ average (76% at UBC) in third and fourth year courses",
+        "qogentInsight": "For Indian applicants, typically a minimum of 65-70% from a reputed university is expected, though competitive programs may require 75%+."
+      },
+      {
+        "id": 213,
+        "universityId": 6,
+        "type": "Language",
+        "description": "TOEFL iBT 90+ with minimum 22 in each component, or IELTS 6.5 with minimum 6.0 in each component",
+        "qogentInsight": "While these are minimum requirements, competitive programs often expect TOEFL 100+ or IELTS 7.0+."
+      }
+    ],
+    "costs": {
+      "tuitionDomestic": "CAD 5,600 - 8,500 per year for most programs",
+      "tuitionInternational": "CAD 11,000 - 42,000 per year for most programs",
+      "livingExpenses": {
+        "accommodation": "CAD 900-1,800 per month",
+        "food": "CAD 400-600 per month",
+        "transportation": "CAD 41 per month (U-Pass BC included in student fees)",
+        "other": "CAD 200-300 per month"
+      },
+      "healthInsurance": "CAD 225 per year (iMED) for first 3 months, then BC Medical Services Plan at CAD 75 per month",
+      "applicationFee": "CAD 118.50",
+      "otherFees": "Student fees: approximately CAD 1,000 per year"
+    },
+    "scholarships": [
+      {
+        "id": 307,
+        "universityId": 6,
+        "name": "International Major Entrance Scholarship",
+        "provider": "University",
+        "amount": "CAD 10,000 - CAD 40,000",
+        "description": "Merit-based scholarship for outstanding international students.",
+        "eligibility": "Exceptional academic achievement, leadership, and extracurricular involvement",
+        "applicationProcess": "Separate application after receiving admission offer",
+        "deadline": "Late January for September intake",
+        "successRate": "Highly competitive, fewer than 10% of international applicants receive this"
+      }
+    ],
+    "studentLife": {
+      "housing": "UBC offers various on-campus housing options for students, including residence halls, apartments, and townhouses. Off-campus housing is also available in Vancouver.",
+      "campusFacilities": [
+        "World-class libraries",
+        "Recreation facilities",
+        "Student union building",
+        "Research laboratories",
+        "Health services",
+        "Career services"
+      ],
+      "internationalSupport": "International Student Development provides orientation programs, advising services, cultural events, and support for international students.",
+      "clubs": "Over 350 student clubs and organizations covering diverse interests, from academic to recreational and cultural."
+    },
+    "qogentMetrics": {
+      "admissionSuccessRate": "72%",
+      "studentsPlaced": 85,
+      "testimonials": [
+        {
+          "id": 407,
+          "universityId": 6,
+          "studentName": "Nikhil Verma",
+          "studentImage": "/images/testimonials/nikhil-verma.jpg",
+          "program": "MSc Computer Science",
+          "year": 2022,
+          "quote": "Qogent helped me navigate the complex application process for UBC, which has very specific requirements. Their guidance on highlighting my research experience and crafting a compelling personal statement was invaluable.",
+          "rating": 5
+        }
+      ]
+    },
+    "faq": [
+      {
+        "question": "What makes Vancouver an attractive destination for international students?",
+        "answer": "Vancouver is consistently ranked among the world's most livable cities, known for its natural beauty, mild climate, safety, and multicultural environment. It offers a high quality of life with excellent public transportation, diverse culinary scene, and numerous recreational opportunities."
+      },
+      {
+        "question": "What work opportunities are available for international students at UBC?",
+        "answer": "International students can work on-campus without additional permits, and can work off-campus up to 20 hours per week during academic sessions and full-time during scheduled breaks. After graduation, you may be eligible for a Post-Graduation Work Permit for up to 3 years, depending on your program length."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "McGill University",
+    "slug": "mcgill-university",
+    "countryId": 2,
+    "countryName": "Canada",
+    "location": "Montreal, Quebec",
+    "foundingYear": 1821,
+    "isPublic": true,
+    "ranking": {
+      "qs": 31,
+      "the": 46,
+      "arwu": 78
+    },
+    "logo": "/images/universities/mcgill-logo.svg",
+    "image": "/images/universities/mcgill-campus.jpg",
+    "website": "https://www.mcgill.ca/",
+    "description": "Founded in 1821, McGill University is one of Canada's oldest and most prestigious institutions, known for its excellence in teaching and research. Located in the vibrant and multicultural city of Montreal, McGill offers a unique blend of North American and European cultures.",
+    "studentPopulation": 40000,
+    "internationalStudentPercentage": 30,
+    "featuredPrograms": [
+      {
+        "id": 114,
+        "universityId": 7,
+        "name": "Computer Science",
+        "degree": "Master",
+        "field": "Computer Science & IT",
+        "language": "English",
+        "duration": "2 years",
+        "description": "The Master's program in Computer Science focuses on advanced algorithms, artificial intelligence, bioinformatics, and computer graphics.",
+        "tuitionFee": "Domestic (Quebec): CAD 5,000 per year | Domestic (Non-Quebec): CAD 9,000 per year | International: CAD 31,000 per year",
+        "applicationDeadlines": "January 15 for Fall term",
+        "isPopular": true
+      },
+      {
+        "id": 115,
+        "universityId": 7,
+        "name": "Management",
+        "degree": "Master",
+        "field": "Business & Management",
+        "language": "English",
+        "duration": "1 year",
+        "description": "The Master of Management program provides comprehensive training in management principles and practices for students without previous business education.",
+        "tuitionFee": "Domestic (Quebec): CAD 4,500 per year | Domestic (Non-Quebec): CAD 9,000 per year | International: CAD 49,000 per year",
+        "applicationDeadlines": "Round 1: November 15 | Round 2: January 15 | Round 3: March 15",
+        "isPopular": true
+      }
+    ],
+    "admissionRequirements": [
+      {
+        "id": 214,
+        "universityId": 7,
+        "type": "Academic",
+        "description": "Bachelor's degree with CGPA of 3.0/4.0 or better in the last two years of full-time studies",
+        "qogentInsight": "For Indian applicants, typically a minimum of 65% from a recognized university is required, with competitive programs expecting 70-75%."
+      },
+      {
+        "id": 215,
+        "universityId": 7,
+        "type": "Language",
+        "description": "TOEFL iBT 90+ with minimum 21 in each component, or IELTS 6.5 with minimum 6.0 in each component",
+        "qogentInsight": "While these are minimum requirements, stronger language scores (TOEFL 100+ or IELTS 7.0+) can strengthen your application."
+      }
+    ],
+    "costs": {
+      "tuitionDomestic": "CAD 4,500 - 9,000 per year (varies for Quebec residents vs. other Canadians)",
+      "tuitionInternational": "CAD 20,000 - 50,000 per year depending on program",
+      "livingExpenses": {
+        "accommodation": "CAD 700-1,500 per month",
+        "food": "CAD 400-600 per month",
+        "transportation": "CAD 55 per month (student rate)",
+        "other": "CAD 200-300 per month"
+      },
+      "healthInsurance": "CAD 1,056 per year (International Health Insurance)",
+      "applicationFee": "CAD 125.90",
+      "otherFees": "Student services and other fees: approximately CAD 1,500 per year"
+    },
+    "scholarships": [
+      {
+        "id": 308,
+        "universityId": 7,
+        "name": "McGill Graduate Excellence Fellowship",
+        "provider": "University",
+        "amount": "CAD 5,000 - CAD 15,000",
+        "description": "Merit-based fellowships for outstanding graduate students.",
+        "eligibility": "Exceptional academic record and research potential",
+        "applicationProcess": "Automatic consideration upon application to graduate programs",
+        "deadline": "Same as program application deadline",
+        "successRate": "Competitive, approximately 20% of admitted students receive some form of funding"
+      }
+    ],
+    "studentLife": {
+      "housing": "McGill offers various residence options for students, including traditional dormitories and apartment-style housing. Many students also live in off-campus apartments in nearby neighborhoods.",
+      "campusFacilities": [
+        "Libraries",
+        "Athletic facilities",
+        "Student centers",
+        "Research laboratories",
+        "Health services",
+        "Career planning service"
+      ],
+      "internationalSupport": "International Student Services provides orientation programs, immigration advising, health insurance information, and cultural activities for international students.",
+      "clubs": "Over 230 student clubs and organizations covering diverse interests, from academic to cultural, political, and recreational."
+    },
+    "qogentMetrics": {
+      "admissionSuccessRate": "78%",
+      "studentsPlaced": 92,
+      "testimonials": [
+        {
+          "id": 408,
+          "universityId": 7,
+          "studentName": "Ananya Gupta",
+          "studentImage": "/images/testimonials/ananya-gupta.jpg",
+          "program": "MSc Computer Science",
+          "year": 2021,
+          "quote": "With Qogent's support, I was able to secure admission to McGill's competitive Computer Science program. Their advice on strengthening my research profile and building connections with potential supervisors made a significant difference.",
+          "rating": 5
+        }
+      ]
+    },
+    "faq": [
+      {
+        "question": "Is French necessary for studying at McGill?",
+        "answer": "No, McGill is an English-language university and all courses are taught in English. While knowledge of French can be helpful for daily life in Montreal, it is not required for academic success at McGill."
+      },
+      {
+        "question": "What are the advantages of studying in Montreal?",
+        "answer": "Montreal offers a unique blend of North American and European cultures, with a vibrant arts scene, affordable living costs (compared to Toronto or Vancouver), and a safe, student-friendly environment. It's consistently ranked among the world's best student cities."
       }
     ]
   }
