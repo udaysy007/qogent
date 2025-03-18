@@ -40,48 +40,11 @@ export default function ToolsPage() {
       {/* Tools Grid */}
       <section className="py-16 md:py-20">
         <div className="container px-4 md:px-6">
-          <Tabs defaultValue="all" className="w-full">
-            <div className="flex justify-center mb-8">
-              <TabsList className="bg-muted/50">
-                <TabsTrigger value="all">All Tools</TabsTrigger>
-                <TabsTrigger value="destinations">Destinations</TabsTrigger>
-                <TabsTrigger value="costs">Costs & ROI</TabsTrigger>
-                <TabsTrigger value="requirements">Requirements</TabsTrigger>
-              </TabsList>
-            </div>
-            
-            <TabsContent value="all" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {tools.map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
-                ))}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="destinations" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {tools.filter(tool => tool.category === "destinations").map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
-                ))}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="costs" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {tools.filter(tool => tool.category === "costs").map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
-                ))}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="requirements" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {tools.filter(tool => tool.category === "requirements").map((tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tools.map((tool) => (
+              <ToolCard key={tool.id} tool={tool} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -126,8 +89,8 @@ export default function ToolsPage() {
                   </li>
                 ))}
               </ul>
-              <Button className="mt-4 bg-primary hover:bg-primary/90">
-                <Link href="/tools/destination-finder" className="text-primary-foreground">
+              <Button className="mt-4 bg-primary hover:bg-primary/90 whitespace-nowrap">
+                <Link href="/tools/destination-finder" className="text-primary-foreground flex items-center">
                   Try It Now
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -156,8 +119,8 @@ export default function ToolsPage() {
                 Our tools are great for initial planning, but our advisors can provide customized guidance for your specific situation.
               </p>
             </div>
-            <Button size="lg" className="bg-primary hover:bg-primary/90">
-              <Link href="/contact" className="text-primary-foreground">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 whitespace-nowrap">
+              <Link href="/contact" className="text-primary-foreground flex items-center">
                 Contact Us
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -172,41 +135,46 @@ export default function ToolsPage() {
 // Tool Card Component
 function ToolCard({ tool }) {
   return (
-    <Card className="overflow-hidden group hover:shadow-md transition-all duration-200 border bg-gradient-to-b from-card to-card/80">
-      <div className="p-6 flex flex-col h-full">
-        <div className="mb-4">
-          <div className="p-3 rounded-full bg-gradient-to-br from-[var(--tool-color-light)] to-[var(--tool-color)] w-fit" 
-               style={{ 
-                 "--tool-color": tool.colorClass, 
-                 "--tool-color-light": `${tool.colorClass}20` 
-               } as React.CSSProperties}>
-            <tool.icon className="h-6 w-6 text-[var(--tool-color)]" />
-          </div>
-          <h3 className="text-xl font-medium mt-3">{tool.name}</h3>
-        </div>
-        
-        <p className="text-sm text-muted-foreground mb-6">
-          {tool.description}
-        </p>
-        
-        <div className="mt-auto flex justify-between items-center">
-          {tool.comingSoon ? (
-            <div className="inline-block rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
-              Coming Soon
+    <Link 
+      href={tool.comingSoon ? "#" : tool.link}
+      className={`block ${!tool.comingSoon && "cursor-pointer"}`}
+    >
+      <Card className="overflow-hidden group hover:shadow-md transition-all duration-200 border bg-gradient-to-b from-card to-card/80 h-full">
+        <div className="p-6 flex flex-col h-full">
+          <div className="mb-4">
+            <div className="p-3 rounded-full bg-gradient-to-br from-[var(--tool-color-light)] to-[var(--tool-color)] w-fit" 
+                 style={{ 
+                   "--tool-color": tool.colorClass, 
+                   "--tool-color-light": `${tool.colorClass}20` 
+                 } as React.CSSProperties}>
+              <tool.icon className="h-6 w-6 text-[var(--tool-color)]" />
             </div>
-          ) : (
-            <Link href={tool.link} className="text-primary flex items-center group-hover:underline">
-              Explore Tool
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          )}
+            <h3 className="text-xl font-medium mt-3">{tool.name}</h3>
+          </div>
+          
+          <p className="text-sm text-muted-foreground mb-6">
+            {tool.description}
+          </p>
+          
+          <div className="mt-auto flex justify-between items-center">
+            {tool.comingSoon ? (
+              <div className="inline-block rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+                Coming Soon
+              </div>
+            ) : (
+              <div className="text-primary flex items-center group-hover:underline whitespace-nowrap">
+                Explore Tool
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 flex-shrink-0" />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </Link>
   )
 }
 
-// Sample data for tools
+// Sample data for tools - only keeping the 4 implemented tools and setting others to "Coming Soon"
 const tools = [
   {
     id: 1,
@@ -226,7 +194,7 @@ const tools = [
     category: "destinations",
     link: "/tools/country-comparison",
     colorClass: "var(--info)",
-    comingSoon: true
+    comingSoon: false
   },
   {
     id: 3,
@@ -236,7 +204,7 @@ const tools = [
     category: "costs",
     link: "/tools/roi-calculator",
     colorClass: "var(--success)",
-    comingSoon: true
+    comingSoon: false
   },
   {
     id: 4,
@@ -246,26 +214,46 @@ const tools = [
     category: "costs",
     link: "/tools/cost-calculator",
     colorClass: "var(--success)",
-    comingSoon: true
+    comingSoon: false
   },
   {
     id: 5,
-    name: "Program Compatibility Checker",
-    description: "Check which programs across different countries you qualify for based on your academic credentials.",
+    name: "Admission Requirements Checker",
+    description: "Check if you meet the admission requirements for universities based on your academic profile.",
     icon: GraduationCap,
     category: "requirements",
-    link: "/tools/program-compatibility",
+    link: "/tools/requirements-checker",
     colorClass: "var(--warning)",
     comingSoon: true
   },
   {
     id: 6,
-    name: "Visa Requirements Wizard",
-    description: "Get a step-by-step guide to visa requirements based on your nationality and destination country.",
+    name: "Document Validator",
+    description: "Check if your documents meet university and visa requirements before submitting your application.",
     icon: FileText,
     category: "requirements",
-    link: "/tools/visa-requirements",
+    link: "/tools/document-validator",
     colorClass: "var(--warning)",
+    comingSoon: true
+  },
+  {
+    id: 7,
+    name: "Application Timeline Generator",
+    description: "Create a personalized timeline for your study abroad application process.",
+    icon: Calendar,
+    category: "planning",
+    link: "/tools/timeline-generator",
+    colorClass: "var(--secondary)",
+    comingSoon: true
+  },
+  {
+    id: 8,
+    name: "Career Path Explorer",
+    description: "Explore potential career paths based on your field of study and country of choice.",
+    icon: Briefcase,
+    category: "planning",
+    link: "/tools/career-explorer",
+    colorClass: "var(--secondary)",
     comingSoon: true
   }
 ]; 
