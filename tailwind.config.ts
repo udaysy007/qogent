@@ -81,9 +81,53 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '100%',
+            color: 'var(--foreground)',
+            a: {
+              color: 'var(--primary)',
+              '&:hover': {
+                color: 'var(--primary-foreground)',
+              },
+            },
+            'h1, h2, h3, h4, h5, h6': {
+              color: 'var(--foreground)',
+              fontWeight: '600',
+            },
+            pre: {
+              backgroundColor: 'var(--muted)',
+              borderRadius: '0.375rem',
+              padding: '1rem',
+            },
+            code: {
+              backgroundColor: 'var(--muted)',
+              borderRadius: '0.25rem',
+              padding: '0.25rem',
+              color: 'var(--foreground)',
+            },
+            blockquote: {
+              borderLeftColor: 'var(--primary)',
+            },
+            hr: {
+              borderColor: 'var(--border)',
+            },
+            'ul > li::before': {
+              backgroundColor: 'var(--muted-foreground)',
+            },
+            'ol > li::before': {
+              color: 'var(--muted-foreground)',
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require('@tailwindcss/typography'),
+  ],
 } satisfies Config
 
 export default config 
