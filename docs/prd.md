@@ -8,13 +8,13 @@
 
 ### Objective
 
-Serve as **Qogent's** central digital hub, unifying the brand's global presence and offering an authoritative gateway for students exploring international education. This hub also supports features like a job portal, specialized tools (e.g., country selection), and integrated links to country-specific sites.
+Serve as **Qogent's** central digital hub, unifying the brand's global presence and offering an authoritative gateway for students exploring international education. This hub also supports features like specialized tools (e.g., country selection), and integrated links to country-specific sites.
 
 ### Key Goals
 
 1. **Global Brand Positioning**: Present Qogent as the definitive global name in study abroad consulting.
 2. **Unified Hub Experience**: Central website linking seamlessly to localized domains (e.g., studyingermany.app, studyincanada.app) while retaining consistent branding.
-3. **Empowering Resources**: Provide admissions guidance, visa support, job listings, and tools to help students find the right country.
+3. **Empowering Resources**: Provide admissions guidance, visa support, and tools to help students find the right country.
 4. **Scalable Architecture**: Easily add new country sites, content modules, or expansions without reinventing core functionality.
 5. **High-Impact SEO**: Optimize Qogent.in for both brand and general study abroad keywords, ensuring top-notch discoverability.
 
@@ -24,7 +24,7 @@ Serve as **Qogent's** central digital hub, unifying the brand's global presence 
 
 1. **Prospective International Students**: Those evaluating multiple study destinations or seeking in-depth guidance.
 2. **Parents & Sponsors**: Concerned about costs, financing, safety, and overall viability of studying abroad.
-3. **Academic & Corporate Partners**: Universities, organizations, or employers wanting to collaborate or post job opportunities.
+3. **Academic & Corporate Partners**: Universities, organizations, or employers wanting to collaborate.
 4. **Qogent Alumni & Community**: Former students, mentors, and potential ambassadors who contribute testimonials and resources.
 
 ---
@@ -53,47 +53,39 @@ Serve as **Qogent's** central digital hub, unifying the brand's global presence 
    - **Team & Culture**: Diverse group of educational consultants, tech wizards, and former international students, united to make education accessible for all.
    - **Fun Facts**: 88% success rate for German Public Universities, 2000+ students admitted to top global universities, expanding to 100+ unique programs.
 
-4. **Services**
-
-   - **Admissions & Applications**: High-level overview of how Qogent assists with university selection and application processes based on academic merit.
-   - **Visa & Immigration Support**: Guidance on procedures, compliance, and best practices.
-   - **Scholarship Advisory**: Direction on available scholarships, grants, or stipends.
-   - **Pre-Departure & Post-Arrival**: Resources for housing, cultural adaptation, and language prep.
-
-5. **"Which Country is Right for You?" Tool**
+4. **"Which Country is Right for You?" Tool**
 
    - **Interactive Questionnaire**: Collects academic background, budget, career goals.
    - **Real-Time Recommendations**: Suggests potential countries and programs aligned with the student's profile.
    - **Merit-Based Focus**: Leverages Qogent's admissions data to provide acceptance likelihood and scholarship insights.
    - **Call-to-Action**: Routes students to relevant country `.app` site or specialized blog posts.
 
-6. **Blog/Resources**
+5. **Blog/Resources**
 
    - **General Study Abroad Content**: Funding, standardized tests, cultural tips.
    - **Cross-Links** to relevant country sites for deeper or more localized articles.
    - **Content Marketing / SEO Strategy**: Showcasing Qogent's expertise, boosting organic traffic.
 
-7. **Job Portal**
-
-   - **Dedicated Section** (`qogent.in/jobs`): Lists career opportunities to work at Qogent.
-   - **User Flow**: Candidates can search/filter by department/role, with direct application instructions.
-   - **Applicant Portal** (Future Phase): Candidates can track application status and communicate with HR.
-   - **Integration**: Potential synergy with sub-sites—e.g., region-specific career openings at Qogent's various locations.
-
-8. **Testimonials & Case Studies**
+6. **Testimonials & Case Studies**
 
    - **Student Success Stories**: Narratives of aspiration and triumph.
    - **Video/Photo Testimonials**: Multimedia for stronger engagement.
 
-9. **Contact & Support**
+7. **Contact & Support**
 
    - **Central Inquiry Form**: One-stop channel for prospective students, parents, partners.
    - **Help Desk / Chat**: Basic triaging for common queries.
 
-10. **Brand Consolidation**
+8. **Brand Consolidation**
 
 - **Consistent Branding**: Uniform color palette, typography, and design across Qogent.in and all sub-sites.
 - **"by Qogent"** Tagline: Reinforce the global brand identity on every specialized platform.
+
+9. **Footer Components**
+
+- **Careers at Qogent**: Information about job opportunities at Qogent (not for international students).
+- **Legal Information**: Privacy policy, terms of service, and other legal documentation.
+- **Support Links**: Access to help resources and frequently asked questions.
 
 ### 3.2 Extended Requirements
 
@@ -163,9 +155,9 @@ To maintain a cohesive, recognizable presence across all Qogent platforms, we ad
 
 1. **MVP Launch** (~4–6 Weeks)
 
-   - **Core Pages**: Homepage, About Us, Services, Contact.
+   - **Core Pages**: Homepage, About Us, Contact.
    - **Country-Selector Tool**: Basic version of "Which Country is Right for You?"
-   - **Job Portal (Initial Version)**: Basic listing and filtering.
+   - **Careers in Footer**: Basic information about opportunities at Qogent.
    - **Blog/Resource Section**: Setup for broad content topics.
    - **Essential SEO**: Basic metadata, sitemaps, GSC integration.
 
@@ -173,7 +165,7 @@ To maintain a cohesive, recognizable presence across all Qogent platforms, we ad
 
    - **Advanced Resource Library**: Category-based articles, in-depth guides, potential video tutorials.
    - **User Accounts**: Possibly store favorites, track applications.
-   - **Extended Job Portal**: Employer login, advanced search, application tracking.
+   - **Enhanced Careers Page**: More detailed job descriptions and application process.
    - **Deeper SEO**: Structured data, link-building, region-specific SERPs.
 
 3. **Phase 3** (Ongoing)
@@ -186,10 +178,10 @@ To maintain a cohesive, recognizable presence across all Qogent platforms, we ad
 ## 6. Success Metrics
 
 1. **Traffic Growth**: Increase in unique visitors to Qogent.in, especially from relevant queries.
-2. **Lead Generation**: Form submissions, job portal sign-ups, usage of the "Which Country is Right for You?" tool.
+2. **Lead Generation**: Form submissions, usage of the "Which Country is Right for You?" tool.
 3. **User Engagement**: Time on site, bounce rate, pages per session.
 4. **Conversion to Spoke Sites**: Click-through rates from Qogent.in to country-specific `.app` domains.
-5. **Brand Recognition**: Rising brand-related searches (e.g., "Qogent," "Qogent Jobs," "Qogent Merit Admissions").
+5. **Brand Recognition**: Rising brand-related searches (e.g., "Qogent," "Qogent Careers," "Qogent Merit Admissions").
 
 ---
 

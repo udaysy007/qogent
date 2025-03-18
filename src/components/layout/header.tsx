@@ -13,8 +13,6 @@ const routes = [
   { name: 'Home', path: '/' },
   { name: 'Destinations', path: '/destinations' },
   { name: 'Universities', path: '/universities' },
-  { name: 'Services', path: '/services' },
-  { name: 'Jobs', path: '/jobs' },
   { name: 'Tools', path: '/tools' },
   { name: 'Blog', path: '/blog' },
 ]

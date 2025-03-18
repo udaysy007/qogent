@@ -5,7 +5,6 @@
 ### 1. Home (/)
 - Hero section with search
 - Featured destinations
-- Services overview
 - Success stories
 - Latest blog posts
 - Call to action
@@ -26,44 +25,34 @@
   - Student visa requirements
   - Language requirements
 
-### 4. Services (/services)
-- Overview of all services
-- Individual service pages:
-  - University Admissions (/services/university-admissions)
-  - Visa Assistance (/services/visa-assistance)
-  - SOP Writing (/services/sop-writing)
-  - Test Preparation (/services/test-preparation)
-  - Career Counseling (/services/career-counseling)
-
-### 5. Tools (/tools)
+### 4. Tools (/tools)
 - Country Selector (/tools/country-selector)
 - Cost Calculator (/tools/cost-calculator)
 - Eligibility Checker (/tools/eligibility-checker)
 - Visa Requirements Checker (/tools/visa-checker)
 
-### 6. Jobs (/jobs)
-- Job listings
-- Individual job posts (/jobs/[id])
-- Application form (/jobs/apply)
-
-### 7. Blog (/blog)
+### 5. Blog (/blog)
 - Blog listing page
 - Individual blog posts (/blog/[slug])
 - Categories (/blog/category/[category])
 
-### 8. Contact (/contact)
+### 6. Contact (/contact)
 - Contact form
 - Office locations
 - Support information
 
-## Utility Pages
+## Footer Links
 
-### 1. Legal
+### 1. Careers at Qogent
+- Job listings for positions at Qogent
+- Application information
+
+### 2. Legal
 - Privacy Policy (/privacy-policy)
 - Terms of Service (/terms-of-service)
 - Cookie Policy (/cookie-policy)
 
-### 2. Support
+### 3. Support
 - FAQ (/faq)
 - Help Center (/help)
 
@@ -75,9 +64,7 @@
 - page.tsx (home)
 - about/
 - destinations/
-- services/
 - tools/
-- jobs/
 - blog/
 - contact/
 
@@ -91,6 +78,10 @@
 - layout.tsx
 - faq/
 - help/
+
+// app/(careers) - Careers at Qogent
+- layout.tsx
+- careers/
 ```
 
 ## Page Components Structure
@@ -142,11 +133,8 @@ components/
 ├── cards/
 │   ├── CountryCard.tsx
 │   ├── UniversityCard.tsx
-│   ├── ServiceCard.tsx
-│   └── JobCard.tsx
 └── sections/
     ├── FeaturedDestinations.tsx
-    ├── ServicesOverview.tsx
     ├── TestimonialSection.tsx
     └── BlogSection.tsx
 ```

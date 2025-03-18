@@ -19,8 +19,8 @@ export default function HomePage() {
           href: "/destinations"
         }}
         secondaryAction={{
-          text: "Our Services",
-          href: "/services"
+          text: "Find Universities",
+          href: "/universities"
         }}
         image={
           <div className="relative h-[400px] w-full rounded-lg overflow-hidden">
@@ -37,27 +37,27 @@ export default function HomePage() {
 
       <FeatureSection
         title="How We Help You Succeed"
-        description="We provide comprehensive support throughout your study abroad journey"
+        description="We provide comprehensive information throughout your study abroad journey"
         features={[
           {
             icon: <GraduationCap className="h-6 w-6" />,
-            title: "University Admissions",
-            description: "Get personalized guidance on university selection and application process tailored to your academic profile."
+            title: "University Exploration",
+            description: "Explore top universities across multiple countries with detailed information about programs and requirements."
           },
           {
             icon: <Globe className="h-6 w-6" />,
-            title: "Visa Assistance",
-            description: "Navigate complex visa requirements with our expert guidance to ensure a smooth approval process."
+            title: "Country Information",
+            description: "Learn about different study destinations, their education systems, and what makes them unique."
           },
           {
             icon: <Briefcase className="h-6 w-6" />,
-            title: "Job Opportunities",
-            description: "Access exclusive job listings and internship opportunities in your destination country."
+            title: "Student Stories",
+            description: "Read success stories from students who have navigated the international education journey."
           },
           {
             icon: <Calculator className="h-6 w-6" />,
-            title: "Financial Planning",
-            description: "Plan your education budget with our cost calculators and scholarship information."
+            title: "Interactive Tools",
+            description: "Use our specialized tools to find the right country, calculate costs, and check eligibility requirements."
           }
         ]}
         background="muted"
