@@ -1,7 +1,8 @@
 import Link from "next/link"
-import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
+import { HeroImage } from "@/components/shared/optimized-image"
+import { getCountryHero } from "@/lib/image-helpers"
 
 interface CountryCardProps {
   country: {
@@ -39,19 +40,20 @@ export function CountryCard({
   // Get flag emoji for the country
   const flagEmoji = countryFlagEmojis[countrySlug] || ""
   
-  // Use hero image instead of flag
-  const heroImageUrl = `/images/destinations/${countrySlug}-hero.jpg`
+  // Use hero image with helper function for proper fallback
+  const heroImageUrl = getCountryHero(countrySlug)
+  const fallbackImageUrl = "/images/placeholders/hero-placeholder.jpg"
 
   return (
     <Link href={`/destinations/${countrySlug}`} className="block group">
       <Card className={`relative overflow-hidden h-[400px] ${variant === "featured" ? "border-primary/50" : ""} transition-transform duration-300 group-hover:scale-[1.02]`}>
         {/* Background Image */}
         <div className="absolute inset-0 w-full h-full">
-          <Image
+          <HeroImage
             src={heroImageUrl}
-            alt={`${name}`}
-            fill
-            className="object-cover"
+            alt={`${name} landscape`}
+            fallbackSrc={fallbackImageUrl}
+            className="object-cover h-full w-full"
             priority
           />
           {/* Vignette overlay - stronger dark gradient for better text readability */}

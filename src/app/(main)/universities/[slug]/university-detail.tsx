@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Calendar, Award, School, ExternalLink, GraduationCap, BookOpen, Globe, Building, Clock, FileText, Banknote, Info, Users, MessageSquare } from 'lucide-react'
 import { University, UniversityProgram, AdmissionRequirement, Scholarship } from '@/types/university'
@@ -13,6 +12,15 @@ import { Separator } from '@/components/ui/separator'
 import { Blockquote } from '@/components/ui/blockquote'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
+import { UniversityOverview } from './university-overview'
+import { UniversityPrograms } from './university-programs'
+import { UniversityAdmissions } from './university-admissions'
+import { UniversityCosts } from './university-costs'
+import { UniversityLifestyle } from './university-lifestyle'
+import { UniversityFAQ } from './university-faq'
+import { getUniversityCampusUrl } from '@/lib/supabase-storage'
+import { getUniversityCampus } from '@/lib/image-helpers'
+import { HeroImage } from '@/components/shared/optimized-image'
 
 interface UniversityDetailProps {
   university: University
@@ -21,371 +29,103 @@ interface UniversityDetailProps {
 export function UniversityDetail({ university }: UniversityDetailProps) {
   const [activeTab, setActiveTab] = useState('overview')
   
+  // Function to generate a meaningful abbreviation
+  const getUniversityAbbreviation = (name: string): string => {
+    // Special cases
+    if (name === 'Trinity College Dublin') return 'TCD'
+    if (name === 'Technical University of Munich') return 'TUM'
+    if (name === 'Humboldt University of Berlin') return 'HUB'
+    if (name === 'University of British Columbia') return 'UBC'
+    if (name === 'University of Toronto') return 'UTO'
+    if (name === 'Heidelberg University') return 'HDU'
+    
+    // Generic cases
+    if (name.startsWith('University of')) {
+      const parts = name.replace('University of ', '').split(' ')
+      if (parts.length === 1) return parts[0].slice(0, 3).toUpperCase()
+      return parts.map(part => part[0]).join('').toUpperCase()
+    }
+    
+    // For other cases, take first letter of significant words
+    const words = name.split(' ').filter(word => 
+      !['of', 'the', 'and', '&', 'for', 'in'].includes(word.toLowerCase())
+    )
+    
+    return words.slice(0, Math.min(3, words.length))
+      .map(word => word[0])
+      .join('')
+      .toUpperCase()
+  }
+  
+  // Get university campus image URL with fallback
+  const campusImageUrl = university.image || getUniversityCampus(university.slug)
+  
+  // Fallback campus image
+  const fallbackCampusImage = "/images/placeholders/hero-placeholder.jpg"
+
+  const abbr = getUniversityAbbreviation(university.name)
+  // Use a consistent placeholder URL for logo
+  const logoUrl = `https://placehold.co/400x400/2563eb/ffffff/png?text=${abbr}`
+  
   return (
-    <div className="py-12">
-      <Container>
-        {/* Hero Section */}
-        <div className="relative rounded-xl overflow-hidden mb-12">
-          {university.image ? (
-            <div className="relative w-full h-80">
-              <Image
-                src={university.image}
-                alt={university.name}
-                fill
-                className="object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-gray-900/20"></div>
-            </div>
-          ) : (
-            <div className="w-full h-80 bg-primary/10 flex items-center justify-center">
-              <School className="h-24 w-24 text-primary/30" />
-            </div>
-          )}
-          
-          <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
-            <div className="flex items-center gap-4 mb-4">
-              {university.logo ? (
-                <div className="relative w-16 h-16 bg-white rounded-md p-2 shadow-md">
-                  <Image
-                    src={university.logo}
-                    alt={`${university.name} logo`}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-              ) : (
-                <div className="w-16 h-16 bg-white rounded-md flex items-center justify-center shadow-md">
-                  <School className="h-10 w-10 text-primary" />
-                </div>
-              )}
-              
-              <div>
-                <Badge variant="outline" className="bg-white/90 mb-2">
-                  {university.isPublic ? 'Public University' : 'Private University'}
-                </Badge>
-                <h1 className="text-2xl md:text-4xl font-bold tracking-tight text-white">
-                  {university.name}
-                </h1>
-                <div className="flex items-center text-gray-200 mt-1">
-                  <MapPin className="h-4 w-4 mr-1" />
-                  <span>{university.location}, {university.countryName}</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex flex-wrap gap-3 mt-4">
-              {university.ranking?.qs && (
-                <Badge variant="secondary" className="flex items-center gap-1.5">
-                  <Award className="h-3.5 w-3.5" />
-                  QS Rank: {university.ranking.qs}
-                </Badge>
-              )}
-              {university.ranking?.the && (
-                <Badge variant="secondary" className="flex items-center gap-1.5">
-                  <Award className="h-3.5 w-3.5" />
-                  THE Rank: {university.ranking.the}
-                </Badge>
-              )}
-              <Badge variant="secondary" className="flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5" />
-                Founded: {university.foundingYear}
-              </Badge>
-              <Badge variant="secondary" className="flex items-center gap-1.5">
-                <Users className="h-3.5 w-3.5" />
-                {university.studentPopulation.toLocaleString()} Students
-              </Badge>
-              <Badge variant="secondary" className="flex items-center gap-1.5">
-                <Globe className="h-3.5 w-3.5" />
-                {university.internationalStudentPercentage}% International
-              </Badge>
-              <a href={university.website} target="_blank" rel="noopener noreferrer">
-                <Badge variant="outline" className="bg-white/90 text-primary flex items-center gap-1.5">
-                  <ExternalLink className="h-3.5 w-3.5" />
-                  Visit Website
-                </Badge>
-              </a>
-            </div>
+    <div className="university-detail w-full max-w-7xl mx-auto px-4 py-8 md:px-6 lg:py-12">
+      {/* University header with hero image */}
+      <div className="relative w-full h-64 md:h-80 lg:h-96 mb-8 rounded-xl overflow-hidden">
+        <HeroImage
+          src={campusImageUrl}
+          alt={`${university.name} campus`}
+          fallbackSrc={fallbackCampusImage}
+          priority
+          className="rounded-xl"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-background/20 flex flex-col justify-end p-6 md:p-8">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 text-white">{university.name}</h1>
+          <div className="flex items-center text-white/80">
+            <span className="text-sm md:text-base">{university.location}, {university.countryName}</span>
           </div>
         </div>
+      </div>
+
+      {/* University content tabs */}
+      <Tabs 
+        defaultValue="overview" 
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="w-full"
+      >
+        <TabsList className="w-full max-w-lg mx-auto grid grid-cols-3 md:grid-cols-6 mb-8">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="programs">Programs</TabsTrigger>
+          <TabsTrigger value="admissions">Admissions</TabsTrigger>
+          <TabsTrigger value="costs">Costs</TabsTrigger>
+          <TabsTrigger value="lifestyle">Lifestyle</TabsTrigger>
+          <TabsTrigger value="faq">FAQ</TabsTrigger>
+        </TabsList>
         
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Main Content */}
-          <div className="lg:col-span-2">
-            <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="mb-8">
-                <TabsTrigger value="overview" className="flex items-center gap-1.5">
-                  <Info className="h-4 w-4" />
-                  Overview
-                </TabsTrigger>
-                <TabsTrigger value="programs" className="flex items-center gap-1.5">
-                  <BookOpen className="h-4 w-4" />
-                  Programs
-                </TabsTrigger>
-                <TabsTrigger value="admission" className="flex items-center gap-1.5">
-                  <FileText className="h-4 w-4" />
-                  Admission
-                </TabsTrigger>
-                <TabsTrigger value="costs" className="flex items-center gap-1.5">
-                  <Banknote className="h-4 w-4" />
-                  Costs
-                </TabsTrigger>
-              </TabsList>
-              
-              {/* Overview Tab */}
-              <TabsContent value="overview" className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-bold mb-4">About {university.name}</h2>
-                  <p className="text-muted-foreground">{university.description}</p>
-                </div>
-                
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Popular Fields of Study</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {Array.from(new Set(university.featuredPrograms.map(p => p.field))).map((field, i) => (
-                      <Badge key={i} variant="secondary" className="text-sm py-1">
-                        {field}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Student Life</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-lg flex items-center gap-2">
-                          <Building className="h-5 w-5 text-primary" />
-                          Housing
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm text-muted-foreground">{university.studentLife.housing}</p>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-lg flex items-center gap-2">
-                          <Users className="h-5 w-5 text-primary" />
-                          Campus Life
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-sm text-muted-foreground mb-2">{university.studentLife.clubs}</p>
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {university.studentLife.campusFacilities.slice(0, 4).map((facility, i) => (
-                            <Badge key={i} variant="outline" className="text-xs">
-                              {facility}
-                            </Badge>
-                          ))}
-                          {university.studentLife.campusFacilities.length > 4 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{university.studentLife.campusFacilities.length - 4} more
-                            </Badge>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              </TabsContent>
-              
-              {/* Programs Tab */}
-              <TabsContent value="programs" className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-bold mb-4">Featured Programs</h2>
-                  <p className="text-muted-foreground mb-6">
-                    Below are some of the most popular programs for international students at {university.name}.
-                    This is not a complete list of all available programs.
-                  </p>
-                  
-                  <div className="space-y-6">
-                    {university.featuredPrograms.map(program => (
-                      <ProgramCard key={program.id} program={program} />
-                    ))}
-                  </div>
-                </div>
-              </TabsContent>
-              
-              {/* Admission Tab */}
-              <TabsContent value="admission" className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-bold mb-4">Admission Requirements</h2>
-                  <p className="text-muted-foreground mb-6">
-                    Below are the admission requirements for {university.name}. These requirements
-                    may vary by program, so always check the specific program page for detailed information.
-                  </p>
-                  
-                  <div className="space-y-6">
-                    {university.admissionRequirements.map(req => (
-                      <RequirementCard key={req.id} requirement={req} />
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <h3 className="text-xl font-semibold mb-4">Qogent Insights</h3>
-                  <Card className="bg-blue-light dark:bg-blue-primary/10 border-blue-primary/30">
-                    <CardHeader>
-                      <CardTitle className="text-lg flex items-center gap-2">
-                        <MessageSquare className="h-5 w-5 text-blue-primary" />
-                        Insider Tips for Admission Success
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-4">
-                        {university.admissionRequirements
-                          .filter(req => req.qogentInsight)
-                          .map((req, index) => (
-                            <li key={index} className="flex gap-2">
-                              <span className="text-blue-primary font-bold mt-1">•</span>
-                              <p className="text-muted-foreground">{req.qogentInsight}</p>
-                            </li>
-                          ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
-              
-              {/* Costs Tab */}
-              <TabsContent value="costs" className="space-y-8">
-                <div>
-                  <h2 className="text-2xl font-bold mb-4">Tuition & Costs</h2>
-                  <p className="text-muted-foreground mb-6">
-                    Below is a breakdown of the costs associated with studying at {university.name}.
-                    These costs are estimates and may vary depending on your specific situation.
-                  </p>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-lg">Tuition Fees</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-3">
-                          <div>
-                            <p className="text-sm font-medium text-muted-foreground">Domestic Students:</p>
-                            <p className="font-bold">{university.costs.tuitionDomestic}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-muted-foreground">International Students:</p>
-                            <p className="font-bold">{university.costs.tuitionInternational}</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-lg">Additional Fees</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-3">
-                          <div>
-                            <p className="text-sm font-medium text-muted-foreground">Application Fee:</p>
-                            <p className="font-bold">{university.costs.applicationFee || 'None'}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-muted-foreground">Other Fees:</p>
-                            <p className="font-bold">{university.costs.otherFees || 'None'}</p>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium text-muted-foreground">Health Insurance:</p>
-                            <p className="font-bold">{university.costs.healthInsurance}</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                  
-                  <h3 className="text-xl font-semibold mb-4">Living Expenses</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-base">Accommodation</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="font-bold">{university.costs.livingExpenses.accommodation}</p>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-base">Food</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="font-bold">{university.costs.livingExpenses.food}</p>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-base">Transportation</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="font-bold">{university.costs.livingExpenses.transportation}</p>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card>
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-base">Other Expenses</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="font-bold">{university.costs.livingExpenses.other}</p>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-                
-                {university.scholarships.length > 0 && (
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4">Available Scholarships</h3>
-                    <div className="space-y-6">
-                      {university.scholarships.map(scholarship => (
-                        <ScholarshipCard key={scholarship.id} scholarship={scholarship} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </TabsContent>
-            </Tabs>
-          </div>
-          
-          {/* Right Column - Sidebar */}
-          <div className="lg:sticky lg:top-24 lg:self-start">
-            {/* FAQ */}
-            {university.faq.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MessageSquare className="h-5 w-5" />
-                    Frequently Asked Questions
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {university.faq.map((item, i) => (
-                    <div key={i}>
-                      <h4 className="font-medium mb-1">{item.question}</h4>
-                      <p className="text-sm text-muted-foreground">{item.answer}</p>
-                      {i < university.faq.length - 1 && <Separator className="mt-4" />}
-                    </div>
-                  ))}
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" className="w-full">
-                    Ask a Question
-                  </Button>
-                </CardFooter>
-              </Card>
-            )}
-          </div>
-        </div>
-      </Container>
+        <TabsContent value="overview">
+          <UniversityOverview university={university} />
+        </TabsContent>
+        
+        <TabsContent value="programs">
+          <UniversityPrograms programs={university.featuredPrograms} />
+        </TabsContent>
+        
+        <TabsContent value="admissions">
+          <UniversityAdmissions admissionRequirements={university.admissionRequirements} />
+        </TabsContent>
+        
+        <TabsContent value="costs">
+          <UniversityCosts costs={university.costs} scholarships={university.scholarships} />
+        </TabsContent>
+        
+        <TabsContent value="lifestyle">
+          <UniversityLifestyle studentLife={university.studentLife} />
+        </TabsContent>
+        
+        <TabsContent value="faq">
+          <UniversityFAQ faq={university.faq} />
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

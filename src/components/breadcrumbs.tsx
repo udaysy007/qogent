@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ChevronRight, Home } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 interface BreadcrumbItem {
   label: string
@@ -10,15 +11,17 @@ interface BreadcrumbsProps {
   items: BreadcrumbItem[]
   homeHref?: string
   showHome?: boolean
+  className?: string
 }
 
 export function Breadcrumbs({
   items,
   homeHref = "/",
-  showHome = true
+  showHome = true,
+  className
 }: BreadcrumbsProps) {
   return (
-    <nav aria-label="Breadcrumb" className="mb-6">
+    <nav aria-label="Breadcrumb" className={cn("mb-6", className)}>
       <ol className="flex flex-wrap items-center gap-2 text-sm">
         {showHome && (
           <>

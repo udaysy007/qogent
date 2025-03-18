@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation"
 import Image from "next/image"
-import { ArrowRight, Check, Globe, GraduationCap, Building, Landmark, Wallet, MapPin, Book, Users, Calendar, Sparkles, Star, HelpCircle, Home, ClipboardCheck, MessageCircle } from "lucide-react"
+import { ArrowRight, Check, Globe, GraduationCap, Building, Landmark, Wallet, MapPin, Book, Users, Calendar, Sparkles, Star, HelpCircle, Home, ClipboardCheck, MessageCircle, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Section } from "@/components/ui/section"
@@ -12,7 +12,7 @@ import { Heading } from "@/components/ui/heading"
 import { Paragraph } from "@/components/ui/paragraph"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { UniversityCard } from "@/components/university-card"
+import { UniversityCard } from "@/components/cards/university-card"
 import { CallToAction } from "@/components/call-to-action"
 import { Breadcrumbs } from "@/components/breadcrumbs"
 import { useCountry } from "@/hooks/use-countries"
@@ -22,14 +22,33 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { useUniversityCards } from "@/hooks/use-universities"
+import { Card } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Database } from '@/types/supabase'
+import { UniversityCard as UniversityCardType } from '@/types/university'
+import { useState, useEffect } from "react"
+
+// Country type from Supabase
+type Country = Database['public']['Tables']['countries']['Row'];
 
 export default function DestinationPage() {
   const params = useParams()
   const slug = params?.slug as string
   
+  // Fetch country data
   const { data: destination, isLoading, isError } = useCountry(slug)
-
-  if (isLoading) {
+  
+  // Always show loading state on initial render to prevent hydration mismatch
+  const [isClientReady, setIsClientReady] = useState(false)
+  
+  // After component mounts, mark as client-ready
+  useEffect(() => {
+    setIsClientReady(true)
+  }, [])
+  
+  // Show loading state during server render or initial client render
+  if (!isClientReady || isLoading) {
     return (
       <Section>
         <Container>
@@ -351,28 +370,7 @@ export default function DestinationPage() {
             {destination.universitiesIntro || `${destination.name} is home to several world-class universities offering a wide range of programs for international students. Here are some of the top institutions to consider:`}
           </Paragraph>
           
-          <Grid cols={3} gap="lg">
-            {/* This would ideally be populated from the database */}
-            {[1, 2, 3].map((id) => (
-              <UniversityCard 
-                key={id}
-                university={{
-                  id,
-                  name: `University of ${destination.name} ${id}`,
-                  countryId: destination.id,
-                  website: "https://www.university.edu",
-                  isPublic: true,
-                  ranking: 100 + id,
-                  description: `One of the leading universities in ${destination.name} with excellent programs for international students.`
-                }}
-                country={{
-                  name: destination.name,
-                  code: destination.code || "IE",
-                  slug: destination.slug
-                }}
-              />
-            ))}
-          </Grid>
+          <UniversitiesByCountry universities={destination.universities || []} country={destination} />
           
           <div className="mt-8 text-center">
             <Button asChild>
@@ -1091,4 +1089,90 @@ export default function DestinationPage() {
       />
     </main>
   )
+}
+
+function UniversitiesByCountry({ universities, country }: { universities: UniversityCardType[], country: Country }) {
+  // No need to filter by country name again since the universities are already filtered
+  // Just limit to 3 for display
+  const filteredUniversities = universities.slice(0, 3);
+  
+  // Use useState and useEffect for client-side rendering
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  // Return a simple placeholder during server rendering
+  if (!isClient) {
+    return (
+      <section className="py-16 border-t border-border">
+        <Container>
+          <div className="h-8 w-64 bg-muted rounded mb-4"></div>
+          <div className="h-5 w-full max-w-md bg-muted rounded mb-8"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="h-64 bg-muted rounded"></div>
+            ))}
+          </div>
+        </Container>
+      </section>
+    );
+  }
+
+  return (
+    <section className="py-16 border-t border-border">
+      <Container>
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+          <div>
+            <h2 className="text-2xl font-bold mb-2">Top Universities in {country.name}</h2>
+            <p className="text-muted-foreground">
+              Explore highly-ranked universities offering quality education to international students
+            </p>
+          </div>
+          <Link 
+            href={`/destinations/${country.slug}/universities`} 
+            className="text-primary font-medium flex items-center hover:underline"
+          >
+            View all universities
+            <ChevronRight className="h-4 w-4 ml-1" />
+          </Link>
+        </div>
+ 
+        {filteredUniversities.length === 0 ? (
+          <div className="p-12 text-center bg-muted/30 border rounded-lg">
+            <GraduationCap className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+            <h3 className="text-xl font-medium mb-2">No Universities Found</h3>
+            <p className="text-muted-foreground">
+              We couldn't find any universities for this country. Check back later as we continue to update our database.
+            </p>
+          </div>
+        ) : (
+          <Grid cols={3} gap="lg">
+            {filteredUniversities.map((university) => (
+              <UniversityCard
+                key={university.id}
+                university={{
+                  id: university.id,
+                  name: university.name,
+                  slug: university.slug,
+                  countryId: university.countryId,
+                  countryName: country.name,
+                  logo: university.logo,
+                  isPublic: university.isPublic,
+                  ranking: {
+                    qs: university.ranking?.qs
+                  },
+                  location: country.name,
+                  featuredFields: ['Business', 'Engineering', 'Computer Science'],
+                  qogentSuccessRate: '85%'
+                }}
+                variant="default"
+              />
+            ))}
+          </Grid>
+        )}
+      </Container>
+    </section>
+  );
 } 

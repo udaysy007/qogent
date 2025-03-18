@@ -1,36 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Qogent.in
+
+This is a [Next.js](https://nextjs.org) project for Qogent.in, a platform for international education guidance.
 
 ## Getting Started
 
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Documentation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Detailed documentation is available in the `docs` folder:
+
+- [Supabase Storage](./docs/supabase-storage.md) - Documentation for image storage using Supabase
+- [Project Setup](./docs/project-setup.md) - Details on project initialization and dependencies
+- [Style Guide](./docs/styleguide.md) - Design system and styling guidelines
+
+## Supabase Integration
+
+This project uses Supabase for:
+
+- Database (PostgreSQL)
+- Auth
+- Storage (for images)
+
+### Database Migrations
+
+Database migrations are stored in `supabase/migrations/` but have been archived to save space. The archive can be found at `archives/supabase-migrations-archive.tar.gz`.
+
+#### Applying Migrations to MSinIreland Database
+
+```bash
+export PGPASSWORD="E1d_1di4u:)" && psql -h db.scpupgxqbkpielyjbdmr.supabase.co -p 5432 -d postgres -U postgres -f supabase/migrations/migration-file.sql
+```
+
+#### Applying Migrations to MSinPoland Database
+
+```bash
+export PGPASSWORD="E1d_1di4u:)" && psql -h db.ocdserkgbbpuaugmwcjt.supabase.co -p 5432 -d postgres -U postgres -f supabase/migrations/migration-file.sql
+```
+
+#### Verifying Migrations
+
+After applying a migration, verify it was successful by checking the table structure:
+
+```sql
+-- Run this query in the Supabase SQL Editor
+SELECT column_name, data_type 
+FROM information_schema.columns 
+WHERE table_name = 'table_name' 
+ORDER BY ordinal_position;
+```
+
+### Supabase Storage
+
+University images (campus photos and logos) are stored in Supabase Storage. To upload all images to Supabase:
+
+```bash
+pnpm upload-images
+```
+
+See the [Supabase Storage documentation](./docs/supabase-storage.md) for implementation details.
+
+## Image System
+
+Qogent uses a comprehensive image system with the following components:
+
+- **Optimized Image Components**: Located in `src/components/shared/optimized-image.tsx`
+  - `OptimizedImage`: Universal image component with loading, error, and fallback handling
+  - `UniversityLogo`: Specialized for university logos with text abbreviation fallbacks
+  - `CountryFlag`: Specialized for country flags with country code fallbacks
+  - `HeroImage`: Specialized for hero images with enhanced placeholders
+
+- **Image Storage**: Supabase Storage with a structured approach:
+  - University images (campus photos and logos) stored in `/universities` bucket
+  - Country images (flags and hero images) stored in `/countries` bucket
+  - Team member avatars stored in `/people` bucket
+  - Blog post images stored in `/blog` bucket
+  
+- **Image Management**: The project includes a unified image manager script (`scripts/image-manager.js`) that handles:
+  - **Image Optimization**: Reduces image size for faster loading while creating backups of originals
+  - **Image Uploading**: Uploads optimized images to Supabase Storage
+  - **Error Handling**: Provides robust fallbacks and reporting
+
+### Image Optimization
+
+Images are optimized directly, replacing the originals after creating backups:
+
+```bash
+# Optimize images (original high-resolution images are backed up first)
+pnpm optimize-images
+
+# Upload optimized images to Supabase Storage
+pnpm upload-images
+
+# Both optimize and upload in one command
+pnpm images
+```
+
+### Image Backups
+
+Original high-resolution images are automatically backed up to:
+- `/public/images/backup/destinations/` - Original destination hero images
+- `/public/images/backup/universities/` - Original university images
+
+This ensures we have access to the original assets if needed, while serving optimized images for better performance.
+
+## Project Structure
+
+```
+src/
+├── app/                   # Next.js app router pages
+├── components/            # React components
+│   ├── ui/                # Base UI components (shadcn)
+│   └── shared/            # Shared components
+├── lib/                   # Utility functions
+├── hooks/                 # Custom React hooks
+├── types/                 # TypeScript types
+└── providers/             # React context providers
+
+public/                    # Static assets
+└── images/                # Images used in the application
+    ├── destinations/      # Optimized destination hero images
+    ├── universities/      # University logos and campus images
+    ├── countries/         # Country flags
+    └── backup/            # Backup of original high-resolution images
+
+scripts/                   # Utility scripts
+└── image-manager.js       # Unified image optimization and upload script
+
+supabase/                  # Supabase configuration
+├── migrations/            # SQL migrations (archived)
+└── seed/                  # Seed data
+
+docs/                      # Project documentation
+```
+
+## Development Scripts
+
+- `pnpm dev`: Start development server
+- `pnpm build`: Build for production
+- `pnpm start`: Start production server
+- `pnpm lint`: Run linting checks
+- `pnpm optimize-images`: Optimize images for web
+- `pnpm upload-images`: Upload images to Supabase
+- `pnpm images`: Optimize and upload images
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Supabase Documentation](https://supabase.io/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [shadcn/ui Documentation](https://ui.shadcn.com)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The site is deployed via Netlify. For configuration details, see the `netlify.toml` file.

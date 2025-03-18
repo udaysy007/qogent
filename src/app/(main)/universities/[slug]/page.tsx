@@ -1,6 +1,10 @@
-import { Metadata } from 'next'
+'use client'
+
 import { notFound } from 'next/navigation'
+import { useEffect, useState, use } from 'react'
 import { UniversityDetail } from './university-detail'
+import { useUniversity } from '@/hooks/use-universities'
+import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
 interface PageProps {
   params: {
@@ -8,51 +12,32 @@ interface PageProps {
   }
 }
 
-// Dynamically generate metadata based on the university
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = params
+export default function UniversityPage(props: PageProps) {
+  // Use React.use() to unwrap params
+  const params = use(props.params)
+  const slug = params.slug
+  const [isClient, setIsClient] = useState(false)
   
-  try {
-    // In a real implementation, this would be an API call
-    const data = await import('@/data/universities.json').then(
-      (module) => module.default
+  // Use the hook to fetch university data
+  const { data: university, isLoading, error } = useUniversity(slug)
+  
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+  
+  // Show loading state while data is being fetched
+  if (!isClient || isLoading) {
+    return (
+      <div className="flex items-center justify-center py-32">
+        <LoadingSpinner size="lg" />
+      </div>
     )
-    const university = data.find((uni: any) => uni.slug === slug)
-    
-    if (!university) {
-      return {
-        title: 'University Not Found',
-      }
-    }
-    
-    return {
-      title: `${university.name} | Study in ${university.countryName}`,
-      description: university.description.slice(0, 160),
-    }
-  } catch (error) {
-    return {
-      title: 'University Details',
-      description: 'Detailed information about studying at this university.',
-    }
   }
-}
-
-export default async function UniversityPage({ params }: PageProps) {
-  const { slug } = params
   
-  try {
-    // In a real implementation, this would be an API call
-    const data = await import('@/data/universities.json').then(
-      (module) => module.default
-    )
-    const university = data.find((uni: any) => uni.slug === slug)
-    
-    if (!university) {
-      notFound()
-    }
-    
-    return <UniversityDetail university={university} />
-  } catch (error) {
+  // Show not found if there's an error or no university data
+  if (error || !university) {
     notFound()
   }
+  
+  return <UniversityDetail university={university} />
 } 
