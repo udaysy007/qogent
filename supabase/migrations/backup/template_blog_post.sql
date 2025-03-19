@@ -3,8 +3,8 @@
 -- ====================================================================
 -- This template includes all required fields and proper formatting for blog posts
 -- Field length limitations:
--- - meta_title: STRICT 60 character limit
--- - meta_description: STRICT 160 character limit
+-- - meta_title: STRICT 60 character limit (e.g. "Study in Germany: Complete Guide for International Students")
+-- - meta_description: STRICT 160 character limit (e.g. "Learn everything about studying in Germany as an international student. Get details on universities, courses, costs, visas, scholarships and application process.")
 -- - Always use Uday Yatnalli's author ID: 8d6e5aff-491e-4d51-9be5-fbef9b106ad9
 -- - Keywords must be proper PostgreSQL arrays
 -- ====================================================================

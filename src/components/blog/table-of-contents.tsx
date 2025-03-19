@@ -96,17 +96,29 @@ export function TableOfContents({ items }: { items: TableOfContentsItem[] }) {
 
   const renderItems = (items: TableOfContentsItem[]) => {
     return (
-      <ul className="space-y-1 text-sm">
+      <ul className="space-y-2">
         {items.map((item) => (
-          <li key={item.id} className={`${item.level > 2 ? 'ml-4' : ''}`}>
+          <li 
+            key={item.id} 
+            className={cn(
+              "relative",
+              item.level > 2 ? 'ml-4' : ''
+            )}
+          >
             <a
               href={`#${item.slug}`}
               onClick={(e) => handleLinkClick(item.slug, e)}
-              className={`block py-1 hover:text-foreground transition-colors ${
-                activeId === item.slug
-                  ? 'text-foreground font-medium'
-                  : 'text-muted-foreground'
-              }`}
+              className={cn(
+                "block py-2 px-4 rounded-md text-sm transition-all duration-200",
+                "hover:bg-blue-light dark:hover:bg-gray-800",
+                "focus:outline-none focus:ring-2 focus:ring-blue-primary focus:ring-opacity-50",
+                activeId === item.slug ? [
+                  "bg-blue-light dark:bg-gray-800",
+                  "text-blue-primary dark:text-blue-primary font-medium",
+                  "before:absolute before:left-0 before:top-0 before:h-full",
+                  "before:w-1 before:bg-blue-primary before:rounded-full"
+                ] : "text-gray-600 dark:text-gray-400"
+              )}
             >
               {item.title}
             </a>
@@ -118,9 +130,21 @@ export function TableOfContents({ items }: { items: TableOfContentsItem[] }) {
   }
 
   return (
-    <div className="rounded-lg border bg-card p-6 max-h-[500px] overflow-auto shadow-sm">
-      <h3 className="text-lg font-semibold mb-4">On this page</h3>
+    <div className={cn(
+      "rounded-xl border border-gray-200 dark:border-gray-700",
+      "bg-white dark:bg-gray-900",
+      "p-6 max-h-[calc(100vh-200px)] overflow-auto",
+      "shadow-lg dark:shadow-gray-800/30",
+      "backdrop-blur-sm dark:backdrop-blur-sm",
+      "sticky top-24"
+    )}>
+      <div className="flex items-center gap-2 mb-6">
+        <List className="w-5 h-5 text-blue-primary" />
+        <h3 className="font-display text-xl font-semibold text-gray-900 dark:text-white">
+          On this page
+        </h3>
+      </div>
       {renderItems(items)}
     </div>
   )
-} 
+}

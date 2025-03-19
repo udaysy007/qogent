@@ -24,9 +24,13 @@ Instead of:
 "The German university application process can be challenging for international students."
 
 Write like this:
-"3 AM. Energy drink in hand. Staring at your fifth different university website. Each one saying something completely different about application requirements. Yeah, we know that feeling."
+## Important Notes on Examples
+**The examples below are meant to be illustrative only.** They demonstrate the conversational style and authentic tone we aim for, but:
+- Do not copy these openings verbatim for actual blog posts
+- Each blog should have its own unique voice and opening approach
+- Vary your intros and storytelling approach for each piece
+- Use these as inspiration for the tone, not as templates to fill in
 
-Or try the one-sentence impact approach:
 "3 AM. Again.
 
 You're sitting there in your PJs, staring at uni-assist.de for what feels like the millionth time.

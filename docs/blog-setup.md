@@ -218,10 +218,55 @@ Table for managing URL redirects.
    - Provide translated content
    - Maintain consistent URL structure
 
+## Content Formatting Guidelines
+
+### Tables
+Tables should be formatted using HTML syntax rather than Markdown to ensure proper rendering across all devices. Always wrap tables in a `table-wrapper` div for responsive behavior:
+
+```html
+<div class="table-wrapper">
+<table>
+  <thead>
+    <tr>
+      <th>Header 1</th>
+      <th>Header 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Content 1</td>
+      <td>Content 2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+```
+
+**Best practices for tables:**
+- Keep tables simple and focused on essential information
+- Ensure column headers are clear and concise
+- Use consistent formatting within table cells
+- Avoid overly wide tables that might break the mobile layout
+- For data-heavy tables, consider adding a caption for accessibility
+
+**Avoid:**
+- Markdown table syntax (e.g., `| Header | Header |`)
+- Nested tables
+- Tables with excessive columns (more than 4-5 on mobile)
+- Empty cells without content
+
+### Markdown Formatting
+For markdown formatting:
+- Use **bold text** for emphasis
+- Use *italics* for secondary emphasis
+- Use > for blockquotes
+- Use numbered lists for sequential steps
+- Use bullet points for unordered lists
+
 ## Limitations
 
 1. **Content Formatting**
-   - Limited to Markdown format
+   - Limited to Markdown format with HTML tables
    - No real-time preview during content creation
    - Manual table of contents creation
 
