@@ -1,112 +1,126 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { List } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+// Constant for header offset - matching FragmentScroller
+const SCROLL_OFFSET = 100
+
 export interface TableOfContentsItem {
   id: string
+  slug: string
   title: string
   level: number
   items?: TableOfContentsItem[]
 }
 
-export function TableOfContents({ items }: { items?: TableOfContentsItem[] }) {
+export function TableOfContents({ items }: { items: TableOfContentsItem[] }) {
   const [activeId, setActiveId] = useState<string>('')
   
+  // Get all slugs flat list for intersection observer
+  const getAllSlugs = (items: TableOfContentsItem[]): string[] => {
+    return items.reduce<string[]>((acc, item) => {
+      const itemSlugs = item.items ? getAllSlugs(item.items) : []
+      return [...acc, item.slug, ...itemSlugs]
+    }, [])
+  }
+
   useEffect(() => {
-    if (!items || items.length === 0) return
+    const slugs = getAllSlugs(items)
+    console.log('TOC: Available heading slugs:', slugs)
     
-    // Function to get all heading IDs
-    const getAllIds = (items: TableOfContentsItem[]): string[] => {
-      return items.reduce<string[]>((acc, item) => {
-        return [
-          ...acc, 
-          item.id, 
-          ...(item.items ? getAllIds(item.items) : [])
-        ]
-      }, [])
+    // Debug: Log all headings IDs present in the document
+    const headingElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+    const presentIds = Array.from(headingElements).map(el => el.id)
+    console.log('TOC: Actual heading IDs in document:', presentIds)
+    
+    // Check for mismatches to help debugging
+    const mismatches = slugs.filter(slug => !presentIds.includes(slug))
+    if (mismatches.length > 0) {
+      console.warn('TOC: Slugs not found in document:', mismatches)
     }
-    
-    const headingIds = getAllIds(items)
     
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.target.id) {
+          if (entry.isIntersecting) {
             setActiveId(entry.target.id)
           }
         })
       },
-      { rootMargin: '-100px 0px -66% 0px' }
+      {
+        rootMargin: '-100px 0px -80% 0px', // Updated to match SCROLL_OFFSET
+        threshold: 0
+      }
     )
-    
-    // Observe all section headings
-    headingIds.forEach((id) => {
-      const element = document.getElementById(id)
+
+    // Observe all headings
+    slugs.forEach((slug) => {
+      const element = document.getElementById(slug)
       if (element) {
         observer.observe(element)
+      } else {
+        console.warn('TOC: Could not find element with ID:', slug)
       }
     })
-    
+
     return () => {
-      headingIds.forEach((id) => {
-        const element = document.getElementById(id)
-        if (element) {
-          observer.unobserve(element)
-        }
-      })
+      observer.disconnect()
     }
   }, [items])
-  
-  if (!items || items.length === 0) {
-    return null
+
+  const handleLinkClick = (slug: string, event: React.MouseEvent) => {
+    event.preventDefault()
+    
+    const element = document.getElementById(slug)
+    
+    if (element) {
+      // Update the URL hash
+      window.history.pushState(null, '', `#${slug}`)
+      
+      // Scroll to the element
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.scrollY - SCROLL_OFFSET // Using the constant
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+      
+      setActiveId(slug)
+    } else {
+      console.warn('TOC: Link clicked but element not found:', slug)
+    }
   }
-  
+
+  const renderItems = (items: TableOfContentsItem[]) => {
+    return (
+      <ul className="space-y-1 text-sm">
+        {items.map((item) => (
+          <li key={item.id} className={`${item.level > 2 ? 'ml-4' : ''}`}>
+            <a
+              href={`#${item.slug}`}
+              onClick={(e) => handleLinkClick(item.slug, e)}
+              className={`block py-1 hover:text-foreground transition-colors ${
+                activeId === item.slug
+                  ? 'text-foreground font-medium'
+                  : 'text-muted-foreground'
+              }`}
+            >
+              {item.title}
+            </a>
+            {item.items && item.items.length > 0 && renderItems(item.items)}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
   return (
-    <div className="bg-muted/40 dark:bg-muted/20 rounded-lg p-5 mb-8 sticky top-20 not-prose max-h-[calc(100vh-8rem)] overflow-auto">
-      <div className="flex items-center gap-2 font-medium mb-4">
-        <List className="h-5 w-5" />
-        <h2 className="text-lg">Table of Contents</h2>
-      </div>
-      <nav>
-        <ul className="space-y-2 text-sm">
-          {items.map((item) => (
-            <li key={item.id}>
-              <a
-                href={`#${item.id}`}
-                className={cn(
-                  "block py-1 transition-colors hover:text-primary",
-                  activeId === item.id 
-                    ? "text-primary font-medium" 
-                    : "text-foreground/90"
-                )}
-              >
-                {item.title}
-              </a>
-              {item.items && item.items.length > 0 && (
-                <ul className="mt-1 ml-4 space-y-1 border-l-2 border-muted-foreground/20 pl-3">
-                  {item.items.map((subItem) => (
-                    <li key={subItem.id}>
-                      <a
-                        href={`#${subItem.id}`}
-                        className={cn(
-                          "block py-1 text-muted-foreground transition-colors hover:text-primary",
-                          activeId === subItem.id 
-                            ? "text-primary font-medium" 
-                            : "text-muted-foreground"
-                        )}
-                      >
-                        {subItem.title}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-      </nav>
+    <div className="rounded-lg border bg-card p-6 max-h-[500px] overflow-auto shadow-sm">
+      <h3 className="text-lg font-semibold mb-4">On this page</h3>
+      {renderItems(items)}
     </div>
   )
 } 

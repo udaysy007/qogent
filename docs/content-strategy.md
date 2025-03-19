@@ -8,53 +8,13 @@ This document outlines the content strategy for Qogent.in, establishing guidelin
 
 1. **User-Centered**: All content addresses genuine information needs of prospective international students and their supporters
 2. **Authentic**: Content is well-researched and accurate, but presented in a relatable, student-friendly way
-3. **Actionable**: Provides clear next steps and practical guidance that feels like advice from a friend
-4. **Accessible**: Written in clear, jargon-free, conversational language with proper structure for all users
+3. **Actionable**: Provides clear next steps and practical guidance
+4. **Accessible**: Written in clear language with proper structure for all users
 5. **Inclusive**: Represents diverse perspectives and accommodates various learning preferences
-6. **Approachable**: Created with a friendly, empathetic tone that acknowledges student struggles and concerns
 
 ## Brand Voice & Tone
 
-### Our Voice (How We Always Sound)
-
-Our voice is the consistent personality that comes through in all our content. At Qogent, we're not just another education website – we're your virtual study abroad besties who've been there, done that, and made all the mistakes so you don't have to.
-
-- **Authentically Casual**: We talk like real humans having coffee with friends, not like an institution sending a formal letter. We use contractions, casual phrases, and the occasional well-placed exclamation mark!
-
-- **Self-Aware & Occasionally Self-Deprecating**: We're not afraid to share stories about our own study abroad meltdowns, application mishaps, and that time we completely misunderstood how German university applications work.
-
-- **Genuinely Helpful But Never Preachy**: We're the friends who'll stay up late helping you with applications – supportive without being condescending. We don't lecture; we commiserate and then offer solutions.
-
-- **Unexpectedly Specific**: We don't just say "applications can be challenging" – we talk about "that specific moment when you're staring at your fifth application portal of the day and your coffee has gone cold for the third time."
-
-- **Cleverly Conversational**: We use metaphors and analogies that make complex concepts click. We won't just tell you about visa requirements; we'll compare it to "assembling furniture with instructions that keep changing languages every third step."
-
-### Emoji & Casual Elements Guidelines
-
-While our tone is conversational and friendly, we maintain a balanced approach to casual elements:
-
-- **Emoji Usage**: Limited to 1-2 per page maximum. Emojis should support the message, not dominate it.
-
-  - ✅ Good use: "Not sure where to start? We've got you covered! 👍"
-  - ❌ Overuse: "Hey there!!! 😊😊😊 Ready to learn about 🇩🇪 German 🇩🇪 universities??? 🎓🎓🎓"
-
-- **Exclamation Points**: Use purposefully to convey genuine enthusiasm, not as a default punctuation.
-
-- **Text Effects**: Occasional use of capitalization for emphasis ("This is a HUGE opportunity") or asterisks for emphasis ("this is _really_ important") is acceptable when it serves the message.
-
-### Our Tone (How We Sound in Different Contexts)
-
-Our tone adapts based on the context while maintaining our core voice:
-
-- **For Application Guides**: Your supportive but slightly stressed friend ("Okay, so application deadlines are approaching and you're panicking a bit. Been there! Let's tackle this one section at a time...")
-
-- **For Visa Information**: Your detail-oriented friend who somehow makes bureaucracy funny ("Visa requirements: where governments prove they really, REALLY want to test your patience. Don't worry though – we've decoded the secret language of embassy websites...")
-
-- **For Cost Breakdowns**: Your financially savvy but realistic friend ("Let's talk money. Not the fun conversation, we know, but we promise not to use the phrase 'just cut back on lattes' even once...")
-
-- **For Student Stories**: Your friend who tells great stories at dinner parties ("So picture this: Sarah's first day in Munich. She's jet-lagged, can't speak German, and just realized she packed shampoo but no conditioner...")
-
-- **For Academic Content**: Your smartest friend who never makes you feel dumb ("German academic credit systems are... unique. And by 'unique' we mean 'initially confusing to literally everyone.' Let's break this down...")
+For detailed voice and tone guidelines, please refer to `blog-voice-tone.md`. This document contains our comprehensive guide on how to write in Qogent's authentic, conversational style.
 
 ## Writing Style Guidelines
 

@@ -10,7 +10,7 @@ The Qogent blog serves as a key content marketing channel to establish brand aut
 2. **Drive Organic Search Traffic**: Target high-value keywords to attract prospective international students and their parents
 3. **Support User Journey**: Create content that guides users through awareness, consideration, and decision stages
 4. **Generate Quality Leads**: Convert blog readers into tool users and potential clients
-5. **Reinforce Brand Voice**: Showcase Qogent's approachable, authentic, and student-centered perspective
+5. **Reinforce Brand Voice**: Follow the voice and tone guidelines in `blog-voice-tone.md` to maintain consistent, authentic communication
 
 ## Target Audience Segments
 
