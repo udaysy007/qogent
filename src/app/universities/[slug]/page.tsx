@@ -1,20 +1,12 @@
 'use client'
 
 import { notFound } from 'next/navigation'
-import { useEffect, useState, use } from 'react'
+import { useEffect, useState } from 'react'
 import { UniversityDetail } from './university-detail'
 import { useUniversity } from '@/hooks/use-universities'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
-interface PageProps {
-  params: {
-    slug: string
-  }
-}
-
-export default function UniversityPage(props: PageProps) {
-  // Use React.use() to unwrap params
-  const params = use(props.params)
+export default function UniversityPage({ params }: { params: { slug: string } }) {
   const slug = params.slug
   const [isClient, setIsClient] = useState(false)
   
@@ -29,13 +21,13 @@ export default function UniversityPage(props: PageProps) {
   if (!isClient || isLoading) {
     return (
       <div className="flex items-center justify-center py-32">
-        <LoadingSpinner size="lg" />
+        <LoadingSpinner />
       </div>
     )
   }
   
-  // Show not found if there's an error or no university data
-  if (error || !university) {
+  // Show 404 if university not found
+  if (!university) {
     notFound()
   }
   

@@ -159,12 +159,13 @@ function BlogPostHeader({ post }: { post: BlogPost }) {
 }
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const slug = params.slug
   const cookieStore = cookies()
   const supabase = createServerClient(cookieStore)
   const blogService = BlogService.getInstance(supabase)
   
   // Get the post with dynamic TOC generation (now the default)
-  const post = await blogService.getPostBySlug(params.slug)
+  const post = await blogService.getPostBySlug(slug)
   
   if (!post) {
     notFound()
