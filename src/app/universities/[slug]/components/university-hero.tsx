@@ -56,8 +56,8 @@ export function UniversityHero({ university }: UniversityHeroProps) {
 
   const abbr = getUniversityAbbreviation(university.name)
   
-  // Use a consistent placeholder URL for logo
-  const logoUrl = university.logo || `https://placehold.co/400x400/2563eb/ffffff/png?text=${abbr}`
+  // Use the new logo path format
+  const logoUrl = `/images/universities/${university.slug}/logo.png`
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,15 +102,10 @@ export function UniversityHero({ university }: UniversityHeroProps) {
           </div>
           <h3 className="font-semibold truncate">{university.name}</h3>
         </div>
-        <div className="flex items-center gap-2">
-          <Button size="sm">
-            Apply Now
-          </Button>
-        </div>
       </div>
 
       {/* Hero section */}
-      <div className="relative h-[60vh] min-h-[400px] max-h-[600px] w-full overflow-hidden">
+      <div className="relative h-[48vh] min-h-[320px] max-h-[480px] w-full overflow-hidden">
         {/* Parallax background image */}
         <div 
           className="absolute inset-0 w-full h-full"
@@ -123,7 +118,7 @@ export function UniversityHero({ university }: UniversityHeroProps) {
             priority
             className="h-full"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
         </div>
 
         {/* Content overlay */}
@@ -153,15 +148,15 @@ export function UniversityHero({ university }: UniversityHeroProps) {
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <div className="flex items-center gap-2 mb-2">
-                    <Badge variant="secondary" className="bg-primary/10 text-primary px-2 py-0.5">
+                    <Badge variant="secondary" className="bg-white/10 text-white px-2 py-0.5">
                       {university.isPublic ? 'Public' : 'Private'}
                     </Badge>
-                    <div className="flex items-center text-muted-foreground">
+                    <div className="flex items-center text-white/70">
                       <MapPin className="w-3.5 h-3.5 mr-1" />
                       <span className="text-sm">{university.location}, {university.countryName}</span>
                     </div>
                   </div>
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{university.name}</h1>
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-white">{university.name}</h1>
                 </motion.div>
 
                 {/* Quick stats */}
@@ -172,44 +167,44 @@ export function UniversityHero({ university }: UniversityHeroProps) {
                   className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6"
                 >
                   {university.ranking?.qs && (
-                    <div className="bg-stat-card-bg backdrop-blur-sm rounded-lg p-3">
+                    <div className="bg-black/20 backdrop-blur-sm rounded-lg p-3">
                       <div className="flex items-center gap-2">
-                        <Award className="w-4 h-4 text-primary" />
-                        <span className="text-xs font-medium text-muted-foreground">QS Ranking</span>
+                        <Award className="w-4 h-4 text-white" />
+                        <span className="text-xs font-medium text-white/70">QS Ranking</span>
                       </div>
-                      <p className="text-lg font-bold mt-1">#{university.ranking.qs}</p>
+                      <p className="text-lg font-bold mt-1 text-white">#{university.ranking.qs}</p>
                     </div>
                   )}
                   
-                  <div className="bg-stat-card-bg backdrop-blur-sm rounded-lg p-3">
+                  <div className="bg-black/20 backdrop-blur-sm rounded-lg p-3">
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-primary" />
-                      <span className="text-xs font-medium text-muted-foreground">Est.</span>
+                      <Calendar className="w-4 h-4 text-white" />
+                      <span className="text-xs font-medium text-white/70">Est.</span>
                     </div>
-                    <p className="text-lg font-bold mt-1">{university.foundingYear}</p>
+                    <p className="text-lg font-bold mt-1 text-white">{university.foundingYear}</p>
                   </div>
                   
-                  <div className="bg-stat-card-bg backdrop-blur-sm rounded-lg p-3">
+                  <div className="bg-black/20 backdrop-blur-sm rounded-lg p-3">
                     <div className="flex items-center gap-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
                         <path d="M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0" />
                         <circle cx="12" cy="8" r="2" />
                       </svg>
-                      <span className="text-xs font-medium text-muted-foreground">Students</span>
+                      <span className="text-xs font-medium text-white/70">Students</span>
                     </div>
-                    <p className="text-lg font-bold mt-1">{university.studentPopulation.toLocaleString()}</p>
+                    <p className="text-lg font-bold mt-1 text-white">{university.studentPopulation.toLocaleString()}</p>
                   </div>
                   
-                  <div className="bg-stat-card-bg backdrop-blur-sm rounded-lg p-3">
+                  <div className="bg-black/20 backdrop-blur-sm rounded-lg p-3">
                     <div className="flex items-center gap-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
                         <path d="M2 12a5 5 0 0 0 5 5 8 8 0 0 1 5 2 8 8 0 0 1 5-2 5 5 0 0 0 5-5V7H2Z" />
                         <path d="M6 11c0-5.1 8-5.1 8 0" />
                         <path d="M10 11v5" />
                       </svg>
-                      <span className="text-xs font-medium text-muted-foreground">Success Rate</span>
+                      <span className="text-xs font-medium text-white/70">Success Rate</span>
                     </div>
-                    <p className="text-lg font-bold mt-1">{university.qogentMetrics.admissionSuccessRate}</p>
+                    <p className="text-lg font-bold mt-1 text-white">{university.qogentMetrics.admissionSuccessRate}</p>
                   </div>
                 </motion.div>
 
@@ -220,10 +215,6 @@ export function UniversityHero({ university }: UniversityHeroProps) {
                   transition={{ duration: 0.5, delay: 0.6 }}
                   className="flex flex-wrap gap-3"
                 >
-                  <Button size="lg" className="gap-2">
-                    Apply Now
-                    <CornerRightDown className="w-4 h-4" />
-                  </Button>
                   <Button variant="outline" size="lg" asChild>
                     <Link href={university.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                       <ExternalLink className="w-4 h-4" />

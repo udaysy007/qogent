@@ -9,6 +9,8 @@ import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/shared/theme-toggle"
+import { usePathname } from "next/navigation"
+import { Skeleton } from "@/components/ui/skeleton"
 
 interface NavItem {
   name: string
@@ -22,14 +24,31 @@ interface NavBarProps {
 }
 
 export function NavBar({ items, className }: NavBarProps) {
-  const [activeTab, setActiveTab] = useState(items[0].name)
+  const pathname = usePathname()
+  const [activeTab, setActiveTab] = useState("")
   const [isMobile, setIsMobile] = useState(false)
   const { theme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [logoLoaded, setLogoLoaded] = useState(false)
 
+  // Update active tab based on current URL when component mounts
   useEffect(() => {
     setMounted(true)
-  }, [])
+    
+    // Find matching nav item based on the current path
+    const matchedItem = items.find(item => {
+      // Check for exact match first
+      if (pathname === item.url) return true
+      
+      // Check for section match (e.g., /destinations/any-subpage matches /destinations)
+      if (item.url !== '/' && pathname.startsWith(item.url)) return true
+      
+      return false
+    })
+    
+    // Set the active tab to the matched item or default to home
+    setActiveTab(matchedItem?.name || items[0].name)
+  }, [pathname, items])
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,6 +59,30 @@ export function NavBar({ items, className }: NavBarProps) {
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
   }, [])
+
+  // Preload the logo images
+  useEffect(() => {
+    if (mounted) {
+      // Use a simple preloading approach without the Image constructor
+      const preloadImage = (src: string) => {
+        return new Promise<void>((resolve) => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.onload = () => {
+            resolve();
+          };
+        });
+      };
+      
+      // Preload both logos and set loaded state when done
+      Promise.all([
+        preloadImage('/images/qogent_logo.png'),
+        preloadImage('/images/qogent_logo_white.png')
+      ]).then(() => {
+        setLogoLoaded(true);
+      });
+    }
+  }, [mounted]);
 
   return (
     <>
@@ -57,22 +100,29 @@ export function NavBar({ items, className }: NavBarProps) {
             <div className="flex items-center gap-3 bg-background/80 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
               {/* Logo */}
               <Link href="/" className="flex items-center px-2">
-                {mounted && (
-                  <Image
-                    src={theme === 'dark' ? '/images/qogent_logo_white.png' : '/images/qogent_logo.png'}
-                    alt="Qogent Logo"
-                    width={200}
-                    height={60}
-                    className="h-11 w-auto object-contain select-none"
-                    priority
-                    quality={100}
-                    style={{ 
-                      imageRendering: 'crisp-edges',
-                      maxWidth: 'none'
-                    }}
-                    unoptimized
-                  />
-                )}
+                {/* Logo placeholder with exact dimensions to prevent layout shifts */}
+                <div className="relative h-11 w-[150px]">
+                  {(mounted && logoLoaded) ? (
+                    <Image
+                      src={theme === 'dark' ? '/images/qogent_logo_white.png' : '/images/qogent_logo.png'}
+                      alt="Qogent Logo"
+                      width={200}
+                      height={60}
+                      className="h-11 w-auto object-contain select-none"
+                      priority
+                      quality={100}
+                      style={{ 
+                        imageRendering: 'crisp-edges',
+                        maxWidth: 'none'
+                      }}
+                      unoptimized
+                    />
+                  ) : (
+                    <div className="h-11 w-full flex items-center justify-center">
+                      <Skeleton className="h-7 w-[120px]" />
+                    </div>
+                  )}
+                </div>
               </Link>
 
               {/* Navigation Items */}
@@ -133,9 +183,15 @@ export function NavBar({ items, className }: NavBarProps) {
               </div>
             </div>
 
-            {/* Theme Toggle */}
+            {/* Theme Toggle - Always show a placeholder while loading */}
             <div className="flex items-center justify-center bg-background/80 border border-border backdrop-blur-lg w-10 h-10 rounded-full shadow-lg group hover:bg-muted/50 transition-colors">
-              <ThemeToggle />
+              {mounted ? (
+                <ThemeToggle />
+              ) : (
+                <div className="w-5 h-5 rounded-full">
+                  <Skeleton className="h-5 w-5 rounded-full" />
+                </div>
+              )}
             </div>
           </div>
         </div>

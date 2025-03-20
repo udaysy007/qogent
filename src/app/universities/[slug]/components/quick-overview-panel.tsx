@@ -14,7 +14,6 @@ import {
   Award, 
   PanelRightOpen
 } from 'lucide-react'
-import { formatCurrency } from '@/lib/utils'
 import Link from 'next/link'
 
 interface QuickOverviewPanelProps {
@@ -96,12 +95,12 @@ export function QuickOverviewPanel({
       `}
     >
       <Card className={`
-        overflow-hidden border shadow-md
+        overflow-hidden border shadow-md bg-card/50 backdrop-blur-sm
         ${isMobile ? 'mx-auto max-w-md' : ''}
       `}>
         {/* Heading - always visible */}
         <div 
-          className="bg-primary/5 p-4 border-b flex justify-between items-center cursor-pointer"
+          className="bg-primary/5 p-3 border-b flex justify-between items-center cursor-pointer"
           onClick={() => isMobile && setIsCollapsed(!isCollapsed)}
         >
           <h3 className="font-semibold text-sm">Quick Overview</h3>
@@ -113,51 +112,51 @@ export function QuickOverviewPanel({
         </div>
 
         {/* Collapsible content */}
-        <div className={`p-4 flex flex-col gap-5 ${isMobile && isCollapsed ? 'hidden' : ''}`}>
+        <div className={`p-4 flex flex-col gap-4 ${isMobile && isCollapsed ? 'hidden' : ''}`}>
           {/* Application deadline countdown */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 border-l-2 border-primary pl-2">
               <CalendarClock className="h-4 w-4 text-primary" />
-              <h4 className="text-xs font-medium">Application Deadline</h4>
+              <h4 className="text-sm font-medium">Application Deadline</h4>
             </div>
-            <div className="bg-primary/5 rounded-md p-3">
-              <p className="text-sm font-semibold mb-1">Next Deadline</p>
-              <p className="text-xs text-muted-foreground">{getNextDeadline()}</p>
+            <div className="bg-primary/5 rounded-lg p-3 hover:bg-primary/10 transition-colors">
+              <p className="font-semibold text-sm mb-0.5">Next Deadline</p>
+              <p className="text-sm text-muted-foreground">{getNextDeadline()}</p>
             </div>
           </div>
 
           {/* Tuition fees */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 border-l-2 border-primary pl-2">
               <GraduationCap className="h-4 w-4 text-primary" />
-              <h4 className="text-xs font-medium">Tuition Fees (Annual)</h4>
+              <h4 className="text-sm font-medium">Tuition Fees (Annual)</h4>
             </div>
             <div className="flex flex-col gap-2">
-              <div className="bg-primary/5 rounded-md p-3">
-                <p className="text-sm font-semibold mb-1">International Students</p>
-                <p className="text-xs text-muted-foreground">{university.costs.tuitionInternational}</p>
+              <div className="bg-primary/5 rounded-lg p-3 hover:bg-primary/10 transition-colors">
+                <p className="font-semibold text-sm mb-0.5">International Students</p>
+                <p className="text-sm text-muted-foreground">{university.costs.tuitionInternational}</p>
               </div>
-              <div className="bg-primary/5 rounded-md p-3">
-                <p className="text-sm font-semibold mb-1">Domestic Students</p>
-                <p className="text-xs text-muted-foreground">{university.costs.tuitionDomestic}</p>
+              <div className="bg-primary/5 rounded-lg p-3 hover:bg-primary/10 transition-colors">
+                <p className="font-semibold text-sm mb-0.5">Domestic Students</p>
+                <p className="text-sm text-muted-foreground">{university.costs.tuitionDomestic}</p>
               </div>
             </div>
           </div>
 
           {/* Language requirements */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 border-l-2 border-primary pl-2">
               <Globe className="h-4 w-4 text-primary" />
-              <h4 className="text-xs font-medium">Language Requirements</h4>
+              <h4 className="text-sm font-medium">Language Requirements</h4>
             </div>
-            <div className="bg-primary/5 rounded-md p-3">
+            <div className="bg-primary/5 rounded-lg p-3 hover:bg-primary/10 transition-colors">
               {university.admissionRequirements
                 .filter(req => req.type === 'Language')
                 .map((req, index) => (
                   <div key={index} className="mb-2 last:mb-0">
-                    <p className="text-xs text-muted-foreground">{req.description}</p>
+                    <p className="text-sm text-muted-foreground">{req.description}</p>
                     {req.qogentInsight && (
-                      <p className="text-xs italic mt-1 text-primary">{req.qogentInsight}</p>
+                      <p className="text-sm italic mt-1.5 text-primary/90 bg-primary/5 p-1.5 rounded">{req.qogentInsight}</p>
                     )}
                   </div>
                 ))}
@@ -167,24 +166,24 @@ export function QuickOverviewPanel({
           {/* Popular program */}
           {displayProgram && (
             <div className="space-y-2">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 border-l-2 border-primary pl-2">
                 <BookOpen className="h-4 w-4 text-primary" />
-                <h4 className="text-xs font-medium">
+                <h4 className="text-sm font-medium">
                   {displayProgram.isPopular ? 'Most Popular Program' : 'Featured Program'}
                 </h4>
               </div>
-              <div className="bg-primary/5 rounded-md p-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+              <div className="bg-primary/5 rounded-lg p-3 hover:bg-primary/10 transition-colors">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Badge variant="outline" className="text-xs bg-background/50">
                     {displayProgram.degree}
                   </Badge>
-                  <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+                  <Badge variant="outline" className="text-xs bg-background/50">
                     {displayProgram.language}
                   </Badge>
                 </div>
-                <p className="text-sm font-semibold mb-1">{displayProgram.name}</p>
-                <div className="flex items-center gap-2 mt-2 text-[10px] text-muted-foreground">
-                  <Clock className="h-3 w-3" />
+                <p className="font-semibold text-sm mb-1.5">{displayProgram.name}</p>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Clock className="h-3.5 w-3.5" />
                   <span>{displayProgram.duration}</span>
                 </div>
               </div>
@@ -193,20 +192,22 @@ export function QuickOverviewPanel({
 
           {/* Success rate */}
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 border-l-2 border-primary pl-2">
               <Award className="h-4 w-4 text-primary" />
-              <h4 className="text-xs font-medium">Qogent Success Rate</h4>
+              <h4 className="text-sm font-medium">Qogent Success Rate</h4>
             </div>
-            <div className="bg-primary/5 rounded-md p-3">
-              <p className="text-sm font-semibold mb-1">{university.qogentMetrics.admissionSuccessRate}</p>
-              <p className="text-xs text-muted-foreground">
+            <div className="bg-primary/5 rounded-lg p-3 hover:bg-primary/10 transition-colors">
+              <p className="font-semibold text-sm mb-0.5">{university.qogentMetrics.admissionSuccessRate}</p>
+              <p className="text-sm text-muted-foreground">
                 {university.qogentMetrics.studentsPlaced} students placed
               </p>
             </div>
           </div>
 
           {/* Apply now button */}
-          <Button className="w-full mt-2">Apply Now</Button>
+          <Button size="default" className="w-full mt-1 font-medium text-sm">
+            Apply Now
+          </Button>
         </div>
       </Card>
       

@@ -76,7 +76,7 @@ export function ContentTabs({
           <TabsList 
             className={cn(
               "h-16 w-full justify-start overflow-x-auto overflow-y-hidden scrollbar-hide",
-              "md:justify-center md:h-14 md:pb-0"
+              "h-14 pb-0"
             )}
           >
             {tabs.map((tab) => (
@@ -84,9 +84,10 @@ export function ContentTabs({
                 key={tab.value}
                 value={tab.value}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2 h-12 data-[state=active]:bg-primary/5",
+                  "flex items-center gap-2 px-4 py-2 h-12",
                   "transition-all duration-300 rounded-none border-b-2 border-transparent",
-                  "data-[state=active]:border-primary"
+                  "data-[state=active]:border-primary data-[state=active]:text-primary",
+                  "hover:bg-accent/5"
                 )}
               >
                 {tab.icon}
