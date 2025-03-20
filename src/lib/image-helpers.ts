@@ -13,7 +13,7 @@ const isBrowser = typeof window !== 'undefined'
 export function getUniversityLogo(slug: string): string {
   // Always prefer local files in development
   if (process.env.NODE_ENV === 'development') {
-    return `/images/universities/logos/${slug}.svg`
+    return `/images/universities/${slug}/main.jpg`
   }
   
   // In production, use Supabase
@@ -21,7 +21,7 @@ export function getUniversityLogo(slug: string): string {
     return getUniversityLogoUrl(slug)
   } catch (error) {
     // If Supabase fails, fall back to local
-    return `/images/universities/logos/${slug}.svg`
+    return `/images/universities/${slug}/main.jpg`
   }
 }
 
@@ -31,7 +31,7 @@ export function getUniversityLogo(slug: string): string {
 export function getUniversityCampus(slug: string): string {
   // Always prefer local files in development
   if (process.env.NODE_ENV === 'development') {
-    return `/images/universities/campus/${slug}.jpg`
+    return `/images/universities/${slug}/main.jpg`
   }
   
   // In production, use Supabase
@@ -39,7 +39,7 @@ export function getUniversityCampus(slug: string): string {
     return getUniversityCampusUrl(slug)
   } catch (error) {
     // If Supabase fails, fall back to local
-    return `/images/universities/campus/${slug}.jpg`
+    return `/images/universities/${slug}/main.jpg`
   }
 }
 

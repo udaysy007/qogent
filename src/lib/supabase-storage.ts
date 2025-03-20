@@ -104,7 +104,7 @@ export function getUniversityCampusUrl(slug: string): string {
   }
   
   try {
-    return getStorageUrl('universities', `campus/${slug}.jpg`)
+    return getStorageUrl('universities', `${slug}/main.jpg`)
   } catch (error) {
     throw new Error(`Could not get campus image for university: ${slug}`)
   }

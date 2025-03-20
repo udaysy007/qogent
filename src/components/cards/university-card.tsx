@@ -3,20 +3,41 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { MapPin, Award, GraduationCap, Users, Building2 } from 'lucide-react'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { MapPin, Award, GraduationCap } from 'lucide-react'
+import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { UniversityCard as UniversityCardType } from '@/types/university'
 import { cn } from '@/lib/utils'
-import { getUniversityLogoUrl } from '@/lib/supabase-storage'
 
 interface UniversityCardProps {
   university: UniversityCardType
   className?: string
-  variant?: 'default' | 'featured'
+  variant?: 'default' | 'featured' | 'compact'
   isPremium?: boolean
   onClick?: () => void
+}
+
+// Add helper function for country code mapping
+const getCountryCode = (countryName: string): string => {
+  const countryMap: { [key: string]: string } = {
+    'United States': 'usa',
+    'USA': 'usa',
+    'United States of America': 'usa',
+    'United Kingdom': 'uk',
+    'UK': 'uk',
+    'Germany': 'germany',
+    'Ireland': 'ireland',
+    'Canada': 'canada',
+    'Poland': 'poland',
+    'Australia': 'australia',
+    'Netherlands': 'netherlands',
+    'Japan': 'japan',
+    'Singapore': 'singapore',
+    'France': 'france',
+    'Italy': 'italy'
+  }
+  return countryMap[countryName] || countryName.toLowerCase()
 }
 
 export function UniversityCard({
@@ -27,7 +48,6 @@ export function UniversityCard({
   onClick,
 }: UniversityCardProps) {
   const {
-    id,
     name,
     slug,
     countryName,
@@ -35,166 +55,159 @@ export function UniversityCard({
     isPublic,
     ranking,
     location,
-    featuredFields,
-    qogentSuccessRate,
   } = university
-
-  // Function to generate a meaningful abbreviation
-  const getUniversityAbbreviation = (name: string): string => {
-    // Special cases
-    if (name === 'Trinity College Dublin') return 'TCD'
-    if (name === 'Technical University of Munich') return 'TUM'
-    if (name === 'Humboldt University of Berlin') return 'HUB'
-    if (name === 'University of British Columbia') return 'UBC'
-    if (name === 'University of Toronto') return 'UTO'
-    if (name === 'Heidelberg University') return 'HDU'
-    
-    // Generic cases
-    if (name.startsWith('University of')) {
-      const parts = name.replace('University of ', '').split(' ')
-      if (parts.length === 1) return parts[0].slice(0, 3).toUpperCase()
-      return parts.map(part => part[0]).join('').toUpperCase()
-    }
-    
-    // For other cases, take first letter of significant words
-    const words = name.split(' ').filter(word => 
-      !['of', 'the', 'and', '&', 'for', 'in'].includes(word.toLowerCase())
-    )
-    
-    return words.slice(0, Math.min(3, words.length))
-      .map(word => word[0])
-      .join('')
-      .toUpperCase()
-  }
-
-  const abbr = getUniversityAbbreviation(name)
-  
-  // Generate placeholder image URL
-  const getImageUrl = () => {
-    if (logo && (logo.startsWith('http') || logo.startsWith('https'))) {
-      return logo;
-    }
-    
-    try {
-      return getUniversityLogoUrl(slug);
-    } catch (error) {
-      return `https://placehold.co/400x400/2563eb/ffffff/png?text=${abbr}`;
-    }
-  }
-
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = `https://placehold.co/400x400/2563eb/ffffff/png?text=${abbr}`;
-  };
-
-  const logoUrl = getImageUrl()
 
   return (
     <Card
       className={cn(
-        'group flex flex-col justify-between min-h-[320px] transition-all duration-300',
-        'bg-white dark:bg-gray-900/50 backdrop-blur-sm',
-        'border border-border/5 dark:border-border/10',
-        isPremium
-          ? 'hover:border-primary/50 dark:hover:border-primary/50 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/5'
-          : 'hover:scale-[1.01] hover:shadow-md hover:shadow-black/5 dark:hover:shadow-white/5',
+        'group relative overflow-hidden transition-all duration-300',
+        'min-h-[420px]', // Taller cards
+        'hover:shadow-xl hover:shadow-black/10',
+        variant === 'featured' ? 'md:col-span-2 min-h-[480px]' : '',
         className
       )}
       onClick={onClick}
     >
-      <CardHeader className="flex flex-row items-center gap-4 pb-4">
-        <div className={cn(
-          'relative flex-shrink-0 rounded-xl overflow-hidden',
-          'w-20 h-20 bg-blue-50 dark:bg-blue-950/50',
-          'shadow-sm border border-blue-100/50 dark:border-blue-900/50',
-          'transition-transform duration-300 group-hover:scale-105'
-        )}>
+      {/* Background Image with Enhanced Gradient Overlay */}
+      <div className="absolute inset-0 w-full h-full">
+        <Image
+          src={`/images/universities/${slug}/main.jpg`}
+          alt={`${name} campus`}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={variant === 'featured'}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent opacity-90" />
+      </div>
+
+      {/* Top Right Badge - Country Flag Only */}
+      <div className="absolute top-4 right-4 z-20">
+        <div className="rounded-lg overflow-hidden shadow-lg h-8 w-12 bg-gray-100">
           <Image
-            src={logoUrl}
-            alt={`${name} logo`}
-            fill
-            className="object-contain p-2.5"
-            sizes="80px"
-            priority={variant === 'featured'}
-            onError={handleImageError}
+            src={`/images/flags/${getCountryCode(countryName)}.svg`}
+            alt={`${countryName} flag`}
+            width={48}
+            height={32}
+            className="object-cover w-full h-full"
+            onError={(e) => {
+              // Fallback to png if svg doesn't exist
+              const imgElement = e.target as HTMLImageElement;
+              if (imgElement.src.endsWith('.svg')) {
+                imgElement.src = `/images/flags/${getCountryCode(countryName)}.png`;
+              }
+            }}
           />
         </div>
-        <div className="space-y-1.5">
-          <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">{name}</CardTitle>
-          <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
-            <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
-            <span>{location}, {countryName}</span>
-          </div>
-        </div>
-      </CardHeader>
-      
-      <CardContent className="pb-4 space-y-6">
-        <div className="flex flex-wrap gap-2">
-          {ranking?.qs && (
-            <Badge variant="outline" className="bg-blue-50/50 dark:bg-blue-950/50 border-primary/20 dark:border-primary/20 text-primary dark:text-primary-foreground">
-              <Award className="h-3.5 w-3.5 mr-1" />
-              QS #{ranking.qs}
-            </Badge>
-          )}
-          
-          {isPublic && (
-            <Badge variant="secondary" className="bg-secondary/10 dark:bg-secondary/20">
-              <Building2 className="h-3.5 w-3.5 mr-1" />
-              Public
-            </Badge>
-          )}
+      </div>
 
-          {qogentSuccessRate && (
-            <Badge variant="outline" className="bg-green-50/50 dark:bg-green-950/50 border-green-500/20 dark:border-green-400/20 text-green-600 dark:text-green-400">
-              <Users className="h-3.5 w-3.5 mr-1" />
-              {qogentSuccessRate}% Success
-            </Badge>
+      {/* Top Left Badge - Public/Private */}
+      <div className="absolute top-4 left-4 z-20">
+        <Badge 
+          variant="secondary" 
+          className={cn(
+            "text-[11px] font-medium py-0.5 px-2 shadow-md",
+            isPublic 
+              ? "bg-emerald-500/90 text-white" 
+              : "bg-purple-500/90 text-white"
           )}
-        </div>
+        >
+          {isPublic ? 'Public' : 'Private'}
+        </Badge>
+      </div>
 
-        {featuredFields.length > 0 && (
-          <div className="space-y-2.5">
-            <div className="flex items-center gap-1.5 text-sm font-medium text-gray-900 dark:text-gray-100">
-              <GraduationCap className="h-4 w-4" />
-              <span>Popular Programs</span>
+      {/* Content Container */}
+      <div className="relative z-10 flex flex-col h-full">
+        {/* Main Content Area */}
+        <div className="mt-auto p-6 pt-32">
+          {/* Logo and Title Section */}
+          <div className="flex items-start gap-4 mb-6">
+            <div className={cn(
+              'relative flex-shrink-0 rounded-xl overflow-hidden',
+              'w-16 h-16 bg-white',
+              'shadow-lg border border-white/10',
+              'transition-transform duration-300 group-hover:scale-110'
+            )}>
+              <Image
+                src={logo || `/images/universities/${slug.toLowerCase().replace(/[^a-z0-9]+/g, '-')}/logo.png`}
+                alt={`${name} logo`}
+                fill
+                className="object-contain p-2"
+                sizes="64px"
+                priority
+                onError={(e) => {
+                  const imgElement = e.target as HTMLImageElement;
+                  const originalSlug = slug.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                  const currentPath = imgElement.src;
+                  
+                  // Log the attempted path
+                  console.log('Failed to load logo from:', currentPath);
+                  
+                  // Try different path variations
+                  const variations = [
+                    originalSlug,
+                    originalSlug.replace(/^the-/, ''),
+                    originalSlug.replace('university-of-', 'university-'),
+                    originalSlug.replace(/^university-/, '').replace(/-university$/, ''),
+                    'university-' + originalSlug.replace(/^university-/, '').replace(/-university$/, '')
+                  ];
+                  
+                  // Find the first variation that exists in our directory structure
+                  const existingVariation = variations.find(v => {
+                    const path = `/images/universities/${v}/logo.png`;
+                    console.log('Trying path:', path);
+                    return true; // We'll try each path
+                  });
+                  
+                  if (existingVariation) {
+                    const newPath = `/images/universities/${existingVariation}/logo.png`;
+                    console.log('Using path:', newPath);
+                    imgElement.src = newPath;
+                  }
+                }}
+              />
             </div>
-            <div className="flex flex-wrap gap-1.5">
-              {featuredFields.slice(0, 3).map((field, i) => (
-                <Badge 
-                  key={i} 
-                  variant="secondary" 
-                  className="bg-gray-100/50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-400 hover:bg-gray-200/50 dark:hover:bg-gray-700/50"
-                >
-                  {field}
-                </Badge>
-              ))}
-              {featuredFields.length > 3 && (
-                <Badge 
-                  variant="outline" 
-                  className="text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-800"
-                >
-                  +{featuredFields.length - 3} more
-                </Badge>
+
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-white leading-tight mb-2 break-words">
+                {name}
+              </h3>
+              {ranking?.qs && (
+                <div className="flex items-center gap-1.5">
+                  <Award 
+                    className={cn(
+                      "h-3.5 w-3.5 flex-shrink-0",
+                      ranking.qs <= 50 ? "text-yellow-400" : "text-blue-400"
+                    )}
+                  />
+                  <span className="text-xs font-medium text-gray-300">
+                    QS #{ranking.qs}
+                  </span>
+                </div>
               )}
             </div>
           </div>
-        )}
-      </CardContent>
 
-      <CardFooter>
-        <Button 
-          variant="default"
-          className={cn(
-            'w-full transition-all duration-300',
-            'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600',
-            'text-white font-medium'
-          )}
-          asChild
-        >
-          <Link href={`/universities/${slug}`}>
-            View Details
-          </Link>
-        </Button>
-      </CardFooter>
+          {/* Action Button */}
+          <Button 
+            variant="default"
+            className={cn(
+              'w-full font-medium',
+              'py-4 text-sm rounded-full',
+              'bg-blue-600 hover:bg-blue-500 text-white',
+              'shadow-[0_4px_14px_0_rgba(0,118,255,0.39)]',
+              'hover:shadow-[0_6px_20px_rgba(0,118,255,0.23)]',
+              'transition-all duration-300 hover:scale-[1.02]',
+              'hover:glow-blue-500/50'
+            )}
+            asChild
+          >
+            <Link href={`/universities/${slug}`}>
+              View Details
+            </Link>
+          </Button>
+        </div>
+      </div>
     </Card>
   )
 } 
