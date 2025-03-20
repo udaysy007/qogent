@@ -64,22 +64,22 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
+/* Custom animations */
 @layer utilities {
   .animate-fade-in {
     animation: fadeIn 0.5s ease-in-out;
   }
-
+  
   .animate-slide-up {
     animation: slideUp 0.5s ease-out;
   }
-
+  
   .animate-pulse-subtle {
     animation: pulseSubtle 2s infinite;
   }
@@ -87,12 +87,12 @@
   .hover-lift {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-
+  
   .hover-lift:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
-
+  
   .dark .hover-lift:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   }
@@ -104,59 +104,45 @@
   .animate-appear-zoom {
     animation: appear-zoom 1s ease-out forwards;
   }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes appear-zoom {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes pulseSubtle {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
 }
 
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes appear-zoom {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 /* Mobile-first approach */
 .container {
   @apply px-4 md:px-6 mx-auto max-w-7xl;
@@ -180,4 +166,3 @@
 .card-modern {
   @apply rounded-xl bg-card p-6 shadow-sm transition-all duration-200 hover:shadow-md;
 }
-

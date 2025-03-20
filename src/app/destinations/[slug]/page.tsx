@@ -27,7 +27,8 @@ import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Database } from '@/types/supabase'
 import { UniversityCard as UniversityCardType } from '@/types/university'
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
+import LoadingDestination from "./loading"
 
 // Country type from Supabase
 type Country = Database['public']['Tables']['countries']['Row'];
@@ -38,29 +39,9 @@ export default function DestinationPage() {
   
   // Fetch country data
   const { data: destination, isLoading, isError } = useCountry(slug)
-  
-  // Always show loading state on initial render to prevent hydration mismatch
-  const [isClientReady, setIsClientReady] = useState(false)
-  
-  // After component mounts, mark as client-ready
-  useEffect(() => {
-    setIsClientReady(true)
-  }, [])
-  
-  // Show loading state during server render or initial client render
-  if (!isClientReady || isLoading) {
-    return (
-      <Section>
-        <Container>
-          <div className="flex items-center justify-center min-h-[50vh]">
-            <p>Loading destination information...</p>
-          </div>
-        </Container>
-      </Section>
-    )
-  }
 
-  if (isError || !destination) {
+  // Show error only if we have an explicit error and we're not loading
+  if (isError && !isLoading) {
     return (
       <Section>
         <Container>
@@ -78,6 +59,11 @@ export default function DestinationPage() {
         </Container>
       </Section>
     )
+  }
+
+  // If we're loading or don't have data yet, show loading skeleton
+  if (isLoading || !destination) {
+    return <LoadingDestination />
   }
 
   // Get country flag emoji

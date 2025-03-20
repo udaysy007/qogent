@@ -118,6 +118,8 @@ export function HeroWithMockup({
                 "bg-primary hover:bg-primary/90",
                 "text-primary-foreground shadow-lg",
                 "transition-all duration-300",
+                "rounded-full",
+                "px-8 py-6 text-lg"
               )}
             >
               <a href={primaryCta.href}>{primaryCta.text}</a>
@@ -131,6 +133,8 @@ export function HeroWithMockup({
                 "border-primary/20 hover:border-primary/30 dark:border-primary/20 dark:hover:border-primary/30",
                 "text-foreground/90 dark:text-foreground/90",
                 "transition-all duration-300",
+                "rounded-full",
+                "px-8 py-6 text-lg"
               )}
             >
               <a href={secondaryCta.href}>

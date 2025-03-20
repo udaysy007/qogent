@@ -19,10 +19,11 @@ export interface CountryData {
 }
 
 export interface UserPreferences {
-  studyLevel: string;
-  fieldOfStudy: string;
-  academicPerformance: string;
-  postGradPlans: string;
+  studyLevel: 'Bachelors' | 'Masters' | 'PhD' | 'Professional';
+  fieldOfStudy: 'Engineering' | 'Computer Science' | 'Business' | 'Medicine' | 
+                'Natural Sciences' | 'Arts' | 'Social Sciences' | 'Environmental';
+  academicPerformance: 'High Achiever' | 'Strong' | 'Projects Focus' | 'Well Rounded';
+  postGradPlans: 'Work Abroad' | 'Return Home' | 'Flexible Plans';
   tuitionBudget: number;
   livingExpensesBudget: number;
   scholarshipNeeds: string;
@@ -30,7 +31,8 @@ export interface UserPreferences {
   preferredRegions: string[];
   languagePreference: string;
   locationType: string;
-  importantFactors: string[];
+  importantFactors: Array<'Education Quality' | 'Cost' | 'Job Market' | 
+                        'Visa Process' | 'Safety' | 'Lifestyle'>;
 }
 
 export interface CountryRecommendation {
@@ -52,7 +54,7 @@ export const countryDatabase: Record<string, CountryData> = {
     qualityOfLife: "high",
     regions: ["Europe"],
     cityTypes: ["Major city", "Medium-sized city"],
-    strengths: ["Engineering", "Computer Science", "Sciences"],
+    strengths: ["Engineering", "Computer Science", "Natural Sciences"],
     characteristics: {
       freeEducation: true,
       workRights: true,
@@ -332,16 +334,17 @@ export function scoreCountries(preferences: UserPreferences): CountryRecommendat
 
   // Country-specific modifiers to make the competition more balanced
   const countryModifiers: Record<string, number> = {
-    "Germany": -3,      // Reduced penalty since Germany has low tuition
-    "Poland": 2,        // Boost for Poland since it's very affordable
-    "France": 1,        // Small boost for France due to low tuition
-    "Italy": 1,         // Small boost for Italy due to low tuition
-    "Canada": -5,       // Penalty for Canada due to high costs
-    "USA": -2,          // Changed from bonus to penalty due to very high costs
-    "UK": -2,           // Changed from bonus to penalty due to high costs
-    "Australia": -2,    // Changed from bonus to penalty due to high costs
-    "Ireland": -1,      // Small penalty for Ireland due to high costs
-    "Singapore": -1     // Small penalty for Singapore due to high costs
+    "Germany": 0,      // Removed penalty
+    "Poland": 1,       // Reduced boost
+    "France": 0,       // Removed boost
+    "Italy": 0,        // Removed boost
+    "Canada": -2,      // Reduced penalty
+    "USA": -2,         // Kept penalty
+    "UK": -2,          // Kept penalty
+    "Australia": -2,   // Kept penalty
+    "Ireland": -1,     // Kept small penalty
+    "Singapore": -1,   // Kept small penalty
+    "Netherlands": 0   // Added neutral modifier
   };
   
   // Function to adjust country modifiers based on tuition budget
@@ -351,42 +354,43 @@ export function scoreCountries(preferences: UserPreferences): CountryRecommendat
     // For very low budgets, further adjust to favor low-cost countries
     if (preferences.tuitionBudget <= 5000) {
       // Boost countries with low tuition
-      adjustedModifiers["Germany"] = 5;
-      adjustedModifiers["Poland"] = 7;
-      adjustedModifiers["France"] = 5;
-      adjustedModifiers["Italy"] = 5;
+      adjustedModifiers["Germany"] = 3;
+      adjustedModifiers["Poland"] = 4;
+      adjustedModifiers["France"] = 3;
+      adjustedModifiers["Italy"] = 3;
       
-      // Heavily penalize high-cost countries
-      adjustedModifiers["USA"] = -10;
-      adjustedModifiers["UK"] = -8;
-      adjustedModifiers["Australia"] = -10;
-      adjustedModifiers["Canada"] = -8;
-      adjustedModifiers["Ireland"] = -6;
-      adjustedModifiers["Singapore"] = -6;
-      adjustedModifiers["New Zealand"] = -6;
+      // Penalize high-cost countries
+      adjustedModifiers["USA"] = -8;
+      adjustedModifiers["UK"] = -6;
+      adjustedModifiers["Australia"] = -8;
+      adjustedModifiers["Canada"] = -6;
+      adjustedModifiers["Ireland"] = -4;
+      adjustedModifiers["Singapore"] = -4;
+      adjustedModifiers["New Zealand"] = -4;
+      adjustedModifiers["Netherlands"] = -2;
     }
     // For medium budgets, make more balanced adjustments
     else if (preferences.tuitionBudget <= 15000) {
       // Moderate boosts/penalties
       adjustedModifiers["Germany"] = 2;
-      adjustedModifiers["Poland"] = 4;
-      adjustedModifiers["France"] = 2;
-      adjustedModifiers["Italy"] = 2;
+      adjustedModifiers["Poland"] = 2;
+      adjustedModifiers["France"] = 1;
+      adjustedModifiers["Italy"] = 1;
       
-      adjustedModifiers["USA"] = -6;
-      adjustedModifiers["UK"] = -3;
-      adjustedModifiers["Australia"] = -5;
+      adjustedModifiers["USA"] = -4;
+      adjustedModifiers["UK"] = -2;
+      adjustedModifiers["Australia"] = -3;
+      adjustedModifiers["Netherlands"] = -1;
     }
     
     return adjustedModifiers;
   };
   
-  // Global reputation adjustments - these are more neutral adjustments 
-  // that reflect the global standing of educational systems
+  // Global reputation adjustments - reduced impact
   const reputationBonus: Record<string, number> = {
-    "USA": 3,
-    "UK": 3,
-    "Australia": 2,
+    "USA": 2,
+    "UK": 2,
+    "Australia": 1,
     "Canada": 1,
     "Germany": 1,
     "Japan": 1,
@@ -398,111 +402,81 @@ export function scoreCountries(preferences: UserPreferences): CountryRecommendat
   // Score each country based on the user's preferences
   const scoredCountries = Object.entries(countryDatabase).map(([country, data]) => {
     // Initialize with a base value - scores will range roughly from 0-100
-    // Start at 35 so that even poorly matching countries have some score
-    let score = 35;
+    // Start with a lower base score to allow more differentiation
+    let score = 40;
     const highlights: string[] = [];
     let description = "";
 
     // Apply country-specific modifier if it exists
     const adjustedModifiers = adjustCountryModifiersForBudget(preferences);
     if (adjustedModifiers[country]) {
-      score += adjustedModifiers[country];
+      score += adjustedModifiers[country] * 0.5; // Further reduced impact of modifiers
     }
     
     // Apply global reputation bonus if it exists
     if (reputationBonus[country]) {
-      score += reputationBonus[country];
-      // Don't add to highlights since this is a subtle background adjustment
+      score += reputationBonus[country] * 0.5; // Further reduced reputation impact
     }
 
-    // ------------------------
     // Field of study match (high weight factor)
-    // ------------------------
     if (data.strengths.includes(preferences.fieldOfStudy)) {
-      score += 15;
+      score += 12; // Reduced from 15
       highlights.push(`Strong in ${preferences.fieldOfStudy}`);
     } else {
-      // Penalty for not having the field of study
-      score -= 10;
+      score -= 8; // Reduced penalty from 10
     }
 
-    // ------------------------
-    // Region preference match (critical factor)
-    // ------------------------
+    // Region preference match (important but not critical)
     if (preferences.preferredRegions.length === 0 || 
         preferences.preferredRegions.some((region: string) => data.regions.includes(region)) || 
         preferences.preferredRegions.includes("No preference")) {
-      score += 12;
+      score += 10;
     } else {
-      // Strong penalty for wrong region - this is a critical factor
-      score -= 25;
+      score -= 15; // Reduced from 25
     }
 
-    // ------------------------
-    // Location type match
-    // ------------------------
-    if (data.cityTypes.includes(preferences.locationType) || preferences.locationType === "No preference") {
-      score += 8;
-    } else {
-      score -= 5;
-    }
-
-    // ------------------------
     // Budget considerations for tuition (critical factor)
-    // ------------------------
     const tuitionCostMap = {
-      "free": 500,      // For countries with free or nearly free tuition
-      "low": 3000,      // Updated from 5000
-      "medium": 12000,  // Reduced from 15000
-      "high": 25000,    // Reduced from 30000
-      "very high": 40000 // Reduced from 45000
+      "free": 500,
+      "low": 3000,
+      "medium": 12000,
+      "high": 25000,
+      "very high": 40000
     };
     
-    // Get the estimated tuition cost for this country
     const estimatedTuition = tuitionCostMap[data.tuition as keyof typeof tuitionCostMap];
     
-    // Calculate how well the budget matches the country's tuition
     if (preferences.tuitionBudget >= estimatedTuition) {
-      // Budget is sufficient
-      score += 12; // Reduced from 15 to make low tuition less advantageous
+      score += 10;
       
-      // Extra points if the budget is more than sufficient but not wasteful
       if (preferences.tuitionBudget < estimatedTuition * 1.5) {
-        score += 5;
+        score += 3; // Reduced from 5
       }
       
       if (data.tuition === "low") {
         highlights.push("Free/low tuition");
         
-        // Reduce the advantage of free education
         if (data.characteristics.freeEducation) {
-          score += 5; // Reduced from inherent advantage to explicit smaller bonus
+          score += 3; // Reduced from 5
         }
       }
       
-      // Give a bonus to premium education countries when budget allows
       if (data.tuition === "high" && preferences.tuitionBudget >= estimatedTuition * 1.2) {
-        score += 4; // Bonus for premium education when affordable
+        score += 3;
         highlights.push("Premium education");
       } else if (data.tuition === "very high" && preferences.tuitionBudget >= estimatedTuition * 1.1) {
-        score += 5; // Higher bonus for top-tier education institutions
+        score += 4;
         highlights.push("World-class education");
       }
     } else {
-      // Budget is insufficient - major penalty
       const shortfall = (estimatedTuition - preferences.tuitionBudget) / estimatedTuition;
       
-      // Apply a much more severe penalty for extreme budget mismatches
-      // This ensures that no amount of other bonuses can overcome a severe budget constraint
       if (shortfall > 0.8) {
-        // If budget is less than 20% of required tuition, apply severe penalty
-        score -= 50;
+        score -= 35; // Reduced from 50
       } else if (shortfall > 0.5) {
-        // If budget is less than 50% of required tuition, apply major penalty
-        score -= 35;
+        score -= 25; // Reduced from 35
       } else {
-        // Otherwise use standard penalty calculation
-        score -= Math.round(25 * shortfall);
+        score -= Math.round(20 * shortfall); // Reduced from 25
       }
     }
 
@@ -574,7 +548,7 @@ export function scoreCountries(preferences: UserPreferences): CountryRecommendat
     // ------------------------
     // Post-graduation plans (critical factor)
     // ------------------------
-    if (preferences.postGradPlans === "Work in the country where I study") {
+    if (preferences.postGradPlans === "Work Abroad") {
       // Check both job prospects and residency pathway
       if (data.jobProspects === "excellent") {
         score += 12; // Reduced from 15
@@ -593,7 +567,7 @@ export function scoreCountries(preferences: UserPreferences): CountryRecommendat
         // Smaller penalty for no residency path to give more weight to other factors
         score -= 12; // Reduced from 15
       }
-    } else if (preferences.postGradPlans === "Return to my home country") {
+    } else if (preferences.postGradPlans === "Return Home") {
       // For returning home, give more credit to internationally recognized education
       if (data.jobProspects === "excellent") {
         score += 10; // Increased from 8
@@ -634,14 +608,14 @@ export function scoreCountries(preferences: UserPreferences): CountryRecommendat
     // ------------------------
     // Important factors user selected (heavily weighted)
     // ------------------------
-    if (preferences.importantFactors.includes("High quality education") && data.qualityOfLife === "high") {
+    if (preferences.importantFactors.includes("Education Quality") && data.qualityOfLife === "high") {
       score += 12;
       highlights.push("High quality education");
-    } else if (preferences.importantFactors.includes("High quality education") && data.qualityOfLife !== "high") {
+    } else if (preferences.importantFactors.includes("Education Quality") && data.qualityOfLife !== "high") {
       score -= 10; // Penalty for important factor not met
     }
     
-    if (preferences.importantFactors.includes("Affordability")) {
+    if (preferences.importantFactors.includes("Cost")) {
       if (data.tuition === "low") {
         score += 12; // Reduced from 15
       } else if (data.tuition === "medium") {
@@ -668,7 +642,7 @@ export function scoreCountries(preferences: UserPreferences): CountryRecommendat
       }
     }
     
-    if (preferences.importantFactors.includes("Work opportunities")) {
+    if (preferences.importantFactors.includes("Job Market")) {
       if (data.characteristics.workRights && (data.jobProspects === "excellent" || data.jobProspects === "good")) {
         score += 15;
         if (!highlights.includes("Work while studying")) {
@@ -679,7 +653,7 @@ export function scoreCountries(preferences: UserPreferences): CountryRecommendat
       }
     }
     
-    if (preferences.importantFactors.includes("Ease of visa process")) {
+    if (preferences.importantFactors.includes("Visa Process")) {
       if (data.visaEase === "high") {
         score += 10;
         highlights.push("Straightforward visa process");
@@ -695,7 +669,7 @@ export function scoreCountries(preferences: UserPreferences): CountryRecommendat
       score -= 8; // Penalty for important factor not met
     }
     
-    if (preferences.importantFactors.includes("Quality of life")) {
+    if (preferences.importantFactors.includes("Lifestyle")) {
       if (data.qualityOfLife === "high") {
         score += 10;
         highlights.push("High quality of life");
@@ -734,7 +708,7 @@ export function scoreCountries(preferences: UserPreferences): CountryRecommendat
     }
     
     // Career aspects
-    if (preferences.postGradPlans === "Work in the country where I study") {
+    if (preferences.postGradPlans === "Work Abroad") {
       if (data.jobProspects === "excellent") {
         description += "With its strong economy and excellent job market, it's ideal for career-focused students. ";
       } else if (data.jobProspects === "good") {
@@ -834,7 +808,7 @@ export function generateCountryDescription(country: string, preferences: UserPre
   }
   
   // Career aspects
-  if (preferences.postGradPlans === "Work in the country where I study") {
+  if (preferences.postGradPlans === "Work Abroad") {
     if (data.jobProspects === "excellent") {
       description += "With its strong economy and excellent job market, it's ideal for career-focused students. ";
     } else if (data.jobProspects === "good") {
