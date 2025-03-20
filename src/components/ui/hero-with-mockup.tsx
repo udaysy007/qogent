@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Mockup } from "@/components/ui/mockup"
 import { Glow } from "@/components/ui/glow"
 import { Github } from "lucide-react"
+import { AvatarCircles } from "@/components/ui/avatar-circles"
 
 interface HeroWithMockupProps {
   title: string
@@ -23,6 +24,10 @@ interface HeroWithMockupProps {
     height: number
   }
   className?: string
+  avatarCircles?: {
+    avatarUrls: string[]
+    numPeople: number
+  }
 }
 
 export function HeroWithMockup({
@@ -39,17 +44,26 @@ export function HeroWithMockup({
   },
   mockupImage,
   className,
+  avatarCircles,
 }: HeroWithMockupProps) {
   return (
     <section
       className={cn(
-        "relative bg-background text-foreground",
+        "relative text-foreground",
         "py-4 px-4 md:py-12 lg:py-20",
-        "overflow-hidden",
+        "overflow-visible",
         className,
       )}
     >
       <div className="relative mx-auto max-w-[1280px] flex flex-col gap-8 lg:gap-16">
+        {/* Background Glow */}
+        <div className="absolute inset-0 -top-[100%] overflow-visible pointer-events-none">
+          <Glow
+            variant="above"
+            className="animate-appear-zoom opacity-0 [animation-delay:1000ms]"
+          />
+        </div>
+        
         <div className="relative z-10 flex flex-col items-center gap-6 text-center lg:gap-8">
           {/* Heading */}
           <h1
@@ -77,6 +91,20 @@ export function HeroWithMockup({
           >
             {description}
           </p>
+
+          {/* Avatar Circles with Text */}
+          {avatarCircles && (
+            <div className="flex flex-col items-center gap-2 animate-appear opacity-0 [animation-delay:300ms]">
+              <AvatarCircles
+                avatarUrls={avatarCircles.avatarUrls}
+                numPeople={avatarCircles.numPeople}
+                className="justify-center"
+              />
+              <p className="text-sm text-muted-foreground italic">
+                Join 1000+ students starting Winter 2025
+              </p>
+            </div>
+          )}
 
           {/* CTAs */}
           <div
@@ -130,14 +158,6 @@ export function HeroWithMockup({
             </Mockup>
           </div>
         </div>
-      </div>
-
-      {/* Background Glow */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <Glow
-          variant="above"
-          className="animate-appear-zoom opacity-0 [animation-delay:1000ms]"
-        />
       </div>
     </section>
   )

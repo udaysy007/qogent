@@ -69,18 +69,15 @@ export function UniversityCard({
 
   const abbr = getUniversityAbbreviation(name)
   
-  // Generate placeholder image URL - always return the same value on both server and client
+  // Generate placeholder image URL
   const getImageUrl = () => {
-    // If it's a full URL, use it directly
     if (logo && (logo.startsWith('http') || logo.startsWith('https'))) {
       return logo;
     }
     
-    // Try to get the logo from Supabase Storage
     try {
       return getUniversityLogoUrl(slug);
     } catch (error) {
-      // If Supabase Storage URL fails, use a placeholder
       return `https://placehold.co/400x400/2563eb/ffffff/png?text=${abbr}`;
     }
   }
@@ -89,25 +86,26 @@ export function UniversityCard({
     e.currentTarget.src = `https://placehold.co/400x400/2563eb/ffffff/png?text=${abbr}`;
   };
 
-  // Avoid any client-specific logic in the render function
   const logoUrl = getImageUrl()
 
   return (
     <Card
       className={cn(
-        'flex flex-col justify-between min-h-[320px] transition-all duration-200',
+        'group flex flex-col justify-between min-h-[320px] transition-all duration-300',
+        'bg-white dark:bg-gray-900/50 backdrop-blur-sm',
+        'border border-border/5 dark:border-border/10',
         isPremium
-          ? 'border-primary dark:border-primary hover:scale-[1.03] hover:shadow-md cursor-pointer'
-          : 'hover:scale-[1.01]',
+          ? 'hover:border-primary/50 dark:hover:border-primary/50 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/5'
+          : 'hover:scale-[1.01] hover:shadow-md hover:shadow-black/5 dark:hover:shadow-white/5',
         className
       )}
       onClick={onClick}
     >
-      <CardHeader className="flex flex-row items-center gap-2 pb-2">
+      <CardHeader className="flex flex-row items-center gap-4 pb-4">
         <div className={cn(
           'relative flex-shrink-0 rounded-xl overflow-hidden',
-          'w-20 h-20 bg-white dark:bg-gray-800',
-          'shadow-sm border border-border/10',
+          'w-20 h-20 bg-blue-50 dark:bg-blue-950/50',
+          'shadow-sm border border-blue-100/50 dark:border-blue-900/50',
           'transition-transform duration-300 group-hover:scale-105'
         )}>
           <Image
@@ -120,70 +118,76 @@ export function UniversityCard({
             onError={handleImageError}
           />
         </div>
-        <div>
-          <CardTitle className="text-base">{name}</CardTitle>
-          <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-            <MapPin className="h-4 w-4 flex-shrink-0" />
+        <div className="space-y-1.5">
+          <CardTitle className="text-base font-semibold text-gray-900 dark:text-gray-100">{name}</CardTitle>
+          <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
+            <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
             <span>{location}, {countryName}</span>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="pb-2">
-        <div className="flex flex-col gap-4">
-          <div>
-            <div className="flex flex-wrap gap-3 mb-4">
-              {ranking?.qs && (
-                <Badge variant="outline" className="px-3 py-1 border-primary/30">
-                  <Award className="h-4 w-4 mr-1.5 text-primary" />
-                  QS Rank #{ranking.qs}
-                </Badge>
-              )}
-              
-              {isPublic && (
-                <Badge variant="secondary" className="px-3 py-1">
-                  <Building2 className="h-4 w-4 mr-1.5" />
-                  Public University
-                </Badge>
-              )}
+      
+      <CardContent className="pb-4 space-y-6">
+        <div className="flex flex-wrap gap-2">
+          {ranking?.qs && (
+            <Badge variant="outline" className="bg-blue-50/50 dark:bg-blue-950/50 border-primary/20 dark:border-primary/20 text-primary dark:text-primary-foreground">
+              <Award className="h-3.5 w-3.5 mr-1" />
+              QS #{ranking.qs}
+            </Badge>
+          )}
+          
+          {isPublic && (
+            <Badge variant="secondary" className="bg-secondary/10 dark:bg-secondary/20">
+              <Building2 className="h-3.5 w-3.5 mr-1" />
+              Public
+            </Badge>
+          )}
 
-              {qogentSuccessRate && (
-                <Badge variant="outline" className="px-3 py-1 border-green-500/30 text-green-500">
-                  <Users className="h-4 w-4 mr-1.5" />
-                  {qogentSuccessRate}% Success Rate
+          {qogentSuccessRate && (
+            <Badge variant="outline" className="bg-green-50/50 dark:bg-green-950/50 border-green-500/20 dark:border-green-400/20 text-green-600 dark:text-green-400">
+              <Users className="h-3.5 w-3.5 mr-1" />
+              {qogentSuccessRate}% Success
+            </Badge>
+          )}
+        </div>
+
+        {featuredFields.length > 0 && (
+          <div className="space-y-2.5">
+            <div className="flex items-center gap-1.5 text-sm font-medium text-gray-900 dark:text-gray-100">
+              <GraduationCap className="h-4 w-4" />
+              <span>Popular Programs</span>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {featuredFields.slice(0, 3).map((field, i) => (
+                <Badge 
+                  key={i} 
+                  variant="secondary" 
+                  className="bg-gray-100/50 dark:bg-gray-800/50 text-gray-600 dark:text-gray-400 hover:bg-gray-200/50 dark:hover:bg-gray-700/50"
+                >
+                  {field}
+                </Badge>
+              ))}
+              {featuredFields.length > 3 && (
+                <Badge 
+                  variant="outline" 
+                  className="text-gray-500 dark:text-gray-400 border-gray-200 dark:border-gray-800"
+                >
+                  +{featuredFields.length - 3} more
                 </Badge>
               )}
             </div>
           </div>
-          {featuredFields.length > 0 && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-1.5 text-sm font-medium">
-                <GraduationCap className="h-4 w-4" />
-                <span>Popular Programs</span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {featuredFields.slice(0, 3).map((field, i) => (
-                  <Badge 
-                    key={i} 
-                    variant="secondary" 
-                    className="bg-secondary/20 hover:bg-secondary/30"
-                  >
-                    {field}
-                  </Badge>
-                ))}
-                {featuredFields.length > 3 && (
-                  <Badge variant="outline" className="text-muted-foreground">
-                    +{featuredFields.length - 3} more
-                  </Badge>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
+        )}
       </CardContent>
-      <CardFooter className="text-sm text-muted-foreground flex justify-between">
+
+      <CardFooter>
         <Button 
           variant="default"
-          className="w-full bg-primary hover:bg-primary/90"
+          className={cn(
+            'w-full transition-all duration-300',
+            'bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600',
+            'text-white font-medium'
+          )}
           asChild
         >
           <Link href={`/universities/${slug}`}>

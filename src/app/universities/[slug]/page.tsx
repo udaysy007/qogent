@@ -1,14 +1,16 @@
 'use client'
 
-import { notFound } from 'next/navigation'
+import { notFound, useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { UniversityDetail } from './university-detail'
 import { useUniversity } from '@/hooks/use-universities'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
 
-export default function UniversityPage({ params }: { params: { slug: string } }) {
-  const slug = params.slug
-  const [isClient, setIsClient] = useState(false)
+export default function UniversityPage() {
+  const params = useParams();
+  const slug = params?.slug as string;
+  
+  const [isClient, setIsClient] = useState(false);
   
   // Use the hook to fetch university data
   const { data: university, isLoading, error } = useUniversity(slug)
