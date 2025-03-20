@@ -65,16 +65,6 @@ export function getCountryFlag(code: string): string {
  * Get country hero image URL with proper fallback handling
  */
 export function getCountryHero(slug: string): string {
-  // Always prefer local files in development
-  if (process.env.NODE_ENV === 'development') {
-    return `/images/destinations/${slug}-hero.jpg`
-  }
-  
-  // In production, use Supabase
-  try {
-    return getCountryHeroUrl(slug)
-  } catch (error) {
-    // If Supabase fails, fall back to local
-    return `/images/destinations/${slug}-hero.jpg`
-  }
+  // Always use local files for country hero images
+  return `/images/destinations/${slug}-hero.jpg`
 } 
