@@ -233,6 +233,54 @@ export function NavBar({ items, className }: NavBarProps) {
           })}
         </div>
       </div>
+
+      {/* Mobile Top Logo */}
+      <div className="fixed top-0 left-0 w-full z-50 sm:hidden">
+        <div className="w-full flex justify-between items-center py-4 px-4 bg-transparent backdrop-blur-md">
+          {/* Empty div for spacing */}
+          <div className="w-8"></div>
+          
+          {/* Center logo */}
+          <Link href="/" className="flex justify-center">
+            <div className="relative h-10 w-[150px]">
+              {(mounted && logoLoaded) ? (
+                <Image
+                  src={theme === 'dark' ? '/images/qogent_logo_white.png' : '/images/qogent_logo.png'}
+                  alt="Qogent Logo"
+                  width={150}
+                  height={40}
+                  className="h-10 w-auto object-contain select-none"
+                  priority
+                  quality={100}
+                  style={{ 
+                    imageRendering: 'crisp-edges',
+                    maxWidth: 'none'
+                  }}
+                  unoptimized
+                />
+              ) : (
+                <div className="h-10 w-full flex items-center justify-center">
+                  <Skeleton className="h-6 w-[130px]" />
+                </div>
+              )}
+            </div>
+          </Link>
+          
+          {/* Theme toggle on the right */}
+          <div className="w-8 h-8 flex items-center justify-center">
+            {mounted ? (
+              <ThemeToggle />
+            ) : (
+              <div className="w-5 h-5 rounded-full">
+                <Skeleton className="h-5 w-5 rounded-full" />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      
+      {/* Mobile header spacer */}
+      <div className="w-full h-20 block sm:hidden" />
     </>
   )
 } 
