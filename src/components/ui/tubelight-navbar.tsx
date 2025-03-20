@@ -1,0 +1,182 @@
+"use client"
+
+import React, { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import Link from "next/link"
+import Image from "next/image"
+import { LucideIcon } from "lucide-react"
+import { useTheme } from "next-themes"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { ThemeToggle } from "@/components/shared/theme-toggle"
+
+interface NavItem {
+  name: string
+  url: string
+  icon: LucideIcon
+}
+
+interface NavBarProps {
+  items: NavItem[]
+  className?: string
+}
+
+export function NavBar({ items, className }: NavBarProps) {
+  const [activeTab, setActiveTab] = useState(items[0].name)
+  const [isMobile, setIsMobile] = useState(false)
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  return (
+    <>
+      {/* Desktop Navigation */}
+      <div className="relative w-full">
+        {/* Spacer div to prevent content jump when navbar becomes fixed */}
+        <div className="w-full h-24 hidden sm:block" />
+        <div
+          className={cn(
+            "fixed top-0 left-0 right-0 z-50 pt-6 pb-6 w-full hidden sm:block",
+            className,
+          )}
+        >
+          <div className="flex items-center justify-center gap-3">
+            <div className="flex items-center gap-3 bg-background/80 border border-border backdrop-blur-lg py-1 px-1 rounded-full shadow-lg">
+              {/* Logo */}
+              <Link href="/" className="flex items-center px-2">
+                {mounted && (
+                  <Image
+                    src={theme === 'dark' ? '/images/qogent_logo_white.png' : '/images/qogent_logo.png'}
+                    alt="Qogent Logo"
+                    width={200}
+                    height={60}
+                    className="h-11 w-auto object-contain select-none"
+                    priority
+                    quality={100}
+                    style={{ 
+                      imageRendering: 'crisp-edges',
+                      maxWidth: 'none'
+                    }}
+                    unoptimized
+                  />
+                )}
+              </Link>
+
+              {/* Navigation Items */}
+              {items.map((item) => {
+                const Icon = item.icon
+                const isActive = activeTab === item.name
+
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.url}
+                    onClick={() => setActiveTab(item.name)}
+                    className={cn(
+                      "relative cursor-pointer text-sm font-semibold px-6 py-2 rounded-full transition-colors",
+                      "text-foreground/80 hover:text-primary",
+                      isActive && "bg-muted text-primary",
+                    )}
+                  >
+                    <span>{item.name}</span>
+                    {isActive && (
+                      <motion.div
+                        layoutId="lamp"
+                        className="absolute inset-0 w-full bg-primary/5 rounded-full -z-10"
+                        initial={false}
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 30,
+                        }}
+                      >
+                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-t-full">
+                          <div className="absolute w-12 h-6 bg-primary/20 rounded-full blur-md -top-2 -left-2" />
+                          <div className="absolute w-8 h-6 bg-primary/20 rounded-full blur-md -top-1" />
+                          <div className="absolute w-4 h-4 bg-primary/20 rounded-full blur-sm top-0 left-2" />
+                        </div>
+                      </motion.div>
+                    )}
+                  </Link>
+                )
+              })}
+
+              {/* Right side items */}
+              <div className="flex items-center gap-4 pl-4 pr-1">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="rounded-full px-6 text-sm font-semibold text-foreground/80 hover:bg-muted hover:text-primary transition-colors"
+                >
+                  Sign In
+                </Button>
+                <Button 
+                  variant="ghost"
+                  size="sm" 
+                  className="rounded-full px-6 text-sm font-semibold text-primary hover:bg-muted hover:text-primary/90 transition-colors"
+                >
+                  Get Started
+                </Button>
+              </div>
+            </div>
+
+            {/* Theme Toggle */}
+            <div className="flex items-center justify-center bg-background/80 border border-border backdrop-blur-lg w-10 h-10 rounded-full shadow-lg group hover:bg-muted/50 transition-colors">
+              <ThemeToggle />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 sm:hidden">
+        <div className="flex items-center gap-3 bg-background/5 border border-border backdrop-blur-lg py-1 px-4 rounded-full shadow-lg">
+          {items.map((item) => {
+            const Icon = item.icon
+            const isActive = activeTab === item.name
+
+            return (
+              <Link
+                key={item.name}
+                href={item.url}
+                onClick={() => setActiveTab(item.name)}
+                className={cn(
+                  "relative p-2 rounded-full transition-colors",
+                  "text-foreground/80 hover:text-primary",
+                  isActive && "text-primary",
+                )}
+              >
+                <Icon size={18} strokeWidth={2.5} />
+                {isActive && (
+                  <motion.div
+                    layoutId="lamp-mobile"
+                    className="absolute inset-0 bg-primary/5 rounded-full -z-10"
+                    initial={false}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 30,
+                    }}
+                  />
+                )}
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </>
+  )
+} 
