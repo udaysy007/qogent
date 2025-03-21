@@ -45,83 +45,84 @@ jobs:
         id: url
         run: |
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            echo "BASE_URL=https://qogent.in" >> $GITHUB_ENV
+            echo "base_url=https://qogent.in" >> $GITHUB_OUTPUT
           else
-            echo "BASE_URL=http://localhost:3000" >> $GITHUB_ENV
+            echo "base_url=http://localhost:3000" >> $GITHUB_OUTPUT
           fi
 
       - name: Check for dead links
         id: blc
         run: |
-          echo "Starting link check for ${{ env.BASE_URL }}"
-          npx blc ${{ env.BASE_URL }} --follow --recursive --ordered --filter-level 3 --exclude "^(tel:|mailto:|sms:|#)" > dead-links-report.txt || true
+          echo "Starting link check for ${{ steps.url.outputs.base_url }}"
+          npx blc ${{ steps.url.outputs.base_url }} --follow --recursive --ordered --filter-level 3 --exclude "^(tel:|mailto:|sms:|#)" > dead-links-report.txt || true
           
-          # Count total and broken links
-          TOTAL_LINKS=$(grep -c "Getting links from\|├" dead-links-report.txt || echo "0")
-          BROKEN_LINKS=$(grep -c "BROKEN" dead-links-report.txt || echo "0")
-          EXCLUDED_LINKS=$(grep -c "excluded" dead-links-report.txt || echo "0")
+          # Initialize counters
+          total_links=0
+          broken_links=0
+          excluded_links=0
           
-          echo "TOTAL_LINKS=$TOTAL_LINKS" >> $GITHUB_ENV
-          echo "BROKEN_LINKS=$BROKEN_LINKS" >> $GITHUB_ENV
-          echo "EXCLUDED_LINKS=$EXCLUDED_LINKS" >> $GITHUB_ENV
+          # Count links using proper string handling
+          while IFS= read -r line; do
+            if [[ $line == *"Getting links from"* ]] || [[ $line == *"├"* ]]; then
+              ((total_links++))
+            fi
+            if [[ $line == *"BROKEN"* ]]; then
+              ((broken_links++))
+            fi
+            if [[ $line == *"excluded"* ]]; then
+              ((excluded_links++))
+            fi
+          done < dead-links-report.txt
+          
+          # Set outputs using proper syntax
+          echo "total_links=${total_links}" >> $GITHUB_OUTPUT
+          echo "broken_links=${broken_links}" >> $GITHUB_OUTPUT
+          echo "excluded_links=${excluded_links}" >> $GITHUB_OUTPUT
+          
+          # Also set environment variables for use in subsequent steps
+          echo "TOTAL_LINKS=${total_links}" >> $GITHUB_ENV
+          echo "BROKEN_LINKS=${broken_links}" >> $GITHUB_ENV
+          echo "EXCLUDED_LINKS=${excluded_links}" >> $GITHUB_ENV
 
       - name: Create issue if broken links found
-        if: env.BROKEN_LINKS != '0'
+        if: steps.blc.outputs.broken_links != '0'
         uses: actions/github-script@v6.4.1
         with:
           script: |
             const fs = require('fs');
             const report = fs.readFileSync('dead-links-report.txt', 'utf8');
             
-            try {
-              const summary = `# Dead Links Report
-              
-              ## Summary
-              - Total Links Scanned: ${{ env.TOTAL_LINKS }}
-              - Broken Links Found: ${{ env.BROKEN_LINKS }}
-              - Links Excluded: ${{ env.EXCLUDED_LINKS }}
-              
-              ## Known Issues
-              1. Missing Pages (404):
-                 - /get-started
-                 - /success-stories
-                 - /contact
-                 - /services
-              
-              2. External Links:
-                 - Indeed job boards (403)
-                 - IELTS sample test questions
-                 - Blog posts with incorrect domains
-              
-              ## Full Report
-              \`\`\`
-              ${report}
-              \`\`\`
-              
-              ## Next Steps
-              1. Create missing pages
-              2. Update external links to use alternative job boards
-              3. Fix blog post URLs to use correct domain
-              4. Review and update IELTS resource links
-              
-              Please review and fix these issues to maintain site reliability.`;
-              
-              const issueParams = {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                title: `🔍 Dead Links Found: ${process.env.BROKEN_LINKS} broken links detected`,
-                body: summary,
-                labels: ['maintenance']
-              };
-              
-              await github.rest.issues.create(issueParams);
-            } catch (error) {
-              console.log('Error creating issue:', error.message);
-              core.setFailed('Failed to create issue');
-            }
+            const summary = `# Dead Links Report
+            
+            ## Summary
+            - Total Links Scanned: ${{ steps.blc.outputs.total_links }}
+            - Broken Links Found: ${{ steps.blc.outputs.broken_links }}
+            - Links Excluded: ${{ steps.blc.outputs.excluded_links }}
+            
+            ## Full Report
+            \`\`\`
+            ${report}
+            \`\`\`
+            
+            ## Next Steps
+            1. Review and fix broken links
+            2. Update any outdated external references
+            3. Verify all internal page links
+            
+            Please review and fix these issues to maintain site reliability.`;
+            
+            const issueParams = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🔍 Dead Links Found: ${process.env.BROKEN_LINKS} broken links detected`,
+              body: summary,
+              labels: ['maintenance']
+            };
+            
+            await github.rest.issues.create(issueParams);
 
       - name: Upload dead links report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: dead-links-report
           path: dead-links-report.txt
