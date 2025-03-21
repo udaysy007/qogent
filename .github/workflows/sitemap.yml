@@ -14,14 +14,17 @@ on:
       - 'src/app/**'  # Run when pages are modified
       - 'scripts/generate-sitemap.ts'  # Run when sitemap generator is modified
 
+# Add permissions
+permissions:
+  contents: write
+  pages: write
+
 jobs:
   generate-sitemap:
     runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # Needed for pushing changes
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -31,9 +34,23 @@ jobs:
       - uses: pnpm/action-setup@v3
         with:
           version: 8
+          run_install: false
           
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Generate sitemap
         env:
@@ -43,7 +60,12 @@ jobs:
 
       - name: Commit and push if changed
         run: |
-          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add public/sitemap.xml public/robots.txt
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update sitemap [skip ci]" && git push) 
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update sitemap [skip ci]"
+            git push
+          fi 
