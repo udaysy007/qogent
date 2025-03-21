@@ -4,43 +4,35 @@ import Link from "next/link"
 import { ArrowRight, Calculator, Globe, Compass, Wallet, BarChart, Book, Briefcase, GraduationCap, FileText, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { ToolsHero } from "@/components/sections/tools-hero"
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { LucideIcon } from "lucide-react"
+
+interface Tool {
+  id: number
+  name: string
+  description: string
+  icon: LucideIcon
+  category: string
+  link: string
+  colorClass: string
+  comingSoon: boolean
+}
 
 export default function ToolsPage() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-28 bg-gradient-to-b from-background to-muted/30">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center text-center space-y-6 max-w-[800px] mx-auto">
-            <div className="inline-block rounded-full bg-primary/10 px-3 py-1 text-sm text-primary font-medium mb-2">
-              Student Resources
-            </div>
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Student Tools & Calculators
-            </h1>
-            <p className="text-muted-foreground md:text-lg max-w-[600px]">
-              Free tools designed to help international students planning to study abroad.
-              Find your ideal destination, compare costs, and make informed decisions.
-            </p>
-          </div>
-        </div>
-        
-        {/* Abstract background shape */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%] rounded-full bg-primary/5 blur-3xl opacity-50"></div>
-        </div>
-      </section>
+      <ToolsHero />
 
       {/* Tools Grid */}
-      <section className="py-16 md:py-20">
+      <section className="pt-8 pb-16 md:pt-12 md:pb-20">
         <div className="container px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {tools.map((tool) => (
               <ToolCard key={tool.id} tool={tool} />
             ))}
@@ -49,59 +41,61 @@ export default function ToolsPage() {
       </section>
 
       {/* Featured Tool */}
-      <section className="py-16 md:py-20 bg-muted/30">
+      <section className="py-16 md:py-20 bg-gradient-to-b from-background to-muted/20">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {/* Content */}
             <div className="space-y-6">
-              <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm">
+              <div className="inline-flex px-4 py-1.5 rounded-full text-sm font-medium bg-primary/10 text-primary">
                 Featured Tool
               </div>
-              <h2 className="text-3xl font-bold tracking-tight">
-                Destination Finder
-              </h2>
-              <p className="text-muted-foreground">
-                Find your perfect study destination based on your academic profile, budget, career goals, 
-                and preferences. Get personalized country recommendations in minutes.
+              <h2 className="text-3xl font-bold tracking-tight">Destination Finder</h2>
+              <p className="text-muted-foreground text-lg">
+                Find your perfect study destination based on your academic profile, budget,
+                career goals, and preferences. Get personalized country recommendations in
+                minutes.
               </p>
-              <ul className="space-y-2">
-                {[
-                  "Customized country recommendations", 
-                  "Budget and academic profile matching", 
-                  "Career prospects consideration",
-                  "Interactive results visualization"
-                ].map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <div className="rounded-full bg-primary/10 p-1 mt-0.5">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-3 w-3 text-primary"
-                      >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    </div>
-                    <span className="text-sm">{feature}</span>
-                  </li>
-                ))}
+              
+              <ul className="space-y-3">
+                <li className="flex items-center gap-2 text-muted-foreground">
+                  <svg className="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Customized country recommendations
+                </li>
+                <li className="flex items-center gap-2 text-muted-foreground">
+                  <svg className="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Budget and academic profile matching
+                </li>
+                <li className="flex items-center gap-2 text-muted-foreground">
+                  <svg className="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Career prospects consideration
+                </li>
+                <li className="flex items-center gap-2 text-muted-foreground">
+                  <svg className="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Interactive results visualization
+                </li>
               </ul>
-              <Button className="mt-4 bg-primary hover:bg-primary/90 whitespace-nowrap">
-                <Link href="/tools/destination-finder" className="text-primary-foreground flex items-center">
-                  Try It Now
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+
+              <Button asChild size="lg" className="rounded-full">
+                <Link href="/tools/destination-finder">Try It Now</Link>
               </Button>
             </div>
-            <div className="bg-card rounded-xl p-6 md:p-8 shadow-sm border">
-              <div className="aspect-video bg-muted rounded-lg flex items-center justify-center overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-primary/5 to-primary/10 flex items-center justify-center">
-                  <Compass className="h-16 w-16 text-primary/40" />
-                </div>
-              </div>
+
+            {/* GIF Preview */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-primary/10">
+              <img
+                src="/images/tools/destination_finder_tool.gif"
+                alt="Destination Finder Tool Preview"
+                className="w-full h-auto"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/5 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
         </div>
@@ -110,7 +104,7 @@ export default function ToolsPage() {
       {/* CTA Section */}
       <section className="py-16 md:py-20">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-card p-8 md:p-10 rounded-xl border bg-gradient-to-br from-background to-muted/30">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-br from-card/50 to-muted/20 p-8 md:p-10 rounded-xl border">
             <div className="space-y-4 text-center md:text-left">
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
                 Need Personalized Help?
@@ -133,95 +127,101 @@ export default function ToolsPage() {
 }
 
 // Tool Card Component
-function ToolCard({ tool }) {
+function ToolCard({ tool }: { tool: Tool }) {
   return (
     <Link 
       href={tool.comingSoon ? "#" : tool.link}
       className={`block ${!tool.comingSoon && "cursor-pointer"}`}
     >
-      <Card className="overflow-hidden group hover:shadow-md transition-all duration-200 border bg-gradient-to-b from-card to-card/80 h-full">
+      <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-gradient-to-br from-background/50 to-background h-full border-0">
         <div className="p-6 flex flex-col h-full">
-          <div className="mb-4">
-            <div className="p-3 rounded-full bg-gradient-to-br from-[var(--tool-color-light)] to-[var(--tool-color)] w-fit" 
-                 style={{ 
-                   "--tool-color": tool.colorClass, 
-                   "--tool-color-light": `${tool.colorClass}20` 
-                 } as React.CSSProperties}>
-              <tool.icon className="h-6 w-6 text-[var(--tool-color)]" />
+          <div className="flex items-start justify-between mb-6">
+            <div>
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-[var(--tool-color-light)] to-[var(--tool-color)] w-fit" 
+                   style={{ 
+                     "--tool-color": tool.colorClass, 
+                     "--tool-color-light": `${tool.colorClass}20` 
+                   } as React.CSSProperties}>
+                <tool.icon className="h-5 w-5 text-[var(--tool-color)]" />
+              </div>
+              <h3 className="text-lg font-semibold mt-4 line-clamp-1">{tool.name}</h3>
             </div>
-            <h3 className="text-xl font-medium mt-3">{tool.name}</h3>
+            <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-muted/30">
+              {tool.category}
+            </span>
           </div>
           
-          <p className="text-sm text-muted-foreground mb-6">
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
             {tool.description}
           </p>
           
-          <div className="mt-auto flex justify-between items-center">
+          <div className="mt-auto">
             {tool.comingSoon ? (
-              <div className="inline-block rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+              <div className="inline-flex items-center rounded-full bg-muted/50 px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
                 Coming Soon
               </div>
             ) : (
-              <div className="text-primary flex items-center group-hover:underline whitespace-nowrap">
-                Explore Tool
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 flex-shrink-0" />
+              <div className="inline-flex items-center text-sm font-medium text-primary group-hover:underline">
+                Try Now
+                <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
             )}
           </div>
         </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-muted/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       </Card>
     </Link>
   )
 }
 
-// Sample data for tools - only keeping the 4 implemented tools and setting others to "Coming Soon"
+// Sample data for tools - with shorter descriptions
 const tools = [
   {
     id: 1,
     name: "Destination Finder",
-    description: "Find your perfect study destination based on your academic profile, budget, and preferences.",
+    description: "Find your ideal study destination based on your profile and preferences.",
     icon: Compass,
-    category: "destinations",
+    category: "Destinations",
     link: "/tools/destination-finder",
     colorClass: "var(--primary)",
     comingSoon: false
   },
   {
     id: 2,
-    name: "Country Comparison Dashboard",
-    description: "Compare up to 3 countries side-by-side across key metrics like costs, visa requirements, and job opportunities.",
+    name: "Country Comparison",
+    description: "Compare countries across key metrics like costs, visas, and opportunities.",
     icon: BarChart,
-    category: "destinations",
+    category: "Destinations",
     link: "/tools/country-comparison",
     colorClass: "var(--info)",
     comingSoon: false
   },
   {
     id: 3,
-    name: "Education ROI Calculator",
-    description: "Calculate your return on investment for studying abroad based on costs and potential earnings.",
+    name: "ROI Calculator",
+    description: "Calculate your education return on investment abroad.",
     icon: Calculator,
-    category: "costs",
+    category: "Costs",
     link: "/tools/roi-calculator",
     colorClass: "var(--success)",
     comingSoon: false
   },
   {
     id: 4,
-    name: "Cost of Living Calculator",
-    description: "Estimate your monthly expenses in different cities based on your lifestyle preferences.",
+    name: "Cost Calculator",
+    description: "Estimate monthly expenses in different cities worldwide.",
     icon: Wallet,
-    category: "costs",
+    category: "Costs",
     link: "/tools/cost-calculator",
     colorClass: "var(--success)",
     comingSoon: false
   },
   {
     id: 5,
-    name: "Admission Requirements Checker",
-    description: "Check if you meet the admission requirements for universities based on your academic profile.",
+    name: "Requirements Checker",
+    description: "Check if you meet university admission requirements.",
     icon: GraduationCap,
-    category: "requirements",
+    category: "Requirements",
     link: "/tools/requirements-checker",
     colorClass: "var(--warning)",
     comingSoon: true
@@ -229,29 +229,29 @@ const tools = [
   {
     id: 6,
     name: "Document Validator",
-    description: "Check if your documents meet university and visa requirements before submitting your application.",
+    description: "Validate your documents against university requirements.",
     icon: FileText,
-    category: "requirements",
+    category: "Requirements",
     link: "/tools/document-validator",
     colorClass: "var(--warning)",
     comingSoon: true
   },
   {
     id: 7,
-    name: "Application Timeline Generator",
-    description: "Create a personalized timeline for your study abroad application process.",
+    name: "Timeline Generator",
+    description: "Create your personalized application timeline.",
     icon: Calendar,
-    category: "planning",
+    category: "Planning",
     link: "/tools/timeline-generator",
     colorClass: "var(--secondary)",
     comingSoon: true
   },
   {
     id: 8,
-    name: "Career Path Explorer",
-    description: "Explore potential career paths based on your field of study and country of choice.",
+    name: "Career Explorer",
+    description: "Explore career paths based on your study choices.",
     icon: Briefcase,
-    category: "planning",
+    category: "Planning",
     link: "/tools/career-explorer",
     colorClass: "var(--secondary)",
     comingSoon: true

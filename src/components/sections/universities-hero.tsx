@@ -18,9 +18,9 @@ export function UniversitiesHero() {
       <div className="container relative z-10 mx-auto grid min-h-[40vh] grid-cols-1 items-center gap-6 px-4 py-8 md:grid-cols-2 lg:px-6">
         {/* Left Column - Text Content */}
         <div className="flex flex-col items-start gap-4">
-          <h1 className="inline-block animate-appear bg-gradient-to-b from-foreground via-foreground/90 to-muted-foreground bg-clip-text text-3xl font-bold leading-tight text-transparent drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] md:text-4xl lg:text-5xl">
+          <h1 className="inline-block animate-appear bg-gradient-to-b from-foreground via-foreground/90 to-muted-foreground bg-clip-text text-3xl font-bold leading-[1.15] pb-2 text-transparent drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] md:text-4xl lg:text-5xl">
             Find Your Perfect
-            <span className="block bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent leading-[1.15] pb-1">
               University
             </span>
           </h1>

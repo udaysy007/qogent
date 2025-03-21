@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { BlogService } from '@/lib/services/blog'
 import { createServerClient } from '@/lib/supabase/server'
 import { BlogListing } from '@/components/blog/blog-listing'
+import { BlogHero } from '@/components/sections/blog-hero'
 
 export const metadata: Metadata = {
   title: 'Blog - Qogent',
@@ -43,36 +44,54 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogPage() {
-  const cookieStore = cookies()
-  const supabase = createServerClient(cookieStore)
-  const blogService = BlogService.getInstance(supabase)
-  const posts = await blogService.getAllPosts()
-  
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Blog',
-            name: 'Qogent Blog',
-            description: 'Explore our latest insights, tutorials, and updates on education, technology, and more.',
-            url: 'https://qogent.com/blog',
-            publisher: {
-              '@type': 'Organization',
-              name: 'Qogent',
-              logo: {
-                '@type': 'ImageObject',
-                url: 'https://qogent.com/logo.png'
+  try {
+    // Create the Supabase client
+    const supabase = createServerClient(cookies())
+    
+    // Initialize the blog service
+    const blogService = BlogService.getInstance(supabase)
+    
+    // Get all posts - no need to wait for session for public blog
+    const posts = await blogService.getAllPosts()
+
+    return (
+      <main>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Blog',
+              name: 'Qogent Blog',
+              description: 'Explore our latest insights, tutorials, and updates on education, technology, and more.',
+              url: 'https://qogent.com/blog',
+              publisher: {
+                '@type': 'Organization',
+                name: 'Qogent',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: 'https://qogent.com/logo.png'
+                }
               }
-            }
-          })
-        }}
-      />
-      <div className="container py-8 md:py-12">
-        <BlogListing initialPosts={posts} />
-      </div>
-    </>
-  )
+            })
+          }}
+        />
+        <BlogHero />
+        <div className="container pt-0 pb-8 md:pb-12">
+          <BlogListing initialPosts={posts} />
+        </div>
+      </main>
+    )
+  } catch (error) {
+    console.error('Error in BlogPage:', error)
+    // Return a fallback UI in case of error
+    return (
+      <main>
+        <BlogHero />
+        <div className="container pt-0 pb-8 md:pb-12">
+          <BlogListing initialPosts={[]} />
+        </div>
+      </main>
+    )
+  }
 } 

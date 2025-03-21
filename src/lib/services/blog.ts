@@ -326,49 +326,150 @@ export class BlogService {
   }
 
   public async searchPosts(query?: string, category?: string): Promise<BlogPost[]> {
-    let supabaseQuery = this.supabase
+    if (!query && !category) {
+      const { data, error } = await this.supabase
+        .from('blog_posts')
+        .select(`
+          id,
+          slug,
+          title,
+          description,
+          content,
+          published_at,
+          updated_at,
+          read_time,
+          category,
+          image_url,
+          author:blog_authors(
+            id,
+            name,
+            role,
+            avatar_url,
+            bio
+          )
+        `)
+        .order('published_at', { ascending: false })
+
+      if (error) {
+        console.error('Error fetching posts:', error)
+        return []
+      }
+
+      return data.map(post => this.transformBlogPost(post))
+    }
+
+    // First, get posts with title matches
+    const titleQuery = this.supabase
       .from('blog_posts')
       .select(`
-        *,
-        author:authors(*)
+        id,
+        slug,
+        title,
+        description,
+        content,
+        published_at,
+        updated_at,
+        read_time,
+        category,
+        image_url,
+        author:blog_authors(
+          id,
+          name,
+          role,
+          avatar_url,
+          bio
+        )
       `)
+      .ilike('title', `%${query}%`)
+      .order('published_at', { ascending: false })
 
-    if (query) {
-      supabaseQuery = supabaseQuery.or(
-        `title.ilike.%${query}%,description.ilike.%${query}%,content.ilike.%${query}%`
-      )
-    }
+    // Then, get posts with description matches (excluding title matches)
+    const descriptionQuery = this.supabase
+      .from('blog_posts')
+      .select(`
+        id,
+        slug,
+        title,
+        description,
+        content,
+        published_at,
+        updated_at,
+        read_time,
+        category,
+        image_url,
+        author:blog_authors(
+          id,
+          name,
+          role,
+          avatar_url,
+          bio
+        )
+      `)
+      .ilike('description', `%${query}%`)
+      .not('title', 'ilike', `%${query}%`)
+      .order('published_at', { ascending: false })
+
+    // Finally, get posts with content matches (excluding title and description matches)
+    const contentQuery = this.supabase
+      .from('blog_posts')
+      .select(`
+        id,
+        slug,
+        title,
+        description,
+        content,
+        published_at,
+        updated_at,
+        read_time,
+        category,
+        image_url,
+        author:blog_authors(
+          id,
+          name,
+          role,
+          avatar_url,
+          bio
+        )
+      `)
+      .ilike('content', `%${query}%`)
+      .not('title', 'ilike', `%${query}%`)
+      .not('description', 'ilike', `%${query}%`)
+      .order('published_at', { ascending: false })
 
     if (category) {
-      supabaseQuery = supabaseQuery.eq('category', category)
+      titleQuery.eq('category', category)
+      descriptionQuery.eq('category', category)
+      contentQuery.eq('category', category)
     }
 
-    const { data: posts, error } = await supabaseQuery.order('published_at', { ascending: false })
+    try {
+      const [titleResults, descriptionResults, contentResults] = await Promise.all([
+        titleQuery,
+        descriptionQuery,
+        contentQuery
+      ])
 
-    if (error) {
+      if (titleResults.error || descriptionResults.error || contentResults.error) {
+        console.error('Error searching posts:', {
+          titleError: titleResults.error,
+          descriptionError: descriptionResults.error,
+          contentError: contentResults.error
+        })
+        return []
+      }
+
+      // Combine results in priority order (title matches first, then description, then content)
+      const allPosts = [
+        ...(titleResults.data || []),
+        ...(descriptionResults.data || []),
+        ...(contentResults.data || [])
+      ]
+
+      return allPosts.map(post => this.transformBlogPost(post))
+    } catch (error) {
       console.error('Error searching posts:', error)
       return []
     }
-
-    return posts.map(post => ({
-      ...post,
-      tags: [],
-      related_posts: [],
-      // SEO fields
-      meta_title: post.meta_title || post.title,
-      meta_description: post.meta_description || post.description,
-      canonical_url: post.canonical_url || `https://qogent.com/blog/${post.slug}`,
-      is_indexed: post.is_indexed ?? true,
-      structured_data: post.structured_data || this.generateStructuredData(post),
-      og_image_url: post.og_image_url || post.image_url,
-      og_image_alt: post.og_image_alt || post.title,
-      keywords: post.keywords || [post.category, ...(post.tags || [])],
-      last_modified: post.last_modified || post.updated_at,
-      priority: post.priority || 0.5,
-      change_frequency: post.change_frequency || 'weekly',
-      language: post.language || 'en-US',
-      translations: post.translations || {}
-    }))
   }
 
   private transformBlogPost(data: any): BlogPost {

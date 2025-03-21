@@ -72,8 +72,8 @@ export function HeroWithMockup({
               "bg-gradient-to-b from-foreground via-foreground/90 to-muted-foreground",
               "bg-clip-text text-transparent",
               "text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl",
-              "leading-[1.2] sm:leading-[1.2]",
-              "pb-1",
+              "leading-[1.15] sm:leading-[1.15]",
+              "pb-2",
               "drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]",
             )}
           >

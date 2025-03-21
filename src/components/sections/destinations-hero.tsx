@@ -94,9 +94,9 @@ export function DestinationsHero() {
       <div className="container relative z-10 mx-auto flex flex-col justify-center min-h-[50vh] px-4 py-12 lg:px-6">
         {/* Text Content with background blur - always visible */}
         <div className="max-w-2xl bg-background/30 backdrop-blur-md p-6 rounded-xl shadow-lg">
-          <h1 className="animate-appear bg-gradient-to-b from-foreground via-foreground/90 to-muted-foreground bg-clip-text text-4xl font-bold leading-tight text-transparent drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] md:text-5xl lg:text-6xl">
+          <h1 className="animate-appear bg-gradient-to-b from-foreground via-foreground/90 to-muted-foreground bg-clip-text text-4xl font-bold leading-[1.15] pb-2 text-transparent drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] md:text-5xl lg:text-6xl">
             Explore Global
-            <span className="block bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent leading-[1.15] pb-1">
               Destinations
             </span>
           </h1>
