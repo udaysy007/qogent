@@ -1,13 +1,33 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  productionBrowserSourceMaps: true,
   images: {
-    domains: [
-      'images.unsplash.com', 
-      'upload.wikimedia.org', 
-      'randomuser.me', 
-      'placehold.co',
-      'kavkopyjktifvtxqgcft.supabase.co'
-    ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'upload.wikimedia.org'
+      },
+      {
+        protocol: 'https',
+        hostname: 'randomuser.me'
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co'
+      },
+      {
+        protocol: 'https',
+        hostname: 'kavkopyjktifvtxqgcft.supabase.co'
+      },
+      {
+        protocol: 'https',
+        hostname: 'v5.airtableusercontent.com'
+      }
+    ]
   },
   typescript: {
     ignoreBuildErrors: true,
@@ -15,11 +35,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // Generate sitemap during build on the server
-      require('./scripts/generate-sitemap')
-    }
+  webpack: (config) => {
+    // Enable source maps in development and production
+    config.devtool = 'source-map'
     return config
   },
 }

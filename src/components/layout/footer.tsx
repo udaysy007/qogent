@@ -66,6 +66,11 @@ export function Footer() {
             <h3 className="text-sm font-medium">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
+                <Link href="/success-stories" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Success Stories
+                </Link>
+              </li>
+              <li>
                 <Link href="/tools" className="text-muted-foreground hover:text-foreground transition-colors">
                   Tools
                 </Link>
@@ -104,8 +109,19 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-12 border-t pt-6 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Qogent. All rights reserved.</p>
+        <div className="mt-12 border-t pt-6">
+          <div className="flex flex-col items-center justify-between gap-4 text-center text-sm text-muted-foreground md:flex-row md:text-left">
+            <p>© {new Date().getFullYear()} Qogent. All rights reserved.</p>
+            <div className="flex items-center space-x-4">
+              <Link href="/privacy" className="hover:text-foreground transition-colors">
+                Privacy Policy
+              </Link>
+              <span className="text-muted-foreground/60">•</span>
+              <Link href="/terms" className="hover:text-foreground transition-colors">
+                Terms of Service
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
