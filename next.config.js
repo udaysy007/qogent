@@ -15,6 +15,13 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Generate sitemap during build on the server
+      require('./scripts/generate-sitemap')
+    }
+    return config
+  },
 }
 
 module.exports = nextConfig 

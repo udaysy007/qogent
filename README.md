@@ -160,3 +160,27 @@ docs/                      # Project documentation
 ## Deployment
 
 The site is deployed via Netlify. For configuration details, see the `netlify.toml` file.
+
+## SEO and Sitemap
+
+The website's sitemap is automatically generated and updated through GitHub Actions:
+
+- Updates daily at midnight UTC
+- Updates when new pages are added or modified
+- Updates when the sitemap generator is modified
+
+The sitemap can be found at:
+- XML format: https://qogent.com/sitemap.xml
+- Text format: https://qogent.com/robots.txt
+
+### Manual Sitemap Generation
+
+If needed, you can manually generate the sitemap:
+
+```bash
+pnpm generate-sitemap
+```
+
+This will create/update:
+- `public/sitemap.xml` - Contains all website URLs
+- `public/robots.txt` - Contains search engine instructions and sitemap location
