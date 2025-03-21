@@ -1,0 +1,61 @@
+name: Dead Link Checker
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Run weekly at midnight on Sunday
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 10.4.1
+          run_install: false
+
+      - name: Install dependencies
+        run: |
+          pnpm install --no-frozen-lockfile
+          pnpm add -D broken-link-checker
+
+      - name: Generate sitemap
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        run: pnpm generate-sitemap
+
+      - name: Check for dead links
+        run: |
+          npx blc https://qogent.com -ro > dead-links-report.txt || true
+          if [ -s dead-links-report.txt ]; then
+            echo "Dead links found:"
+            cat dead-links-report.txt
+            # Create GitHub issue if dead links are found
+            gh issue create \
+              --title "Dead Links Found - $(date +%Y-%m-%d)" \
+              --body "Dead links were found during the automated check. See the report below:
+
+              $(cat dead-links-report.txt)" \
+              --label "bug,maintenance"
+          else
+            echo "No dead links found!"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload report as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dead-links-report
+          path: dead-links-report.txt
+          retention-days: 30 
