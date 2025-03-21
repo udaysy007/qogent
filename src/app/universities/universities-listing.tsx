@@ -57,7 +57,7 @@ export function UniversitiesListing() {
   return (
     <>
       {/* Search and Filter Section */}
-      <div className="space-y-6 mb-12">
+      <div className="space-y-6 mb-8 sm:mb-12 px-4 sm:px-0">
         {/* Search Bar - styled like blog search */}
         <div className="group relative w-full max-w-2xl mx-auto transition-all duration-300">
           <div className="absolute inset-0 -z-10 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
@@ -69,11 +69,11 @@ export function UniversitiesListing() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className={cn(
-                "w-full py-3 pl-11 pr-4",
+                "w-full py-2.5 sm:py-3 pl-11 pr-4",
                 "bg-background/50 backdrop-blur-xl",
                 "border border-border/50",
                 "rounded-full",
-                "text-foreground placeholder:text-muted-foreground",
+                "text-sm sm:text-base text-foreground placeholder:text-muted-foreground",
                 "focus:outline-none focus:ring-2 focus:ring-primary/20",
                 "transition-all duration-300"
               )}
@@ -82,14 +82,14 @@ export function UniversitiesListing() {
         </div>
         
         {/* Country Filter */}
-        <div className="flex items-center justify-between max-w-2xl mx-auto">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between max-w-2xl mx-auto gap-4 sm:gap-0">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <MapPin className="h-4 w-4 text-muted-foreground" />
             <Select
               value={selectedCountry || "all"}
               onValueChange={(value) => setSelectedCountry(value === "all" ? null : value)}
             >
-              <SelectTrigger className="w-[200px] bg-background/50 border-border/50 focus:ring-2 focus:ring-primary/20">
+              <SelectTrigger className="w-full sm:w-[200px] bg-background/50 border-border/50 focus:ring-2 focus:ring-primary/20">
                 <SelectValue placeholder="All Countries" />
               </SelectTrigger>
               <SelectContent>
@@ -108,93 +108,95 @@ export function UniversitiesListing() {
       </div>
       
       {/* Results Section */}
-      {error ? (
-        <div className="p-12 text-center bg-muted rounded-lg border">
-          <p className="text-lg text-muted-foreground">
-            Error loading universities. Please try again later.
-          </p>
-        </div>
-      ) : transformedUniversities.length === 0 ? (
-        <div className="p-12 text-center bg-muted/50 border rounded-lg">
-          <GraduationCap className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-          <h3 className="text-xl font-medium mb-2">No Universities Found</h3>
-          <p className="text-muted-foreground mb-4">
-            Try adjusting your search or selecting a different country.
-          </p>
-          {(selectedCountry || searchQuery) && (
-            <Button 
-              variant="outline" 
-              onClick={() => {
-                setSelectedCountry(null)
-                setSearchQuery("")
-              }}
-            >
-              Clear Filters
-            </Button>
-          )}
-        </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 transition-all duration-300">
-            {!universities ? (
-              // Skeleton loading state
-              <>
-                {[...Array(6)].map((_, i) => (
-                  <Card key={i} className="group relative overflow-hidden">
-                    <div className="animate-pulse space-y-4 p-6">
-                      <Skeleton className="h-40 w-full rounded-lg bg-muted/50" />
-                      <Skeleton className="h-4 w-3/4 bg-muted/50" />
-                      <Skeleton className="h-4 w-1/2 bg-muted/50" />
-                      <div className="space-y-2">
-                        <Skeleton className="h-3 w-full bg-muted/50" />
-                        <Skeleton className="h-3 w-5/6 bg-muted/50" />
-                      </div>
-                      <div className="flex gap-2">
-                        <Skeleton className="h-8 w-16 rounded-full bg-muted/50" />
-                        <Skeleton className="h-8 w-16 rounded-full bg-muted/50" />
-                      </div>
-                    </div>
-                    <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  </Card>
-                ))}
-              </>
-            ) : (
-              transformedUniversities.map((university: UniversityCardType) => (
-                <UniversityCard
-                  key={university.id}
-                  university={university}
-                  variant="default"
-                />
-              ))
+      <div className="px-4 sm:px-0">
+        {error ? (
+          <div className="p-8 sm:p-12 text-center bg-muted rounded-lg border">
+            <p className="text-lg text-muted-foreground">
+              Error loading universities. Please try again later.
+            </p>
+          </div>
+        ) : transformedUniversities.length === 0 ? (
+          <div className="p-8 sm:p-12 text-center bg-muted/50 border rounded-lg">
+            <GraduationCap className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+            <h3 className="text-xl font-medium mb-2">No Universities Found</h3>
+            <p className="text-muted-foreground mb-4">
+              Try adjusting your search or selecting a different country.
+            </p>
+            {(selectedCountry || searchQuery) && (
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  setSelectedCountry(null)
+                  setSearchQuery("")
+                }}
+              >
+                Clear Filters
+              </Button>
             )}
           </div>
-          
-          {/* Country-specific links */}
-          <div className="mt-16 pt-12 border-t border-border/5">
-            <h3 className="text-xl font-semibold mb-6">Looking for more universities?</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {allCountries.map((country: string) => (
-                <Button 
-                  key={country} 
-                  variant="outline" 
-                  className="justify-between group hover:bg-accent/50 transition-colors duration-300"
-                  asChild
-                >
-                  <a 
-                    href={`https://ms-in-${country.toLowerCase().replace(/\s+/g, '')}.qogent.com`} 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between"
-                  >
-                    <span>View all {country} universities</span>
-                    <ExternalLink className="h-4 w-4 ml-2 opacity-70 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                </Button>
-              ))}
+        ) : (
+          <>
+            <div className="grid grid-cols-1 gap-4 sm:gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3 transition-all duration-300">
+              {!universities ? (
+                // Skeleton loading state
+                <>
+                  {[...Array(6)].map((_, i) => (
+                    <Card key={i} className="group relative overflow-hidden">
+                      <div className="animate-pulse space-y-4 p-4 sm:p-6">
+                        <Skeleton className="h-32 sm:h-40 w-full rounded-lg bg-muted/50" />
+                        <Skeleton className="h-4 w-3/4 bg-muted/50" />
+                        <Skeleton className="h-4 w-1/2 bg-muted/50" />
+                        <div className="space-y-2">
+                          <Skeleton className="h-3 w-full bg-muted/50" />
+                          <Skeleton className="h-3 w-5/6 bg-muted/50" />
+                        </div>
+                        <div className="flex gap-2">
+                          <Skeleton className="h-8 w-16 rounded-full bg-muted/50" />
+                          <Skeleton className="h-8 w-16 rounded-full bg-muted/50" />
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    </Card>
+                  ))}
+                </>
+              ) : (
+                transformedUniversities.map((university: UniversityCardType) => (
+                  <UniversityCard
+                    key={university.id}
+                    university={university}
+                    variant="default"
+                  />
+                ))
+              )}
             </div>
-          </div>
-        </>
-      )}
+            
+            {/* Country-specific links */}
+            <div className="mt-12 sm:mt-16 pt-8 sm:pt-12 border-t border-border/5">
+              <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Looking for more universities?</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+                {allCountries.map((country: string) => (
+                  <Button 
+                    key={country} 
+                    variant="outline" 
+                    className="justify-between group hover:bg-accent/50 transition-colors duration-300 text-sm sm:text-base h-auto py-2.5"
+                    asChild
+                  >
+                    <a 
+                      href={`https://ms-in-${country.toLowerCase().replace(/\s+/g, '')}.qogent.com`} 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between"
+                    >
+                      <span>View all {country} universities</span>
+                      <ExternalLink className="h-4 w-4 ml-2 opacity-70 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+                    </a>
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </>
   )
 } 
