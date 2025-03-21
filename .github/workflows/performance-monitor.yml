@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: |
           pnpm install
-          npm install -g @lhci/cli@0.12.x serve
+          npm install -g @lhci/cli@0.12.x
           
       - name: Build application
         env:
@@ -47,11 +47,16 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: pnpm build
         
-      - name: Start server
+      - name: Start Next.js server
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
-          serve out -p 3000 &
-          sleep 10  # Wait for server to start
-        
+          pnpm start &
+          echo "Waiting for Next.js server to be ready..."
+          sleep 20  # Give more time for the server to fully start
+          
       - name: Run Lighthouse CI
         run: |
           echo "Starting Lighthouse CI..."
@@ -64,6 +69,9 @@ jobs:
           fi
           
           echo "Testing URL: $BASE_URL"
+          
+          # Test if the server is responding
+          curl -I $BASE_URL
           
           # Run Lighthouse CI with verbose logging
           lhci collect --verbose --url=$BASE_URL --config=.github/lighthouse-config.json
