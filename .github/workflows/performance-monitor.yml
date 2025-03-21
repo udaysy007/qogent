@@ -1,0 +1,65 @@
+name: Performance Monitoring
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # Run every Monday at midnight
+  workflow_dispatch:  # Allow manual triggering
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+
+jobs:
+  lighthouse-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm install -g @lhci/cli@0.12.x
+        
+      - name: Run Lighthouse CI
+        run: |
+          lhci collect --config=.github/lighthouse-config.json
+          lhci assert --config=.github/lighthouse-config.json
+        continue-on-error: true
+        id: lighthouse
+        
+      - name: Format Lighthouse Score
+        id: format-score
+        run: |
+          REPORT_PATH=$(find .lighthouseci -name "*.json" | head -n 1)
+          echo "PERFORMANCE_SCORE=$(jq '.categories.performance.score' $REPORT_PATH)" >> $GITHUB_ENV
+          echo "ACCESSIBILITY_SCORE=$(jq '.categories.accessibility.score' $REPORT_PATH)" >> $GITHUB_ENV
+          echo "SEO_SCORE=$(jq '.categories.seo.score' $REPORT_PATH)" >> $GITHUB_ENV
+          
+      - name: Store Lighthouse report
+        uses: actions/upload-artifact@v3
+        with:
+          name: lighthouse-report
+          path: .lighthouseci
+          retention-days: 30
+          
+      - name: Create Issue on Low Scores
+        if: env.PERFORMANCE_SCORE < 0.9 || env.ACCESSIBILITY_SCORE < 0.9 || env.SEO_SCORE < 0.9
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 Lighthouse Performance Alert',
+              body: `Performance monitoring detected scores below threshold:
+              
+              - Performance: ${process.env.PERFORMANCE_SCORE * 100}%
+              - Accessibility: ${process.env.ACCESSIBILITY_SCORE * 100}%
+              - SEO: ${process.env.SEO_SCORE * 100}%
+              
+              [View detailed report](${process.env.GITHUB_SERVER_URL}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
+            }); 

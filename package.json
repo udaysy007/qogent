@@ -62,6 +62,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@lhci/cli": "^0.14.0",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.16",
     "@types/canvas-confetti": "^1.9.0",
@@ -69,6 +70,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "10.4.15",
+    "broken-link-checker": "^0.7.8",
     "dotenv": "^16.4.7",
     "eslint": "^9",
     "eslint-config-next": "15.2.2",
