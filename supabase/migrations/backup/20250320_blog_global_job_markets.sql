@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'Best Countries for Post-Study Work in 2025',
   'Compare the best countries for international graduates with analysis of post-study work visas, job markets, and global salary expectations.',
-  'https://qogent.com/blog/global-job-markets-best-countries-post-study-work',
+  'https://qogent.in/blog/global-job-markets-best-countries-post-study-work',
   TRUE,
   ARRAY['post study work visa', 'best countries for international graduates', 'international student jobs', 'work after graduation abroad', 'global job markets'],
   0.8,

@@ -37,7 +37,7 @@ WITH new_post AS (
     CURRENT_TIMESTAMP,
     'LOR Guide: Getting Strong Reference Letters',
     'Get powerful recommendation letters for academic applications. Learn who to ask, when to ask, and how to provide materials that make writing strong letters easy.',
-    'https://qogent.com/blog/letter-of-recommendation-guide-getting-strong-letters',
+    'https://qogent.in/blog/letter-of-recommendation-guide-getting-strong-letters',
     TRUE,
     ARRAY['LOR guide', 'recommendation letter tips', 'reference letter for students'],
     0.8,

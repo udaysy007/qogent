@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'Top English-Speaking Countries for Higher Education 2025',
   'Compare USA, UK, Canada, Australia & Ireland for international students - costs, requirements & opportunities.',
-  'https://qogent.com/blog/top-english-speaking-countries-higher-education',
+  'https://qogent.in/blog/top-english-speaking-countries-higher-education',
   TRUE,
   ARRAY['study in English-speaking countries', 'English taught programs', 'study abroad USA', 'study in UK', 'study in Canada', 'study in Australia', 'study in Ireland'],
   0.8,

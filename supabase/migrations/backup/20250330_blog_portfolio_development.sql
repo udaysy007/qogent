@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'Portfolio Development Guide for Academic Applications (2025)',
   'Create a standout portfolio for creative and technical programs with field-specific tips, formats, and examples from successful applicants.',
-  'https://qogent.com/blog/portfolio-development-guide-creative-technical-programs',
+  'https://qogent.in/blog/portfolio-development-guide-creative-technical-programs',
   TRUE,
   ARRAY['portfolio development', 'student portfolio guide', 'academic portfolio', 'creative program application', 'technical portfolio examples'],
   0.8,

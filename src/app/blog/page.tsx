@@ -17,17 +17,17 @@ export const metadata: Metadata = {
     'max-video-preview': -1
   },
   alternates: {
-    canonical: 'https://qogent.com/blog'
+    canonical: 'https://qogent.in/blog'
   },
   openGraph: {
     title: 'Qogent Blog',
     description: 'Explore our latest insights, tutorials, and updates on education, technology, and more.',
     type: 'website',
-    url: 'https://qogent.com/blog',
+    url: 'https://qogent.in/blog',
     siteName: 'Qogent',
     images: [
       {
-        url: 'https://qogent.com/images/blog/og-image.jpg',
+        url: 'https://qogent.in/images/blog/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Qogent Blog'
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Qogent Blog',
     description: 'Explore our latest insights, tutorials, and updates on education, technology, and more.',
-    images: ['https://qogent.com/images/blog/og-image.jpg']
+    images: ['https://qogent.in/images/blog/og-image.jpg']
   }
 }
 
@@ -64,13 +64,13 @@ export default async function BlogPage() {
               '@type': 'Blog',
               name: 'Qogent Blog',
               description: 'Explore our latest insights, tutorials, and updates on education, technology, and more.',
-              url: 'https://qogent.com/blog',
+              url: 'https://qogent.in/blog',
               publisher: {
                 '@type': 'Organization',
                 name: 'Qogent',
                 logo: {
                   '@type': 'ImageObject',
-                  url: 'https://qogent.com/logo.png'
+                  url: 'https://qogent.in/logo.png'
                 }
               }
             })

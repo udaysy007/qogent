@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   '[SEO Title (under 60 characters)]',
   '[SEO Description (under 160 characters)]',
-  'https://qogent.com/blog/[slug-with-hyphens]',
+  'https://qogent.in/blog/[slug-with-hyphens]',
   TRUE,
   ARRAY['[keyword1]', '[keyword2]', '[keyword3]', '[keyword4]', '[keyword5]'],
   0.8,

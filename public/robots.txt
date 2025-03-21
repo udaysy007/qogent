@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://qogent.com/sitemap.xml
+Sitemap: https://qogent.in/sitemap.xml

@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'Global Career Building Guide for International Students',
   'Learn how to transform your international education into a successful global career with practical strategies from former international students.',
-  'https://qogent.com/blog/building-international-career-study-global-professional',
+  'https://qogent.in/blog/building-international-career-study-global-professional',
   TRUE,
   ARRAY['international career guide', 'global job opportunities', 'career planning for international students', 'international networking strategies', 'global professional development'],
   0.8,

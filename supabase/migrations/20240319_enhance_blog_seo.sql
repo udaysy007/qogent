@@ -49,7 +49,7 @@ UPDATE blog_posts
 SET 
     meta_title = title,
     meta_description = description,
-    canonical_url = CONCAT('https://qogent.com/blog/', slug),
+    canonical_url = CONCAT('https://qogent.in/blog/', slug),
     keywords = ARRAY[category],
     structured_data = jsonb_build_object(
         '@context', 'https://schema.org',

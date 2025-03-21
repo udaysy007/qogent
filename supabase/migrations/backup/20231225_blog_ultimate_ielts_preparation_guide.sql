@@ -256,7 +256,7 @@ After trying literally dozens of resources, here are the ones that genuinely imp
 
 ### Official Resources:
 - **Official IELTS Practice Materials** (Vol 1 & 2) - About $20 each, but worth every penny
-- **[IELTS.org Sample Tests](https://www.ielts.org/usa/ielts-for-test-takers/sample-test-questions)** - Free authentic materials directly from the test makers
+- **[IELTS.org Sample Tests](https://ielts.org/take-a-test/preparation-resources/sample-test-questions)** - Free authentic materials directly from the test makers
 - **Cambridge IELTS Series (Books 1-18)** - The gold standard for practice tests, about $25 per book
 
 ### Free Online Resources:
@@ -470,7 +470,7 @@ What strategies have worked best in your IELTS preparation? Share your experienc
     CURRENT_TIMESTAMP,
     'IELTS Preparation Guide: Tips, Resources & Study Plan',
     'Master IELTS with our comprehensive guide featuring a 4-week study plan, free resources, and proven strategies that helped improve scores from 6.0 to 8.0.',
-    'https://qogent.com/blog/ultimate-ielts-preparation-guide-tips-resources-study-plan',
+    'https://qogent.in/blog/ultimate-ielts-preparation-guide-tips-resources-study-plan',
     TRUE,
     ARRAY['IELTS preparation guide', 'IELTS study plan', 'IELTS tips', 'IELTS resources', 'IELTS practice', 'improve IELTS score', 'IELTS study strategy'],
     0.8,

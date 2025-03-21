@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'Working While Studying Abroad: Country-wise Policies & Tips',
   'Learn about work regulations for international students, job opportunities, and salary expectations in top study abroad destinations.',
-  'https://qogent.com/blog/working-while-studying-abroad-country-wise-policies',
+  'https://qogent.in/blog/working-while-studying-abroad-country-wise-policies',
   TRUE,
   ARRAY['part-time jobs study abroad', 'international student work', 'study abroad work permit', 'student jobs abroad', 'working while studying'],
   0.8,

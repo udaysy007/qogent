@@ -279,7 +279,7 @@ export class BlogService {
       // SEO fields
       meta_title: post.meta_title || post.title,
       meta_description: post.meta_description || post.description,
-      canonical_url: post.canonical_url || `https://qogent.com/blog/${post.slug}`,
+      canonical_url: post.canonical_url || `https://qogent.in/blog/${post.slug}`,
       is_indexed: post.is_indexed ?? true,
       structured_data: post.structured_data || this.generateStructuredData(post),
       og_image_url: post.og_image_url || post.image_url,
@@ -491,7 +491,7 @@ export class BlogService {
       // SEO fields
       meta_title: data.meta_title || data.title,
       meta_description: data.meta_description || data.description,
-      canonical_url: data.canonical_url || `https://qogent.com/blog/${data.slug}`,
+      canonical_url: data.canonical_url || `https://qogent.in/blog/${data.slug}`,
       is_indexed: data.is_indexed ?? true,
       structured_data: data.structured_data || this.generateStructuredData(data),
       og_image_url: data.og_image_url || data.image_url,
@@ -515,21 +515,21 @@ export class BlogService {
       author: {
         '@type': 'Person',
         name: post.author.name,
-        url: `https://qogent.com/authors/${post.author.id}`
+        url: `https://qogent.in/authors/${post.author.id}`
       },
       publisher: {
         '@type': 'Organization',
         name: 'Qogent',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://qogent.com/logo.png'
+          url: 'https://qogent.in/logo.png'
         }
       },
       datePublished: post.published_at,
       dateModified: post.updated_at || post.published_at,
       mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': `https://qogent.com/blog/${post.slug}`
+        '@id': `https://qogent.in/blog/${post.slug}`
       },
       keywords: post.keywords?.join(', ') || post.category
     }

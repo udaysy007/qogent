@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'Study Abroad Budget: Universal Planning Template',
   'Create a realistic study abroad budget with our comprehensive template covering tuition, living expenses, and hidden costs.',
-  'https://qogent.com/blog/study-abroad-budget-universal-planning-template',
+  'https://qogent.in/blog/study-abroad-budget-universal-planning-template',
   TRUE,
   ARRAY['study abroad budget', 'international student expenses', 'financial planning template', 'student budget calculator'],
   0.8,

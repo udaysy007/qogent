@@ -86,8 +86,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Services
+                <Link href="/tools" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Tools & Services
                 </Link>
               </li>
             </ul>

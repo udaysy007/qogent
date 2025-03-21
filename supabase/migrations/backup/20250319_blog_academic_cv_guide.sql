@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'Academic CV Guide: International Standards & Examples',
   'Create a standout academic CV with our guide to international formatting standards and country-specific examples.',
-  'https://qogent.com/blog/academic-cv-international-standards-examples',
+  'https://qogent.in/blog/academic-cv-international-standards-examples',
   TRUE,
   ARRAY['academic CV template', 'international student resume', 'CV formatting', 'academic resume', 'country-specific CV'],
   0.8,

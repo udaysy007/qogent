@@ -114,7 +114,7 @@ Wrap up your post with actionable advice and a personal note. Invite comments or
   CURRENT_TIMESTAMP,
   'SEO-Optimized Title (Max 60 Characters)',
   'Concise, compelling meta description with focus keywords. Should be under 160 characters for search engines.',
-  'https://qogent.com/blog/post-slug-with-keywords',
+  'https://qogent.in/blog/post-slug-with-keywords',
   TRUE,
   ARRAY['keyword1', 'keyword2', 'keyword3', 'keyword4', 'keyword5'],
   0.8,

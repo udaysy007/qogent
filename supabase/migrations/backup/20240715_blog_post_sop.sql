@@ -314,7 +314,7 @@ So what are you waiting for? Open that document and write a deliberately bad fir
   CURRENT_TIMESTAMP,
   'How to Write a Powerful Statement of Purpose | Global Guide',
   'Learn to craft a compelling Statement of Purpose with our country-specific templates, real examples, and step-by-step guide for global university applications.',
-  'https://qogent.com/blog/how-to-write-powerful-statement-of-purpose-global-template',
+  'https://qogent.in/blog/how-to-write-powerful-statement-of-purpose-global-template',
   TRUE,
   ARRAY['statement of purpose', 'SOP template', 'university application', 'personal statement', 'graduate application', 'study abroad application', 'SOP writing guide'],
   0.9,

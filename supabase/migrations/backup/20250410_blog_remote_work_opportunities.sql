@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'Remote Work Guide for International Students (2025)',
   'Find legitimate remote work opportunities as an international student with our guide to online jobs, legal considerations, and success strategies.',
-  'https://qogent.com/blog/remote-work-opportunities-international-students',
+  'https://qogent.in/blog/remote-work-opportunities-international-students',
   TRUE,
   ARRAY['remote jobs for international students', 'online work while studying abroad', 'legal remote work for students', 'international student side hustles', 'digital jobs for students'],
   0.8,

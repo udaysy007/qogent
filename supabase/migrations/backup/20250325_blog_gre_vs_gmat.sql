@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'GRE vs GMAT: Choose the Right Test for Your Goals (2025)',
   'Compare GRE and GMAT exams to decide which is better for your graduate program. Analysis of test structure, scoring, and program preferences.',
-  'https://qogent.com/blog/gre-vs-gmat-which-test-right-for-graduate-program',
+  'https://qogent.in/blog/gre-vs-gmat-which-test-right-for-graduate-program',
   TRUE,
   ARRAY['GRE vs GMAT', 'graduate school exams', 'masters admission tests', 'business school requirements', 'test comparison'],
   0.8,

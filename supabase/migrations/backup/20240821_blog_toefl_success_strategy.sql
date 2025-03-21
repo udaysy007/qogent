@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'TOEFL Success Strategy: Achieve Your Target Score',
   'Discover effective TOEFL preparation strategies with section-by-section tips, study plans, and practice resources to reach your target score.',
-  'https://qogent.com/blog/toefl-success-strategy',
+  'https://qogent.in/blog/toefl-success-strategy',
   TRUE,
   ARRAY['TOEFL preparation tips', 'TOEFL study guide', 'TOEFL success', 'how to prepare for TOEFL', 'TOEFL score improvement'],
   0.8,

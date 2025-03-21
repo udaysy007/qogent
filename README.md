@@ -1,6 +1,6 @@
-# Qogent.in
+# Qogent
 
-This is a [Next.js](https://nextjs.org) project for Qogent.in, a platform for international education guidance.
+Qogent is a comprehensive platform designed to help international students make informed decisions about studying abroad. Visit us at [https://qogent.in](https://qogent.in).
 
 ## Getting Started
 
@@ -170,8 +170,8 @@ The website's sitemap is automatically generated and updated through GitHub Acti
 - Updates when the sitemap generator is modified
 
 The sitemap can be found at:
-- XML format: https://qogent.com/sitemap.xml
-- Text format: https://qogent.com/robots.txt
+- XML format: https://qogent.in/sitemap.xml
+- Text format: https://qogent.in/robots.txt
 
 ### Manual Sitemap Generation
 
@@ -184,3 +184,7 @@ pnpm generate-sitemap
 This will create/update:
 - `public/sitemap.xml` - Contains all website URLs
 - `public/robots.txt` - Contains search engine instructions and sitemap location
+
+## Live Site
+
+The live site can be accessed at [https://qogent.in](https://qogent.in)

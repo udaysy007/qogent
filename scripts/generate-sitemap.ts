@@ -26,7 +26,7 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 async function generateSitemap() {
   try {
     // Base URL of your website
-    const BASE_URL = 'https://qogent.com'
+    const BASE_URL = 'https://qogent.in'
 
     // Get all static routes based on pages
     const pages = await globby([

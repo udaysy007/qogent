@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'Top Countries for International Students in 2025',
   'Compare the top study abroad destinations for 2025 with our analysis of tuition costs, scholarships, job opportunities, and student experiences.',
-  'https://qogent.com/blog/best-countries-international-students-2025-comparison',
+  'https://qogent.in/blog/best-countries-international-students-2025-comparison',
   TRUE,
   ARRAY['best study abroad countries', 'top international student destinations', 'study abroad comparison', 'best countries for education', 'international student rankings 2025'],
   0.9,

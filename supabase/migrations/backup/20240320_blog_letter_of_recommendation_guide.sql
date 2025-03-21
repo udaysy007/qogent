@@ -538,7 +538,7 @@ What questions do you still have about securing strong recommendation letters? S
     CURRENT_TIMESTAMP,
     'Letter of Recommendation Guide: Getting Strong Reference Letters',
     'Learn how to secure powerful academic recommendation letters for study abroad applications. From choosing the right recommenders to providing materials that make their job easier.',
-    'https://qogent.com/blog/letter-of-recommendation-guide-getting-strong-letters',
+    'https://qogent.in/blog/letter-of-recommendation-guide-getting-strong-letters',
     TRUE,
     ARRAY['LOR guide', 'recommendation letter tips', 'reference letter for students', 'academic recommendations', 'how to ask for recommendation', 'study abroad references', 'letter of recommendation template'],
     0.8,

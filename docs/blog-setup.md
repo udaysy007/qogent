@@ -152,7 +152,7 @@ Table for managing URL redirects.
      NOW(),
      'SEO-Optimized Title (max 60 chars)',
      'SEO-Optimized description (max 160 chars)',
-     'https://qogent.com/blog/your-post-slug',
+     'https://qogent.in/blog/your-post-slug',
      'og-image-url',
      'Descriptive alt text for social sharing',
      ARRAY['keyword1', 'keyword2', 'keyword3'],

@@ -538,7 +538,7 @@ What questions do you still have about securing strong recommendation letters? S
     CURRENT_TIMESTAMP,
     'LOR Guide: Getting Strong Reference Letters',
     'Get strong recommendation letters for academic applications. Learn whom to ask, when to ask, and how to provide materials that make writing LORs easy.',
-    'https://qogent.com/blog/letter-of-recommendation-guide-getting-strong-letters',
+    'https://qogent.in/blog/letter-of-recommendation-guide-getting-strong-letters',
     TRUE,
     ARRAY['LOR guide', 'recommendation letter tips', 'reference letter for students', 'academic recommendations', 'how to ask for recommendation', 'study abroad references', 'letter of recommendation template'],
     0.8,

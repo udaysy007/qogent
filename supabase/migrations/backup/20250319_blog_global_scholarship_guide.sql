@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'Global Scholarship Guide for International Students',
   'Find the best scholarships for international students with tips on applications, deadlines, and success strategies.',
-  'https://qogent.com/blog/global-scholarship-guide-international-students',
+  'https://qogent.in/blog/global-scholarship-guide-international-students',
   TRUE,
   ARRAY['international student scholarships', 'study abroad scholarships', 'merit scholarships', 'scholarship application tips'],
   0.8,

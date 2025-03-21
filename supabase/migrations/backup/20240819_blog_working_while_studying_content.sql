@@ -75,7 +75,7 @@ Documentation matters. Get your contracts, pay slips, and tax documents organize
 1. University job boards (called "Schwarzes Brett" – literally "black board")
 2. [Studentjob.de](https://www.studentjob.de/)
 3. LinkedIn with filters set to "Werkstudent" and "part-time"
-4. [HiWi-Jobs](https://www.hiwijobs.de/) for research/academic positions
+4. [Academics.de](https://www.academics.de/) for research/academic positions
 
 **Tax tips nobody told me:**
 
@@ -175,9 +175,9 @@ When my supervisor said "don''t worry about finishing that today," she actually 
 
 **The job hunt strategy that worked for my friends:**
 
-1. [Indeed Canada](https://ca.indeed.com/) with "part-time" and "student" filters
+1. [Jobbank.gc.ca](https://www.jobbank.gc.ca/) with "part-time" and "student" filters
 2. University career center (they often have exclusive listings)
-3. [Job Bank](https://www.jobbank.gc.ca/)
+3. [Student Job Canada](https://www.studentjob.ca/)
 4. Local retail and restaurants (often hire through walk-ins)
 
 **Banking and payment tips:**
@@ -209,7 +209,7 @@ But don''t mistake casual for unprofessional. Australians take their work seriou
 
 1. [Seek](https://www.seek.com.au/)
 2. University job boards
-3. [Indeed Australia](https://au.indeed.com/)
+3. [Student Job Australia](https://www.studentjob.com.au/)
 4. Hospitality jobs through [SpotJobs](https://www.spotjobs.com/)
 
 **Tax return bonus:**

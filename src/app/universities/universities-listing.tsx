@@ -182,7 +182,7 @@ export function UniversitiesListing() {
                     asChild
                   >
                     <a 
-                      href={`https://ms-in-${country.toLowerCase().replace(/\s+/g, '')}.qogent.com`} 
+                      href={`https://ms-in-${country.toLowerCase().replace(/\s+/g, '')}.qogent.in`} 
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-between"

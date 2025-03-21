@@ -512,7 +512,7 @@ export default function DestinationPage() {
           
           <div className="mt-10 text-center">
             <Button asChild variant="outline">
-              <Link href="/services/visa-assistance">
+              <Link href="/contact">
                 Get Visa Application Support
               </Link>
             </Button>

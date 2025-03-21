@@ -38,7 +38,7 @@ INSERT INTO blog_posts (
   CURRENT_TIMESTAMP,
   'International Student Entrepreneurship Guide 2025',
   'Start a business as an international student with our guide to visa requirements, funding options, and startup resources in major study destinations.',
-  'https://qogent.com/blog/entrepreneurship-options-international-students',
+  'https://qogent.in/blog/entrepreneurship-options-international-students',
   TRUE,
   ARRAY['international student entrepreneur', 'startup visa options', 'student business abroad', 'international founder visa', 'student startup guide'],
   0.8,
