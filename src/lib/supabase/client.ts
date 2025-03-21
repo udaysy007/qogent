@@ -8,5 +8,11 @@ export function createClient() {
     throw new Error('Missing Supabase environment variables')
   }
 
-  return createSupabaseClient(supabaseUrl, supabaseKey)
+  return createSupabaseClient(supabaseUrl, supabaseKey, {
+    auth: {
+      persistSession: false, // Don't persist the session to avoid cookie issues
+      autoRefreshToken: false,
+      detectSessionInUrl: false
+    }
+  })
 } 

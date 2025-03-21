@@ -13,7 +13,7 @@ export default function UniversitiesPage() {
     <>
       <UniversitiesHero />
       
-      <section className="py-16 bg-background">
+      <section className="py-16 bg-transparent">
         <Container>
           <div className="max-w-screen-xl mx-auto">
             <UniversitiesListing />

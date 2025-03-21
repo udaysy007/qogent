@@ -8,9 +8,9 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
 import { 
   GraduationCap, 
-  ChevronDown,
   MapPin,
-  ExternalLink
+  ExternalLink,
+  Search
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
@@ -56,57 +56,53 @@ export function UniversitiesListing() {
 
   return (
     <>
-      {/* Page Header */}
-      <div className="mb-12 text-center">
-        <h1 className="text-4xl font-bold tracking-tight mb-4">Top Universities That Welcome You</h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          We've handpicked amazing universities that love international students. These are the ones we know inside out (because we've helped students get in).
-        </p>
-      </div>
-      
       {/* Search and Filter Section */}
-      <div className="relative mb-12">
-        <div className="mx-auto max-w-2xl">
-          <div className="rounded-2xl border bg-background/50 p-6 backdrop-blur-sm">
-            <div className="flex flex-col gap-4">
-              {/* Search Input */}
-              <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="Search universities by name..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-12 w-full bg-background pl-4 pr-4 text-foreground placeholder:text-muted-foreground focus:bg-background border-border/50"
-                />
-              </div>
-
-              {/* Country Filter and Results Count */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-2 w-full sm:w-auto">
-                  <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <Select
-                    value={selectedCountry || "all"}
-                    onValueChange={(value) => setSelectedCountry(value === "all" ? null : value)}
-                  >
-                    <SelectTrigger className="w-[200px] bg-background/50">
-                      <SelectValue placeholder="All Countries" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Countries</SelectItem>
-                      {allCountries.map((country: string) => (
-                        <SelectItem key={country} value={country}>{country}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <p>
-                    <span className="font-medium">{transformedUniversities.length}</span> {transformedUniversities.length === 1 ? 'university' : 'universities'} shown
-                  </p>
-                </div>
-              </div>
-            </div>
+      <div className="space-y-6 mb-12">
+        {/* Search Bar - styled like blog search */}
+        <div className="group relative w-full max-w-2xl mx-auto transition-all duration-300">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
+          <div className="relative flex items-center">
+            <Search className="absolute left-4 h-4 w-4 text-muted-foreground" />
+            <input
+              type="search"
+              placeholder="Search universities..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={cn(
+                "w-full py-3 pl-11 pr-4",
+                "bg-background/50 backdrop-blur-xl",
+                "border border-border/50",
+                "rounded-full",
+                "text-foreground placeholder:text-muted-foreground",
+                "focus:outline-none focus:ring-2 focus:ring-primary/20",
+                "transition-all duration-300"
+              )}
+            />
+          </div>
+        </div>
+        
+        {/* Country Filter */}
+        <div className="flex items-center justify-between max-w-2xl mx-auto">
+          <div className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-muted-foreground" />
+            <Select
+              value={selectedCountry || "all"}
+              onValueChange={(value) => setSelectedCountry(value === "all" ? null : value)}
+            >
+              <SelectTrigger className="w-[200px] bg-background/50 border-border/50 focus:ring-2 focus:ring-primary/20">
+                <SelectValue placeholder="All Countries" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Countries</SelectItem>
+                {allCountries.map((country: string) => (
+                  <SelectItem key={country} value={country}>{country}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <div className="text-sm text-muted-foreground">
+            <span className="font-medium">{transformedUniversities.length}</span> {transformedUniversities.length === 1 ? 'university' : 'universities'} shown
           </div>
         </div>
       </div>

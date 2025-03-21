@@ -97,24 +97,6 @@ export function CTASection() {
             </motion.p>
           </motion.div>
         </div>
-        
-        {/* Trust indicators */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-16 text-center"
-        >
-          <p className="text-sm text-muted-foreground mb-6">TRUSTED BY STUDENTS FROM</p>
-          <div className="flex flex-wrap justify-center gap-8 items-center opacity-70">
-            <img src="/images/trusted/university-1.svg" alt="Partner University" className="h-8 md:h-10 dark:invert" />
-            <img src="/images/trusted/university-2.svg" alt="Partner University" className="h-8 md:h-10 dark:invert" />
-            <img src="/images/trusted/university-3.svg" alt="Partner University" className="h-8 md:h-10 dark:invert" />
-            <img src="/images/trusted/university-4.svg" alt="Partner University" className="h-8 md:h-10 dark:invert" />
-            <img src="/images/trusted/university-5.svg" alt="Partner University" className="h-8 md:h-10 dark:invert" />
-          </div>
-        </motion.div>
       </div>
     </section>
   );

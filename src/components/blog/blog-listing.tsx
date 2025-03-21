@@ -56,7 +56,7 @@ export function BlogListing({ initialPosts }: BlogListingProps) {
   return (
     <div className="space-y-8">
       {/* Search and Filter Section */}
-      <div className="sticky top-4 z-10 space-y-4">
+      <div className="z-10 space-y-4">
         <SearchBar
           value={searchQuery}
           onChange={setSearchQuery}

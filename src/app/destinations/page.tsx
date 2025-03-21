@@ -17,17 +17,12 @@ import dynamic from 'next/dynamic'
 
 // Hero skeleton that shows instantly
 const HeroSkeleton = () => (
-  <div className="relative min-h-[50vh] w-full bg-gradient-to-b from-muted/30 to-muted/10">
-    <div className="container flex items-center justify-start min-h-[50vh]">
-      <div className="bg-background/30 backdrop-blur-md p-6 rounded-xl shadow-lg animate-pulse h-64 w-full max-w-md flex flex-col gap-4">
-        <div className="h-10 bg-muted/20 rounded-md w-3/4"></div>
-        <div className="h-10 bg-muted/20 rounded-md w-1/2"></div>
-        <div className="h-24 bg-muted/20 rounded-md w-full"></div>
-        <div className="flex gap-2">
-          {[1, 2, 3, 4, 5].map(i => (
-            <div key={i} className="h-8 w-16 bg-muted/20 rounded-full"></div>
-          ))}
-        </div>
+  <div className="relative min-h-[30vh] w-full overflow-visible">
+    <div className="container relative z-10 mx-auto flex min-h-[30vh] flex-col items-center justify-center gap-6 px-4 pb-6 pt-8 text-center">
+      <div className="flex flex-col items-center gap-4">
+        <div className="h-12 w-64 bg-muted/10 animate-pulse rounded-lg"></div>
+        <div className="h-10 w-48 bg-muted/10 animate-pulse rounded-lg"></div>
+        <div className="h-24 w-full max-w-[550px] bg-muted/10 animate-pulse rounded-lg mt-2"></div>
       </div>
     </div>
   </div>
@@ -36,10 +31,10 @@ const HeroSkeleton = () => (
 // Loading state for search component
 const SearchSkeleton = () => (
   <div className="flex flex-col lg:flex-row gap-4">
-    <div className="flex-1 h-11 bg-muted/20 animate-pulse rounded-full"></div>
+    <div className="flex-1 h-11 bg-muted/10 animate-pulse rounded-full"></div>
     <div className="flex gap-3">
-      <div className="w-40 h-11 bg-muted/20 animate-pulse rounded-full"></div>
-      <div className="w-40 h-11 bg-muted/20 animate-pulse rounded-full"></div>
+      <div className="w-40 h-11 bg-muted/10 animate-pulse rounded-full"></div>
+      <div className="w-40 h-11 bg-muted/10 animate-pulse rounded-full"></div>
     </div>
   </div>
 )
@@ -48,7 +43,6 @@ const SearchSkeleton = () => (
 const DestinationsHero = dynamic(
   () => import('@/components/sections/destinations-hero').then(mod => ({ default: mod.DestinationsHero })),
   {
-    ssr: false,
     loading: () => <HeroSkeleton />
   }
 )
@@ -125,10 +119,13 @@ export default function DestinationsPage() {
       <DestinationsHero />
       
       <main className="pb-20">
-        {/* Integrated Search Bar - positioned to overlap with hero and content */}
-        <div className="relative -mt-12 mb-16 z-10">
-          <Container className="max-w-6xl">
-            <div className="bg-background/80 backdrop-blur-md rounded-2xl shadow-lg border border-border/40 p-4 md:p-5 transition-all duration-300 hover:shadow-xl hover:bg-background/90">
+        {/* Combined destinations section - now includes search */}
+        <Section className="pt-10 pb-16 bg-transparent">
+          <Container>
+            <h2 className="text-2xl font-bold mb-8 text-center md:text-left">Study Destinations</h2>
+            
+            {/* Search and filter now part of the destinations section */}
+            <div className="mb-10">
               {!isClient ? <SearchSkeleton /> : (
                 <SearchFilter
                   placeholder="Search destinations..."
@@ -160,13 +157,7 @@ export default function DestinationsPage() {
                 />
               )}
             </div>
-          </Container>
-        </div>
-        
-        {/* Combined destinations section */}
-        <Section background="muted" className="-mt-6 pt-10 pb-16 rounded-t-3xl">
-          <Container>
-            <h2 className="text-2xl font-bold mb-8 text-center md:text-left">Study Destinations</h2>
+            
             {isLoading || !isClient ? (
               <LoadingSkeleton />
             ) : error ? (
@@ -197,19 +188,6 @@ export default function DestinationsPage() {
                 </Button>
               </div>
             )}
-          </Container>
-        </Section>
-        
-        <Section background="muted" className="mt-16 rounded-t-3xl pt-16">
-          <Container>
-            <CallToAction
-              title="Compare Study Destinations"
-              description="Not sure which country is right for you? Use our comparison tool to evaluate costs, programs, and opportunities."
-              primaryAction={{
-                text: "Compare Countries",
-                href: "/tools/compare-destinations"
-              }}
-            />
           </Container>
         </Section>
       </main>

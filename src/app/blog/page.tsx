@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { BlogService } from '@/lib/services/blog'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase-client'
 import { BlogListing } from '@/components/blog/blog-listing'
 import { BlogHero } from '@/components/sections/blog-hero'
 
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
 export default async function BlogPage() {
   try {
     // Create the Supabase client
-    const supabase = createServerClient(cookies())
+    const supabase = createClient()
     
     // Initialize the blog service
     const blogService = BlogService.getInstance(supabase)
