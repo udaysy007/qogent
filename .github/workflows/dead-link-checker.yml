@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: '0 0 * * 0'  # Run weekly at midnight on Sunday
   workflow_dispatch:  # Allow manual triggering
+    inputs:
+      use_localhost:
+        description: 'Use localhost:3000 instead of production URL'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   check-links:
@@ -44,17 +50,24 @@ jobs:
       - name: Determine base URL
         id: url
         run: |
-          if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            echo "base_url=https://qogent.in" >> $GITHUB_OUTPUT
-          else
+          if [[ "${{ github.event.inputs.use_localhost }}" == "true" ]]; then
             echo "base_url=http://localhost:3000" >> $GITHUB_OUTPUT
+          else
+            echo "base_url=https://qogent.in" >> $GITHUB_OUTPUT
           fi
 
       - name: Check for dead links
         id: blc
         run: |
           echo "Starting link check for ${{ steps.url.outputs.base_url }}"
-          npx blc ${{ steps.url.outputs.base_url }} --follow --recursive --ordered --filter-level 3 --exclude "^(tel:|mailto:|sms:|#)" > dead-links-report.txt || true
+          
+          # Create a temporary file for the report
+          touch dead-links-report.txt
+          
+          # Run blc and capture both stdout and stderr
+          if ! npx blc ${{ steps.url.outputs.base_url }} --follow --recursive --ordered --filter-level 3 --exclude "^(tel:|mailto:|sms:|#)" 2>&1 | tee dead-links-report.txt; then
+            echo "Link checker completed with warnings or errors"
+          fi
           
           # Initialize counters
           total_links=0
@@ -63,26 +76,44 @@ jobs:
           
           # Count links using proper string handling
           while IFS= read -r line; do
+            # Debug output
+            echo "Processing line: $line"
+            
             if [[ $line == *"Getting links from"* ]] || [[ $line == *"├"* ]]; then
               ((total_links++))
+              echo "Found link: $line"
             fi
             if [[ $line == *"BROKEN"* ]]; then
               ((broken_links++))
+              echo "Found broken link: $line"
             fi
             if [[ $line == *"excluded"* ]]; then
               ((excluded_links++))
+              echo "Found excluded link: $line"
             fi
           done < dead-links-report.txt
           
+          # Debug output
+          echo "Total links found: $total_links"
+          echo "Broken links found: $broken_links"
+          echo "Excluded links found: $excluded_links"
+          
           # Set outputs using proper syntax
-          echo "total_links=${total_links}" >> $GITHUB_OUTPUT
-          echo "broken_links=${broken_links}" >> $GITHUB_OUTPUT
-          echo "excluded_links=${excluded_links}" >> $GITHUB_OUTPUT
+          {
+            echo "total_links=$total_links"
+            echo "broken_links=$broken_links"
+            echo "excluded_links=$excluded_links"
+          } >> $GITHUB_OUTPUT
           
           # Also set environment variables for use in subsequent steps
-          echo "TOTAL_LINKS=${total_links}" >> $GITHUB_ENV
-          echo "BROKEN_LINKS=${broken_links}" >> $GITHUB_ENV
-          echo "EXCLUDED_LINKS=${excluded_links}" >> $GITHUB_ENV
+          {
+            echo "TOTAL_LINKS=$total_links"
+            echo "BROKEN_LINKS=$broken_links"
+            echo "EXCLUDED_LINKS=$excluded_links"
+          } >> $GITHUB_ENV
+          
+          # Ensure the workflow continues even if broken links are found
+          exit 0
 
       - name: Create issue if broken links found
         if: steps.blc.outputs.broken_links != '0'
@@ -114,7 +145,7 @@ jobs:
             const issueParams = {
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `🔍 Dead Links Found: ${process.env.BROKEN_LINKS} broken links detected`,
+              title: `🔍 Dead Links Found: ${{ steps.blc.outputs.broken_links }} broken links detected`,
               body: summary,
               labels: ['maintenance']
             };
