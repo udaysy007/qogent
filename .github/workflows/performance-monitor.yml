@@ -13,11 +13,15 @@ on:
 jobs:
   lighthouse-check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.5.3
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3.8.1
         with:
           node-version: '18'
           
@@ -26,7 +30,15 @@ jobs:
         
       - name: Run Lighthouse CI
         run: |
-          lhci collect --config=.github/lighthouse-config.json
+          # Ensure the site is accessible
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            BASE_URL="https://qogent.in"
+          else
+            BASE_URL="http://localhost:3000"
+          fi
+          
+          # Run Lighthouse CI with the correct URL
+          lhci collect --url=$BASE_URL --config=.github/lighthouse-config.json
           lhci assert --config=.github/lighthouse-config.json
         continue-on-error: true
         id: lighthouse
@@ -35,31 +47,65 @@ jobs:
         id: format-score
         run: |
           REPORT_PATH=$(find .lighthouseci -name "*.json" | head -n 1)
+          if [ ! -f "$REPORT_PATH" ]; then
+            echo "No Lighthouse report found!"
+            exit 1
+          fi
           echo "PERFORMANCE_SCORE=$(jq '.categories.performance.score' $REPORT_PATH)" >> $GITHUB_ENV
           echo "ACCESSIBILITY_SCORE=$(jq '.categories.accessibility.score' $REPORT_PATH)" >> $GITHUB_ENV
           echo "SEO_SCORE=$(jq '.categories.seo.score' $REPORT_PATH)" >> $GITHUB_ENV
+          echo "BEST_PRACTICES_SCORE=$(jq '.categories.["best-practices"].score' $REPORT_PATH)" >> $GITHUB_ENV
           
       - name: Store Lighthouse report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: lighthouse-report
           path: .lighthouseci
           retention-days: 30
           
       - name: Create Issue on Low Scores
-        if: env.PERFORMANCE_SCORE < 0.9 || env.ACCESSIBILITY_SCORE < 0.9 || env.SEO_SCORE < 0.9
-        uses: actions/github-script@v6
+        if: env.PERFORMANCE_SCORE < 0.9 || env.ACCESSIBILITY_SCORE < 0.9 || env.SEO_SCORE < 0.9 || env.BEST_PRACTICES_SCORE < 0.9
+        uses: actions/github-script@v6.4.1
         with:
           script: |
-            const issue = await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: '🚨 Lighthouse Performance Alert',
-              body: `Performance monitoring detected scores below threshold:
+            try {
+              const scores = {
+                Performance: (process.env.PERFORMANCE_SCORE * 100).toFixed(1),
+                Accessibility: (process.env.ACCESSIBILITY_SCORE * 100).toFixed(1),
+                SEO: (process.env.SEO_SCORE * 100).toFixed(1),
+                'Best Practices': (process.env.BEST_PRACTICES_SCORE * 100).toFixed(1)
+              };
               
-              - Performance: ${process.env.PERFORMANCE_SCORE * 100}%
-              - Accessibility: ${process.env.ACCESSIBILITY_SCORE * 100}%
-              - SEO: ${process.env.SEO_SCORE * 100}%
+              const lowScores = Object.entries(scores)
+                .filter(([_, score]) => score < 90)
+                .map(([category, score]) => `- ${category}: ${score}%`)
+                .join('\n');
               
-              [View detailed report](${process.env.GITHUB_SERVER_URL}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`
-            }); 
+              const issue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: '🚨 Lighthouse Performance Alert',
+                body: `## Performance Monitoring Alert
+                
+                The following scores are below the 90% threshold:
+                
+                ${lowScores}
+                
+                ### All Scores:
+                - Performance: ${scores.Performance}%
+                - Accessibility: ${scores.Accessibility}%
+                - SEO: ${scores.SEO}%
+                - Best Practices: ${scores['Best Practices']}%
+                
+                ### Next Steps
+                1. Review the detailed report in the workflow artifacts
+                2. Focus on improving the low-scoring areas
+                3. Consider running Lighthouse locally to test improvements
+                
+                [View detailed report](${process.env.GITHUB_SERVER_URL}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
+                labels: ['performance']
+              });
+            } catch (error) {
+              console.log('Error creating issue:', error.message);
+              core.setFailed('Failed to create performance issue');
+            } 
