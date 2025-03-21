@@ -25,32 +25,62 @@ jobs:
         with:
           node-version: '18'
           
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          
       - name: Install dependencies
-        run: npm install -g @lhci/cli@0.12.x
+        run: |
+          pnpm install
+          npm install -g @lhci/cli@0.12.x serve
+          
+      - name: Build application
+        run: pnpm build
+        
+      - name: Start server
+        run: |
+          serve out -p 3000 &
+          sleep 10  # Wait for server to start
         
       - name: Run Lighthouse CI
         run: |
-          # Ensure the site is accessible
+          echo "Starting Lighthouse CI..."
+          mkdir -p .lighthouseci
+          
           if [[ "${{ github.event_name }}" == "schedule" ]]; then
             BASE_URL="https://qogent.in"
           else
             BASE_URL="http://localhost:3000"
           fi
           
-          # Run Lighthouse CI with the correct URL
-          lhci collect --url=$BASE_URL --config=.github/lighthouse-config.json
+          echo "Testing URL: $BASE_URL"
+          
+          # Run Lighthouse CI with verbose logging
+          lhci collect --verbose --url=$BASE_URL --config=.github/lighthouse-config.json
           lhci assert --config=.github/lighthouse-config.json
         continue-on-error: true
         id: lighthouse
         
+      - name: Debug Lighthouse output
+        run: |
+          echo "Checking .lighthouseci directory contents:"
+          ls -la .lighthouseci/
+          
       - name: Format Lighthouse Score
         id: format-score
         run: |
           REPORT_PATH=$(find .lighthouseci -name "*.json" | head -n 1)
           if [ ! -f "$REPORT_PATH" ]; then
-            echo "No Lighthouse report found!"
+            echo "No Lighthouse report found in directory:"
+            ls -la .lighthouseci/
             exit 1
           fi
+          
+          echo "Found report at: $REPORT_PATH"
+          echo "Report contents:"
+          cat "$REPORT_PATH"
+          
           echo "PERFORMANCE_SCORE=$(jq '.categories.performance.score' $REPORT_PATH)" >> $GITHUB_ENV
           echo "ACCESSIBILITY_SCORE=$(jq '.categories.accessibility.score' $REPORT_PATH)" >> $GITHUB_ENV
           echo "SEO_SCORE=$(jq '.categories.seo.score' $REPORT_PATH)" >> $GITHUB_ENV
