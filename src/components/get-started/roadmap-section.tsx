@@ -60,7 +60,7 @@ export function RoadmapSection() {
       icon: <Calendar className="h-6 w-6" />,
       title: "Application Timeline",
       description: "Plan your applications with our interactive timeline to meet all deadlines.",
-      href: "/tools/application-timeline",
+      href: "/tools/timeline-generator",
     },
     {
       icon: <PiggyBank className="h-6 w-6" />,

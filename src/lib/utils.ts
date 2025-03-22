@@ -6,6 +6,32 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * Get current year
+ */
+export function getCurrentYear() {
+  return new Date().getFullYear();
+}
+
+/**
+ * Get next year
+ */
+export function getNextYear() {
+  return getCurrentYear() + 1;
+}
+
+/**
+ * Get current academic year
+ * If after July, considers it the start of next academic year
+ */
+export function getAcademicYear() {
+  const currentMonth = new Date().getMonth(); // 0-11
+  const currentYear = getCurrentYear();
+  
+  // If we're after July (month 6), consider it the start of the next academic year
+  return currentMonth > 6 ? currentYear : currentYear - 1;
+}
+
+/**
  * Generates a consistent slug from text
  * Used for heading IDs and URL fragments
  */
@@ -95,9 +121,6 @@ export function extractTableOfContents(content: string) {
       result.push(heading);
     }
   });
-  
-  // Log the result for debugging
-  console.log('Dynamic TOC generated:', result);
   
   return result;
 }

@@ -239,12 +239,12 @@ const tools = [
   {
     id: 7,
     name: "Timeline Generator",
-    description: "Create your personalized application timeline.",
+    description: "Create your personalized application timeline with key deadlines and tasks.",
     icon: Calendar,
     category: "Planning",
     link: "/tools/timeline-generator",
     colorClass: "var(--secondary)",
-    comingSoon: true
+    comingSoon: false
   },
   {
     id: 8,

@@ -4,6 +4,7 @@ import { Mockup } from "@/components/ui/mockup"
 import { Glow } from "@/components/ui/glow"
 import { Github } from "lucide-react"
 import { AvatarCircles } from "@/components/ui/avatar-circles"
+import { getCurrentYear } from "@/lib/utils"
 
 interface HeroWithMockupProps {
   title: string
@@ -101,7 +102,7 @@ export function HeroWithMockup({
                 className="justify-center"
               />
               <p className="text-sm text-muted-foreground italic">
-                Join {avatarCircles.numPeople >= 1000 ? `${Math.floor(avatarCircles.numPeople / 1000)}k+` : `${avatarCircles.numPeople}+`} students starting Winter 2025
+                Join {avatarCircles.numPeople >= 1000 ? `${Math.floor(avatarCircles.numPeople / 1000)}k+` : `${avatarCircles.numPeople}+`} students starting Winter {getCurrentYear()}
               </p>
             </div>
           )}
