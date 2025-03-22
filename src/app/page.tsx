@@ -38,6 +38,8 @@ export default function HomePage() {
             "/images/avatars/avatar2.jpg",
             "/images/avatars/avatar3.jpg",
             "/images/avatars/avatar4.jpg",
+            "/images/avatars/avatar5.jpg",
+            "/images/avatars/avatar6.jpg",
           ],
           numPeople: 2000
         }}

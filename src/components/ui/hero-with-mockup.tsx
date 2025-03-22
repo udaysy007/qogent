@@ -101,7 +101,7 @@ export function HeroWithMockup({
                 className="justify-center"
               />
               <p className="text-sm text-muted-foreground italic">
-                Join 1000+ students starting Winter 2025
+                Join {avatarCircles.numPeople >= 1000 ? `${Math.floor(avatarCircles.numPeople / 1000)}k+` : `${avatarCircles.numPeople}+`} students starting Winter 2025
               </p>
             </div>
           )}

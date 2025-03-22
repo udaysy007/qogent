@@ -49,24 +49,6 @@ export function SuccessStoryCard({
           className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
           sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
         />
-
-        {/* Instagram Link */}
-        {instagramUrl && (
-          <Link 
-            href={instagramUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="absolute bottom-4 right-4 z-20 transition-transform hover:scale-110"
-          >
-            <Button 
-              size="icon" 
-              variant="secondary" 
-              className="rounded-full bg-white/20 backdrop-blur-md hover:bg-white/30 text-white border border-white/20"
-            >
-              <Instagram className="h-5 w-5" />
-            </Button>
-          </Link>
-        )}
       </div>
 
       {/* Content */}
@@ -84,13 +66,21 @@ export function SuccessStoryCard({
           </p>
         </div>
 
-        {/* Instagram Link for Mobile */}
+        {/* Instagram Link */}
         {instagramUrl && (
-          <div className="mt-4 sm:hidden">
-            <Link href={instagramUrl} target="_blank" rel="noopener noreferrer">
-              <Button variant="outline" size="sm" className="w-full">
-                <Instagram className="h-4 w-4 mr-2" />
-                View on Instagram
+          <div className="mt-4">
+            <Link 
+              href={instagramUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full flex items-center justify-center gap-2 text-[hsl(var(--primary))] hover:text-[hsl(var(--primary))/80] transition-colors duration-200"
+              >
+                <Instagram className="h-4 w-4" />
+                View Story
               </Button>
             </Link>
           </div>

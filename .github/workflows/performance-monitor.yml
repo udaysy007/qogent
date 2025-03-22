@@ -14,6 +14,7 @@ env:
   NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
   NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
   SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+  LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   lighthouse-check:
@@ -36,9 +37,7 @@ jobs:
           version: 8
           
       - name: Install dependencies
-        run: |
-          pnpm install
-          npm install -g @lhci/cli@0.12.x
+        run: pnpm install
           
       - name: Build application
         env:
@@ -69,93 +68,46 @@ jobs:
           done
           
           echo "Server is ready!"
-          
+
       - name: Run Lighthouse CI
-        run: |
-          echo "Starting Lighthouse CI..."
-          mkdir -p .lighthouseci
-          
-          if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            BASE_URL="https://qogent.in"
-          else
-            BASE_URL="http://localhost:3000"
-          fi
-          
-          echo "Testing URL: $BASE_URL"
-          
-          # Test if the server is responding
-          curl -v $BASE_URL
-          
-          # Run Lighthouse CI with verbose logging and explicit output directory
-          lhci collect --verbose --url=$BASE_URL --config=.github/lighthouse-config.json --outputDir=.lighthouseci
-          
-          # List contents after collection
-          echo "Contents of .lighthouseci after collection:"
-          ls -la .lighthouseci/
-          
-          lhci assert --config=.github/lighthouse-config.json
-        continue-on-error: true
-        id: lighthouse
-        
-      - name: Debug Lighthouse output
-        if: always()
-        run: |
-          echo "Checking .lighthouseci directory contents:"
-          ls -la .lighthouseci/
-          
-          # Print Lighthouse logs if they exist
-          if [ -d ".lighthouseci" ]; then
-            echo "Lighthouse logs:"
-            find .lighthouseci -type f -name "*.log" -exec cat {} \;
-            echo "Lighthouse reports:"
-            find .lighthouseci -type f -name "*.json" -exec cat {} \;
-          fi
-          
-      - name: Format Lighthouse Score
-        id: format-score
-        if: always()
-        run: |
-          REPORT_PATH=$(find .lighthouseci -name "*.json" | head -n 1)
-          if [ ! -f "$REPORT_PATH" ]; then
-            echo "No Lighthouse report found in directory:"
-            ls -la .lighthouseci/
-            pwd
-            find . -name "*.json"
-            exit 1
-          fi
-          
-          echo "Found report at: $REPORT_PATH"
-          echo "Report contents:"
-          cat "$REPORT_PATH"
-          
-          echo "PERFORMANCE_SCORE=$(jq '.categories.performance.score' $REPORT_PATH)" >> $GITHUB_ENV
-          echo "ACCESSIBILITY_SCORE=$(jq '.categories.accessibility.score' $REPORT_PATH)" >> $GITHUB_ENV
-          echo "SEO_SCORE=$(jq '.categories.seo.score' $REPORT_PATH)" >> $GITHUB_ENV
-          echo "BEST_PRACTICES_SCORE=$(jq '.categories.["best-practices"].score' $REPORT_PATH)" >> $GITHUB_ENV
-          
-      - name: Store Lighthouse report
-        if: always()
-        uses: actions/upload-artifact@v4
+        uses: treosh/lighthouse-ci-action@v10
         with:
-          name: lighthouse-report
-          path: |
-            .lighthouseci
-            .lighthouseci/*.json
-            .lighthouseci/*.html
-            .lighthouseci/*.log
-          retention-days: 30
+          urls: |
+            http://localhost:3000
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          configPath: .github/lighthouse-config.json
+          runs: 3
           
       - name: Create Issue on Low Scores
-        if: success() && (env.PERFORMANCE_SCORE < 0.9 || env.ACCESSIBILITY_SCORE < 0.9 || env.SEO_SCORE < 0.9 || env.BEST_PRACTICES_SCORE < 0.9)
+        if: success()
         uses: actions/github-script@v6.4.1
         with:
           script: |
+            const fs = require('fs');
+            const path = require('path');
+            
             try {
+              // Find the latest Lighthouse report
+              const reportsDir = '.lighthouseci';
+              const jsonFiles = fs.readdirSync(reportsDir)
+                .filter(file => file.endsWith('.json'))
+                .map(file => path.join(reportsDir, file));
+              
+              if (jsonFiles.length === 0) {
+                console.log('No Lighthouse reports found');
+                return;
+              }
+              
+              // Get the most recent report
+              const reportPath = jsonFiles[jsonFiles.length - 1];
+              const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+              
               const scores = {
-                Performance: (process.env.PERFORMANCE_SCORE * 100).toFixed(1),
-                Accessibility: (process.env.ACCESSIBILITY_SCORE * 100).toFixed(1),
-                SEO: (process.env.SEO_SCORE * 100).toFixed(1),
-                'Best Practices': (process.env.BEST_PRACTICES_SCORE * 100).toFixed(1)
+                Performance: Math.round(report.categories.performance.score * 100),
+                Accessibility: Math.round(report.categories.accessibility.score * 100),
+                SEO: Math.round(report.categories.seo.score * 100),
+                'Best Practices': Math.round(report.categories['best-practices'].score * 100)
               };
               
               const lowScores = Object.entries(scores)
@@ -163,30 +115,32 @@ jobs:
                 .map(([category, score]) => `- ${category}: ${score}%`)
                 .join('\n');
               
-              const issue = await github.rest.issues.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                title: '🚨 Lighthouse Performance Alert',
-                body: `## Performance Monitoring Alert
-                
-                The following scores are below the 90% threshold:
-                
-                ${lowScores}
-                
-                ### All Scores:
-                - Performance: ${scores.Performance}%
-                - Accessibility: ${scores.Accessibility}%
-                - SEO: ${scores.SEO}%
-                - Best Practices: ${scores['Best Practices']}%
-                
-                ### Next Steps
-                1. Review the detailed report in the workflow artifacts
-                2. Focus on improving the low-scoring areas
-                3. Consider running Lighthouse locally to test improvements
-                
-                [View detailed report](${process.env.GITHUB_SERVER_URL}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
-                labels: ['performance']
-              });
+              if (lowScores) {
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: '🚨 Lighthouse Performance Alert',
+                  body: `## Performance Monitoring Alert
+                  
+                  The following scores are below the 90% threshold:
+                  
+                  ${lowScores}
+                  
+                  ### All Scores:
+                  - Performance: ${scores.Performance}%
+                  - Accessibility: ${scores.Accessibility}%
+                  - SEO: ${scores.SEO}%
+                  - Best Practices: ${scores['Best Practices']}%
+                  
+                  ### Next Steps
+                  1. Review the detailed report in the workflow artifacts
+                  2. Focus on improving the low-scoring areas
+                  3. Consider running Lighthouse locally to test improvements
+                  
+                  [View detailed report](${process.env.GITHUB_SERVER_URL}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
+                  labels: ['performance']
+                });
+              }
             } catch (error) {
               console.log('Error creating issue:', error.message);
               core.setFailed('Failed to create performance issue');

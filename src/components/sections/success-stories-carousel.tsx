@@ -126,6 +126,15 @@ export function SuccessStoriesCarousel({ stories }: SuccessStoriesCarouselProps)
           <Row stories={row3Stories} direction="left" />
         </div>
       </div>
+
+      <div className="flex justify-center mt-8">
+        <a 
+          href="/success-stories" 
+          className="text-primary hover:text-primary/80 transition-colors duration-200 font-medium"
+        >
+          View All Success Stories →
+        </a>
+      </div>
     </section>
   )
 } 

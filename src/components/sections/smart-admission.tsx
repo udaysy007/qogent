@@ -215,7 +215,17 @@ const SmartAdmission = () => {
                   Join students who got admitted to their dream universities
                 </h3>
                 <div className="flex justify-center">
-                  <AvatarCircles numPeople={2000} />
+                  <AvatarCircles 
+                    avatarUrls={[
+                      "/images/avatars/avatar1.jpg",
+                      "/images/avatars/avatar2.jpg",
+                      "/images/avatars/avatar3.jpg",
+                      "/images/avatars/avatar4.jpg",
+                      "/images/avatars/avatar5.jpg",
+                      "/images/avatars/avatar6.jpg",
+                    ]}
+                    numPeople={2000} 
+                  />
                 </div>
                 <p className="text-xl text-gray-600 dark:text-gray-400">
                   Over <span className="font-semibold">2000+</span> students used our platform to get into public universities
