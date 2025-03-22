@@ -259,11 +259,11 @@ const tools = [
   {
     id: 9,
     name: "Career Explorer",
-    description: "Explore career paths based on your study choices.",
+    description: "Explore career paths based on your study choices and preferences. Get personalized recommendations aligned with your goals.",
     icon: Briefcase,
     category: "Planning",
     link: "/tools/career-explorer",
     colorClass: "var(--secondary)",
-    comingSoon: true
+    comingSoon: false
   }
 ]; 
