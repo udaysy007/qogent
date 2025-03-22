@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, Calculator, Globe, Compass, Wallet, BarChart, Book, Briefcase, GraduationCap, FileText, Calendar, Plane } from "lucide-react"
+import { ArrowRight, Calculator, Globe, Compass, Wallet, BarChart, Book, Briefcase, GraduationCap, FileText, Calendar, Plane, ClipboardCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ToolsHero } from "@/components/sections/tools-hero"
@@ -219,12 +219,12 @@ const tools = [
   {
     id: 5,
     name: "Requirements Checker",
-    description: "Check if you meet university admission requirements.",
-    icon: GraduationCap,
-    category: "Requirements",
+    description: "Check if you meet the requirements for your chosen study program and get personalized guidance.",
+    icon: ClipboardCheck,
+    category: "Planning",
     link: "/tools/requirements-checker",
-    colorClass: "var(--warning)",
-    comingSoon: true
+    colorClass: "bg-gradient-to-r from-emerald-500 to-teal-500",
+    comingSoon: false
   },
   {
     id: 6,
