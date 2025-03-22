@@ -72,7 +72,7 @@ export function RoadmapSection() {
       icon: <Plane className="h-6 w-6" />,
       title: "Visa Guide",
       description: "Step-by-step guidance for your student visa application process.",
-      href: "/guides/visa-process",
+      href: "/destinations",
     },
     {
       icon: <CheckCircle className="h-6 w-6" />,
@@ -84,7 +84,7 @@ export function RoadmapSection() {
       icon: <Users className="h-6 w-6" />,
       title: "Connect",
       description: "Join our community of students and get help from those who've been there.",
-      href: "/community",
+      href: "https://www.instagram.com/msingermany",
     }
   ]
 
