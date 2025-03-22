@@ -218,21 +218,21 @@ const tools = [
   },
   {
     id: 5,
+    name: "Document Checklist",
+    description: "Get a personalized checklist of required documents for your study abroad journey.",
+    icon: FileText,
+    category: "Requirements",
+    link: "/tools/document-checklist",
+    colorClass: "var(--warning)",
+    comingSoon: false
+  },
+  {
+    id: 6,
     name: "Requirements Checker",
     description: "Check if you meet university admission requirements.",
     icon: GraduationCap,
     category: "Requirements",
     link: "/tools/requirements-checker",
-    colorClass: "var(--warning)",
-    comingSoon: true
-  },
-  {
-    id: 6,
-    name: "Document Validator",
-    description: "Validate your documents against university requirements.",
-    icon: FileText,
-    category: "Requirements",
-    link: "/tools/document-validator",
     colorClass: "var(--warning)",
     comingSoon: true
   },
