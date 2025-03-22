@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowRight, Calculator, Globe, Compass, Wallet, BarChart, Book, Briefcase, GraduationCap, FileText, Calendar } from "lucide-react"
+import { ArrowRight, Calculator, Globe, Compass, Wallet, BarChart, Book, Briefcase, GraduationCap, FileText, Calendar, Plane } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ToolsHero } from "@/components/sections/tools-hero"
@@ -174,7 +174,7 @@ function ToolCard({ tool }: { tool: Tool }) {
   )
 }
 
-// Sample data for tools - with shorter descriptions
+// Sample data for tools - arranged in chronological order
 const tools = [
   {
     id: 1,
@@ -198,16 +198,6 @@ const tools = [
   },
   {
     id: 3,
-    name: "ROI Calculator",
-    description: "Calculate your education return on investment abroad.",
-    icon: Calculator,
-    category: "Costs",
-    link: "/tools/roi-calculator",
-    colorClass: "var(--success)",
-    comingSoon: false
-  },
-  {
-    id: 4,
     name: "Cost Calculator",
     description: "Estimate monthly expenses in different cities worldwide.",
     icon: Wallet,
@@ -217,17 +207,17 @@ const tools = [
     comingSoon: false
   },
   {
-    id: 5,
-    name: "Document Checklist",
-    description: "Get a personalized checklist of required documents for your study abroad journey.",
-    icon: FileText,
-    category: "Requirements",
-    link: "/tools/document-checklist",
-    colorClass: "var(--warning)",
+    id: 4,
+    name: "ROI Calculator",
+    description: "Calculate your education return on investment abroad.",
+    icon: Calculator,
+    category: "Costs",
+    link: "/tools/roi-calculator",
+    colorClass: "var(--success)",
     comingSoon: false
   },
   {
-    id: 6,
+    id: 5,
     name: "Requirements Checker",
     description: "Check if you meet university admission requirements.",
     icon: GraduationCap,
@@ -237,7 +227,7 @@ const tools = [
     comingSoon: true
   },
   {
-    id: 7,
+    id: 6,
     name: "Timeline Generator",
     description: "Create your personalized application timeline with key deadlines and tasks.",
     icon: Calendar,
@@ -247,7 +237,27 @@ const tools = [
     comingSoon: false
   },
   {
+    id: 7,
+    name: "Document Checklist",
+    description: "Get a personalized checklist of required documents for your study abroad journey.",
+    icon: FileText,
+    category: "Requirements",
+    link: "/tools/document-checklist",
+    colorClass: "var(--warning)",
+    comingSoon: false
+  },
+  {
     id: 8,
+    name: "Pre-departure Checklist",
+    description: "Get a personalized checklist of tasks to complete before departing for your studies.",
+    icon: Plane,
+    category: "Requirements",
+    link: "/tools/pre-departure-checklist",
+    colorClass: "var(--warning)",
+    comingSoon: false
+  },
+  {
+    id: 9,
     name: "Career Explorer",
     description: "Explore career paths based on your study choices.",
     icon: Briefcase,
